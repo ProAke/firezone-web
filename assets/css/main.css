@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Prompt', 'Sarabun', sans-serif;
+    scroll-behavior: smooth;
+    color: #222631;
+    background-color: #ffffff;
+  }
+
+  body {
+    @apply antialiased text-slate-800 bg-white;
+  }
+}
+
+@layer components {
+  .container-classic {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-firezone {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded font-semibold bg-firezone-red text-white hover:bg-firezone-darkred transition-all duration-200 shadow-sm;
+  }
+
+  .btn-outline-firezone {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded font-semibold border-2 border-firezone-red text-firezone-red hover:bg-firezone-red hover:text-white transition-all duration-200;
+  }
+
+  .section-heading {
+    @apply text-2xl md:text-3xl font-extrabold text-firezone-navy tracking-tight;
+  }
+
+  .section-divider {
+    @apply w-14 h-1 bg-firezone-red rounded-full mt-3;
+  }
+}
+
+/* Classic Cameron / Fireszone Theme Accents */
+.cameron-subtitle {
+  @apply inline-flex items-center gap-2 text-firezone-red font-semibold text-sm uppercase tracking-wider mb-2;
+}
+
+.cameron-subtitle::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background-color: #e31e24;
+}
+
+.cameron-subtitle-center {
+  @apply inline-flex items-center justify-center gap-2.5 text-firezone-red font-semibold text-sm uppercase tracking-wider mb-2;
+}
+
+.cameron-subtitle-center::before,
+.cameron-subtitle-center::after {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background-color: #e31e24;
+}
+
+/* Rich HTML content styling for migrated descriptions */
+.fz-prose ul {
+  @apply list-disc pl-5 space-y-1.5 my-3;
+}
+.fz-prose ol {
+  @apply list-decimal pl-5 space-y-1.5 my-3;
+}
+.fz-prose p {
+  @apply mb-3 leading-relaxed;
+}
+.fz-prose li {
+  @apply leading-relaxed;
+}
+.fz-prose h3,
+.fz-prose h4 {
+  @apply font-bold text-firezone-navy mt-4 mb-2 text-base;
+}
+.fz-prose strong {
+  @apply font-bold text-gray-900;
+}

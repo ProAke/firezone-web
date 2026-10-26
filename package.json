@@ -1,0 +1,23 @@
+{
+  "name": "firezone-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "NODE_OPTIONS='--no-warnings' nuxt build",
+    "dev": "NODE_OPTIONS='--no-warnings' nuxt dev --host 0.0.0.0 --port 3000",
+    "generate": "NODE_OPTIONS='--no-warnings' nuxt generate",
+    "preview": "NODE_OPTIONS='--no-warnings' nuxt preview --host 0.0.0.0 --port 3000",
+    "start": "NODE_OPTIONS='--no-warnings' node .output/server/index.mjs",
+    "postinstall": "nuxt prepare",
+    "mirror:media": "node --no-warnings scripts/download-wp-media.mjs",
+    "migrate:media": "node --no-warnings scripts/download-wp-media.mjs"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^0.475.0",
+    "nuxt": "^3.16.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.13.2",
+    "typescript": "^5.8.2"
+  }
+}
