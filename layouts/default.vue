@@ -60,13 +60,13 @@
     <!-- Main Sticky Header -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
       <div class="container-classic h-20 flex items-center justify-between gap-4">
-        <!-- Logo -->
-        <NuxtLink to="/" class="flex items-center gap-3 shrink-0">
+        <!-- Top Menu Logo (logosticky-fireszone-2.png) -->
+        <NuxtLink to="/" class="flex items-center gap-3 shrink-0 py-1">
           <img
-            v-if="(settings.logoHeader || settings.logoUrl) && !logoFailed"
-            :src="settings.logoHeader || settings.logoUrl"
-            :alt="settings.companyName || 'Fireszone'"
-            class="h-12 md:h-14 w-auto object-contain"
+            v-if="!logoFailed"
+            :src="settings.logoHeader || settings.logoUrl || '/logosticky-fireszone-2.png'"
+            :alt="settings.companyName || 'Firezone and Manufacturing Co., Ltd.'"
+            class="h-11 md:h-[50px] w-auto object-contain"
             @error="logoFailed = true"
           />
           <div v-else class="flex items-center gap-2.5">
@@ -74,7 +74,7 @@
               FZ
             </div>
             <div>
-              <div class="font-extrabold text-lg leading-none text-firezone-navy tracking-tight">FIRESZONE</div>
+              <div class="font-extrabold text-lg leading-none text-firezone-navy tracking-tight">FIREZONE</div>
               <div class="text-[11px] text-gray-500">Fire Alarm &amp; Security Systems</div>
             </div>
           </div>
@@ -247,17 +247,17 @@
     <!-- Classic Dark 4-Column Footer -->
     <footer class="bg-firezone-navy text-gray-300 pt-14 pb-8 border-t-4 border-firezone-red">
       <div class="container-classic grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
-        <!-- Col 1: Company -->
+        <!-- Col 1: Company (Footer Zone Logo: logofooter-firesone.png) -->
         <div>
           <img
-            v-if="(settings.logoFooter || settings.footerLogoUrl) && !footerLogoFailed"
-            :src="settings.logoFooter || settings.footerLogoUrl"
-            :alt="settings.companyName || 'Fireszone'"
-            class="h-14 w-auto object-contain mb-4 bg-white/95 p-1.5 rounded"
+            v-if="!footerLogoFailed"
+            :src="settings.logoFooter || settings.footerLogoUrl || '/logofooter-firesone.png'"
+            :alt="settings.companyName || 'Firezone and Manufacturing Co., Ltd.'"
+            class="h-16 md:h-20 w-auto object-contain mb-4"
             @error="footerLogoFailed = true"
           />
           <div v-else class="text-xl font-extrabold text-white mb-3">
-            FIRESZONE
+            FIREZONE
           </div>
           <p class="font-semibold text-white text-sm mb-2">
             {{ settings.companyName || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด' }}

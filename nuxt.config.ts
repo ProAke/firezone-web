@@ -47,7 +47,7 @@ export default defineNuxtConfig({
         {
           rel: 'icon',
           type: 'image/jpeg',
-          href: 'https://fireszone.com/wp-content/uploads/2021/02/cropped-favicon.jpg'
+          href: '/logo-fz.jpg'
         },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },

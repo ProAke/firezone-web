@@ -59,9 +59,9 @@ export const SEED_SETTINGS: Record<string, string> = {
   lineUrl: 'https://line.me/ti/p/RBiGzfFotR',
   lineQrImage: 'https://fireszone.com/wp-content/uploads/2021/01/qrcode.png',
   facebookUrl: 'https://www.facebook.com/FIRESZONE/',
-  logoHeader: 'https://fireszone.com/wp-content/uploads/2021/01/logo-firesone-2.png',
-  logoSticky: 'https://fireszone.com/wp-content/uploads/2021/01/logosticky-fireszone-2.png',
-  logoFooter: 'https://fireszone.com/wp-content/uploads/2021/01/logofooter-firesone.png',
+  logoHeader: '/logosticky-fireszone-2.png',
+  logoSticky: '/logosticky-fireszone-2.png',
+  logoFooter: '/logofooter-firesone.png',
   aboutImage: 'https://fireszone.com/wp-content/uploads/2021/01/bg-homeaboutus.png',
   whyChooseImage: 'https://fireszone.com/wp-content/uploads/2021/01/bg-homefireszone3.png',
   aboutIntro:
