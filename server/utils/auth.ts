@@ -48,16 +48,23 @@ export function verifySessionToken(token: string | undefined, secret: string): {
 export function setAdminSessionCookie(event: H3Event, username: string) {
   const config = useRuntimeConfig(event)
   const token = createSessionToken(username, config.sessionSecret)
+  const isHttps = getRequestProtocol(event, { xForwardedProto: true }) === 'https'
   setCookie(event, COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: isHttps ? 'none' : 'lax',
+    secure: isHttps,
     path: '/',
     maxAge: 60 * 60 * 24 * 7
   })
 }
 
 export function clearAdminSessionCookie(event: H3Event) {
-  deleteCookie(event, COOKIE_NAME, { path: '/' })
+  const isHttps = getRequestProtocol(event, { xForwardedProto: true }) === 'https'
+  deleteCookie(event, COOKIE_NAME, {
+    path: '/',
+    sameSite: isHttps ? 'none' : 'lax',
+    secure: isHttps
+  })
 }
 
 export function getAdminUser(event: H3Event): { username: string } | null {
