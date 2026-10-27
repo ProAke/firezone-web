@@ -3,12 +3,14 @@
     <!-- Admin Sidebar -->
     <aside class="w-full lg:w-64 bg-firezone-navy text-gray-200 shrink-0 flex flex-col">
       <div class="p-5 border-b border-white/10 flex items-center justify-between">
-        <NuxtLink to="/admin" class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded bg-firezone-red text-white flex items-center justify-center font-extrabold text-sm">
-            FZ
-          </div>
+        <NuxtLink to="/admin" class="flex items-center gap-3">
+          <img
+            src="/logofooter-firesone.png"
+            alt="Firezone CMS"
+            class="h-9 w-auto object-contain shrink-0"
+          />
           <div>
-            <div class="font-bold text-white text-sm leading-tight">FIRESZONE CMS</div>
+            <div class="font-bold text-white text-sm leading-tight">FIREZONE CMS</div>
             <div class="text-[11px] text-gray-400">ระบบจัดการเว็บไซต์</div>
           </div>
         </NuxtLink>

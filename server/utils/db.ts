@@ -139,6 +139,20 @@ function seedIfEmpty(db: DatabaseSync) {
     insertSetting.run(k, v)
   }
 
+  // Upgrade legacy remote WordPress logo URLs (or previous default) to bundled local assets
+  db.prepare(`
+    UPDATE settings
+    SET value = '/logosticky-fireszone-2.png'
+    WHERE key IN ('logoHeader', 'logoSticky')
+      AND (value LIKE '%/wp-content/uploads/%logo%fires%one%' OR value = '/logo-fz.jpg')
+  `).run()
+  db.prepare(`
+    UPDATE settings
+    SET value = '/logofooter-firesone.png'
+    WHERE key = 'logoFooter'
+      AND value LIKE '%/wp-content/uploads/%logofooter%'
+  `).run()
+
   // Seed categories & products if empty
   const catCount = db.prepare('SELECT COUNT(*) as c FROM categories').get() as { c: number }
   if (catCount.c === 0) {

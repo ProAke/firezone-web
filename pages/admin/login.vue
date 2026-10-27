@@ -2,10 +2,12 @@
   <div class="min-h-screen bg-firezone-navy flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
       <div class="bg-firezone-red p-6 text-white text-center">
-        <div class="w-12 h-12 rounded-full bg-white/20 mx-auto flex items-center justify-center font-extrabold text-xl mb-2">
-          FZ
-        </div>
-        <h1 class="text-xl font-extrabold">FIRESZONE CMS</h1>
+        <img
+          src="/logofooter-firesone.png"
+          alt="Firezone"
+          class="h-14 w-auto mx-auto object-contain mb-2"
+        />
+        <h1 class="text-xl font-extrabold">FIREZONE CMS</h1>
         <p class="text-xs text-red-100 mt-1">ระบบจัดการเนื้อหาและสินค้าเว็บไซต์</p>
       </div>
 

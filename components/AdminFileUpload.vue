@@ -28,7 +28,8 @@
       <img
         :src="modelValue"
         alt="Preview"
-        class="h-24 w-auto rounded border border-gray-200 object-contain bg-gray-50 p-1"
+        class="h-24 w-auto rounded border border-gray-200 object-contain p-2"
+        :class="darkPreview ? 'bg-firezone-navy' : 'bg-gray-50'"
       />
     </div>
   </div>
@@ -43,6 +44,7 @@ defineProps<{
   placeholder?: string
   accept?: string
   showPreview?: boolean
+  darkPreview?: boolean
 }>()
 
 const emit = defineEmits<{

@@ -63,8 +63,9 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <AdminFileUpload v-model="form.logoHeader" label="โลโก้ส่วนหัวเว็บไซต์ (Header Logo)" accept="image/*" :show-preview="true" />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <AdminFileUpload v-model="form.logoHeader" label="โลโก้เมนูด้านบน (Top Menu Logo)" accept="image/*" :show-preview="true" />
+        <AdminFileUpload v-model="form.logoFooter" label="โลโก้ส่วนท้ายเว็บ (Footer Logo)" accept="image/*" :show-preview="true" :dark-preview="true" />
         <AdminFileUpload v-model="form.lineQrImage" label="รูป LINE QR Code" accept="image/*" :show-preview="true" />
       </div>
 
@@ -140,7 +141,8 @@ const form = reactive<Record<string, string>>({
   email: settings.value.email || '',
   lineId: settings.value.lineId || '',
   lineUrl: settings.value.lineUrl || '',
-  logoHeader: settings.value.logoHeader || '',
+  logoHeader: settings.value.logoHeader || '/logosticky-fireszone-2.png',
+  logoFooter: settings.value.logoFooter || '/logofooter-firesone.png',
   lineQrImage: settings.value.lineQrImage || '',
   aboutIntro: settings.value.aboutIntro || '',
   statFireAlarmCount: settings.value.statFireAlarmCount || '856',
