@@ -10,6 +10,7 @@ export interface SeedCategory {
 export interface SeedProduct {
   id: number
   slug: string
+  legacySlug?: string
   name: string
   brand: string
   excerpt: string
@@ -74,6 +75,44 @@ export const SEED_SETTINGS: Record<string, string> = {
   statMatvLabel: 'โปรเจค ระบบเอ็มเอทีวี',
   googleMapsEmbed:
     'https://maps.google.com/maps?q=678/6%20%E0%B8%8B%E0%B8%AD%E0%B8%A2%E0%B8%9E%E0%B8%AB%E0%B8%A5%E0%B9%82%E0%B8%A2%E0%B8%98%E0%B8%B4%E0%B8%99%2032%20%E0%B9%81%E0%B8%82%E0%B8%A7%E0%B8%87%E0%B8%88%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%A1%20%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%88%E0%B8%95%E0%B8%B8%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%20%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%9E&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  // SEO & ASEO (AI Search Optimization)
+  siteUrl: 'https://fireszone.com',
+  seoDefaultTitle: 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด | ระบบสัญญาณเตือนอัคคีภัย Fire Alarm ครบวงจร',
+  seoDefaultDescription:
+    'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด ตัวแทนจำหน่าย ออกแบบ ติดตั้ง ตรวจเช็ค และบำรุงรักษาระบบสัญญาณเตือนอัคคีภัย (Fire Alarm System) มาตรฐาน UL/FM กล้องวงจรปิด CCTV ระบบทีวีดิจิตอล MATV และระบบแจ้งเตือนไฟไหม้ผ่าน LINE & Email',
+  seoKeywords:
+    'Fire Alarm, ระบบสัญญาณเตือนอัคคีภัย, ตู้ควบคุมไฟอราม, Smoke Detector, Heat Detector, Notifier, Nohmi, System Sensor, ติดตั้งไฟอราม, ตรวจเช็คระบบไฟอราม, แจ้งเตือนไฟไหม้ผ่าน Line',
+  seoOgImage: '/logo-fz.jpg',
+  googleSiteVerification: '',
+  // Analytics & Tag Injection
+  gaMeasurementId: '',
+  gtmContainerId: '',
+  metaPixelId: '',
+  lineTagId: '',
+  customHeadScripts: '',
+  customBodyStartScripts: '',
+  customBodyEndScripts: '',
+  // PDPA Compliance
+  pdpaEnabled: '1',
+  pdpaBannerText:
+    'เว็บไซต์นี้ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งาน วิเคราะห์สถิติการเข้าชม และปรับปรุงการให้บริการตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)',
+  pdpaDpoEmail: 'fire_zone@hotmail.com',
+  pdpaRetentionDays: '365',
+  // LINE Login & LINE OA / Email Notification Settings
+  lineOaBasicId: '',
+  lineLoginChannelId: '',
+  lineLoginChannelSecret: '',
+  lineChannelAccessToken: '',
+  lineNotifyTargetId: '',
+  smtpHost: '',
+  smtpPort: '587',
+  smtpSecure: '0',
+  smtpUser: '',
+  smtpPass: '',
+  smtpFrom: '',
+  notifyEmailTo: 'fire_zone@hotmail.com',
+  turnstileSiteKey: '',
+  turnstileSecretKey: '',
   heroSlidesJson: JSON.stringify([
     {
       id: 1,
@@ -246,7 +285,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     id: 2115,
-    slug: 'fapn202-r-5l',
+    slug: 'nohmi-fapn202-r-10l',
+    legacySlug: 'fapn202-r-5l',
     name: 'FAPN202-R-10L',
     brand: 'NOHMI',
     excerpt:
@@ -266,7 +306,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     id: 2118,
-    slug: '2118',
+    slug: 'nohmi-fapn202-r-5l',
+    legacySlug: '2118',
     name: 'FAPN202-R-5L',
     brand: 'NOHMI',
     excerpt:
@@ -413,7 +454,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     id: 2138,
-    slug: '5600',
+    slug: 'system-sensor-5600',
+    legacySlug: '5600',
     name: '5600',
     brand: 'System Sensor',
     excerpt:
@@ -566,7 +608,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     id: 2281,
-    slug: '2151',
+    slug: 'system-sensor-2151',
+    legacySlug: '2151',
     name: '2151',
     brand: 'System Sensor',
     excerpt:
@@ -584,7 +627,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
   },
   {
     id: 2284,
-    slug: '5151',
+    slug: 'system-sensor-5151',
+    legacySlug: '5151',
     name: '5151',
     brand: 'System Sensor',
     excerpt:

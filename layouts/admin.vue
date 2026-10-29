@@ -102,6 +102,8 @@
 
 <script setup lang="ts">
 import {
+  BarChart3,
+  BellRing,
   Briefcase,
   ExternalLink,
   FolderTree,
@@ -112,6 +114,7 @@ import {
   Newspaper,
   Package,
   Settings,
+  ShieldCheck,
   Wrench
 } from 'lucide-vue-next'
 
@@ -126,12 +129,22 @@ const navItems = [
   { to: '/admin/services', label: 'บริการ & อุปกรณ์', icon: Wrench },
   { to: '/admin/portfolio', label: 'ผลงานการติดตั้ง', icon: Briefcase },
   { to: '/admin/news', label: 'ข่าวสาร & บทความ', icon: Newspaper },
-  { to: '/admin/inquiries', label: 'ข้อความติดต่อลูกค้า', icon: MessageSquare },
-  { to: '/admin/settings', label: 'ตั้งค่าเว็บไซต์', icon: Settings }
+  { to: '/admin/inquiries', label: 'ข้อความ & ไฟล์แนบ', icon: MessageSquare },
+  { to: '/admin/settings?tab=notifications', label: 'แจ้งเตือน LINE OA & Email', icon: BellRing },
+  { to: '/admin/settings?tab=analytics_seo', label: 'Analytics, Tag & SEO', icon: BarChart3 },
+  { to: '/admin/settings?tab=pdpa_security', label: 'PDPA & ความปลอดภัย', icon: ShieldCheck },
+  { to: '/admin/settings', label: 'ข้อมูลบริษัท & โลโก้', icon: Settings }
 ]
 
 function isActive(target: string) {
   if (target === '/admin') return route.path === '/admin'
+  if (target.includes('?tab=')) {
+    const tabVal = target.split('?tab=')[1]
+    return route.path === '/admin/settings' && route.query.tab === tabVal
+  }
+  if (target === '/admin/settings') {
+    return route.path === '/admin/settings' && (!route.query.tab || route.query.tab === 'company')
+  }
   return route.path.startsWith(target)
 }
 

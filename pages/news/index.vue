@@ -50,7 +50,10 @@ const { data } = await useAsyncData('news-list-page', () =>
   $fetch('/api/posts', { query: { type: 'news', perPage: 20 } })
 )
 
-useHead({
-  title: 'ข่าวสารและเกร็ดความรู้ระบบอัคคีภัย | FIRESZONE'
+usePageSeo({
+  title: 'ข่าวสารและเกร็ดความรู้ระบบอัคคีภัย Fire Alarm | FIRESZONE',
+  description:
+    'รวมบทความ เกร็ดความรู้ การดูแลรักษาอุปกรณ์ตรวจจับควัน Smoke Detector และมาตรฐานความปลอดภัยระบบแจ้งเหตุเพลิงไหม้',
+  path: '/news'
 })
 </script>

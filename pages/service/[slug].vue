@@ -77,21 +77,52 @@
 
 <script setup lang="ts">
 const route = useRoute()
+const { settings } = useSiteData()
 const slug = computed(() => String(route.params.slug || ''))
 
 const { data, error } = await useAsyncData(`service-${slug.value}`, () =>
   $fetch(`/api/services/${encodeURIComponent(slug.value)}`)
 )
 
-if (error.value) {
+if (error.value || !data.value?.service) {
   throw createError({ statusCode: 404, statusMessage: 'ไม่พบบริการที่ต้องการ' })
 }
 
-useHead({
+// Canonical 301 redirect when accessed via legacy Thai slug (e.g. /service/ระบบไฟอราม -> /service/fire-alarm-devices)
+if (data.value.service.slug && decodeURIComponent(slug.value) !== data.value.service.slug) {
+  await navigateTo(`/service/${encodeURIComponent(data.value.service.slug)}`, { redirectCode: 301 })
+}
+
+usePageSeo({
   title: computed(() =>
     data.value?.service?.title
       ? `${data.value.service.title} | บริการ FIRESZONE`
       : 'บริการของเรา | FIRESZONE'
-  )
+  ),
+  description: computed(
+    () => data.value?.service?.excerpt || data.value?.service?.content?.slice(0, 180) || ''
+  ),
+  path: computed(() => `/service/${encodeURIComponent(data.value?.service?.slug || slug.value)}`),
+  image: computed(() => data.value?.service?.image || ''),
+  jsonLd: computed(() => {
+    const s = data.value?.service
+    if (!s) return null
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: s.title,
+      description: s.excerpt || s.content,
+      image: s.image || undefined,
+      provider: {
+        '@type': 'LocalBusiness',
+        name: settings.value.companyName || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+        telephone: settings.value.phone1 || '086-363-5495'
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Thailand'
+      }
+    }
+  })
 })
 </script>

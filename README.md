@@ -45,8 +45,10 @@ npm run dev
 3. **จัดการบริการ (`/admin/services`)**: แก้ไขข้อมูลหน้าอุปกรณ์และงานบริการ
 4. **จัดการผลงาน (`/admin/portfolio`)**: เพิ่มโครงการใหม่พร้อมอัปโหลดอัลบั้มรูปภาพหลายรูป
 5. **จัดการข่าวสาร (`/admin/news`)**: เขียนและแก้ไขบทความความรู้
-6. **กล่องข้อความลูกค้า (`/admin/inquiries`)**: ดูรายการขอใบเสนอราคาจากลูกค้าและปรับสถานะการติดต่อกลับ
-7. **ตั้งค่าเว็บไซต์ (`/admin/settings`)**: แก้ไขเบอร์โทร ที่อยู่ โลโก้ LINE QR Code ข้อมูลเกี่ยวกับบริษัท และเปลี่ยนรหัสผ่านผู้ดูแล
+6. **กล่องข้อความลูกค้า & ไฟล์แนบ (`/admin/inquiries`)**: บันทึกลงฐานข้อมูลอัตโนมัติ (Database-First) แสดงป้ายยืนยันตัวตน LINE (`✓ LINE OAuth Verified` / `LINE Connected`), สถานะความยินยอม PDPA, สถานะการส่งแจ้งเตือน Email/LINE OA และเปิดดู/ดาวน์โหลดไฟล์แนบ PDF/รูปภาพจากลูกค้า (สูงสุด 5 ไฟล์)
+7. **แจ้งเตือน LINE OA & Email (`/admin/settings?tab=notifications`)**: ตั้งค่า SMTP Email, LINE Messaging API (Flex Message แจ้งเตือนเข้า LINE OA ทันที), LINE Login OAuth 2.0 สำหรับปุ่ม **Connect LINE** บนฟอร์มติดต่อเรา และปุ่มทดสอบส่งแจ้งเตือนทันที
+8. **Google Analytics, Custom Tags & SEO/ASEO (`/admin/settings?tab=analytics_seo`)**: ตั้งค่า GA4 (`G-XXXX`), Google Tag Manager (`GTM-XXXX`), Meta Pixel, LINE Tag, Google Search Console, ฝังโค้ดสคริปต์เพิ่มเติมใน `<head>` / `<body>` และรองรับ SEO + AI Search Optimization (`/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/llms-full.txt`, Schema.org JSON-LD)
+9. **PDPA & ความปลอดภัย (`/admin/settings?tab=pdpa_security`)**: แถบขอความยินยอมคุกกี้ PDPA (ควบคุมการยิงสคริปต์วิเคราะห์/การตลาด), หน้านโยบาย `/privacy-policy`, ระบบป้องกันสแปมหลายชั้น (Honeypot + HMAC Challenge + Time-Trap + Rate Limit + ตรวจ Magic Bytes ของไฟล์อัปโหลด) และเปลี่ยนรหัสผ่าน Admin
 
 ---
 

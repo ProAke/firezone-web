@@ -20,16 +20,16 @@ export default defineNuxtRouteMiddleware((to) => {
     return navigateTo('/services', { redirectCode: 301 })
   }
 
-  // Legacy WooCommerce category URLs: /product-category/control-panels/notifier
+  // Legacy WooCommerce category URLs -> SEO-friendly /shop/category/<slug>
   if (decodedPath.startsWith('/product-category/')) {
     const segments = decodedPath.split('/').filter(Boolean)
     const lastSlug = segments[segments.length - 1]
     if (lastSlug) {
-      return navigateTo(`/shop?category=${encodeURIComponent(lastSlug)}`, { redirectCode: 301 })
+      return navigateTo(`/shop/category/${encodeURIComponent(lastSlug)}`, { redirectCode: 301 })
     }
   }
 
-  // Legacy WordPress post permalink ending in .htm
+  // Legacy WordPress post permalink ending in .htm -> clean friendly slug
   if (decodedPath.endsWith('.htm')) {
     const cleanSlug = decodedPath.replace(/^\//, '').replace(/\.htm$/i, '')
     if (cleanSlug) {

@@ -9,6 +9,7 @@ export default defineEventHandler((event) => {
       SELECT
         id,
         slug,
+        legacy_slug as legacySlug,
         name,
         brand,
         excerpt,
@@ -17,9 +18,10 @@ export default defineEventHandler((event) => {
         datasheet_url as datasheetUrl,
         is_active as isActive
       FROM products
-      WHERE (LOWER(slug) = LOWER(?) OR CAST(id AS TEXT) = ?) AND is_active = 1
+      WHERE (LOWER(slug) = LOWER(?) OR LOWER(legacy_slug) = LOWER(?) OR CAST(id AS TEXT) = ?)
+        AND is_active = 1
     `)
-    .get(rawSlug, rawSlug) as Record<string, any> | undefined
+    .get(rawSlug, rawSlug, rawSlug) as Record<string, any> | undefined
 
   if (!product) {
     throw createError({

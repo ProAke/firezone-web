@@ -119,7 +119,7 @@
                 </NuxtLink>
                 <template v-for="cat in categoryTree" :key="cat.id">
                   <NuxtLink
-                    :to="`/shop?category=${encodeURIComponent(cat.slug)}`"
+                    :to="`/shop/category/${encodeURIComponent(cat.slug)}`"
                     class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-firezone-red"
                   >
                     <span class="font-medium">{{ cat.name }}</span>
@@ -129,7 +129,7 @@
                     <NuxtLink
                       v-for="sub in cat.children"
                       :key="sub.id"
-                      :to="`/shop?category=${encodeURIComponent(sub.slug)}`"
+                      :to="`/shop/category/${encodeURIComponent(sub.slug)}`"
                       class="flex items-center justify-between pl-8 pr-4 py-1.5 text-xs text-gray-600 hover:text-firezone-red"
                     >
                       <span>— {{ sub.name }}</span>
@@ -296,7 +296,7 @@
           <ul class="space-y-2 text-sm">
             <li v-for="cat in categoryTree.slice(0, 6)" :key="cat.id">
               <NuxtLink
-                :to="`/shop?category=${encodeURIComponent(cat.slug)}`"
+                :to="`/shop/category/${encodeURIComponent(cat.slug)}`"
                 class="text-gray-400 hover:text-white transition-colors flex items-center justify-between"
               >
                 <span>› {{ cat.name }}</span>
@@ -319,7 +319,8 @@
             <li><NuxtLink to="/services" class="text-gray-400 hover:text-white">› บริการติดตั้งและตรวจสอบ</NuxtLink></li>
             <li><NuxtLink to="/portfolio" class="text-gray-400 hover:text-white">› ผลงานโครงการที่ผ่านมา</NuxtLink></li>
             <li><NuxtLink to="/news" class="text-gray-400 hover:text-white">› ข่าวสารและบทความ</NuxtLink></li>
-            <li><NuxtLink to="/contact" class="text-gray-400 hover:text-white">› ติดต่อเรา / แผนที่บริษัท</NuxtLink></li>
+            <li><NuxtLink to="/contact" class="text-gray-400 hover:text-white">› ติดต่อเรา / ขอใบเสนอราคา</NuxtLink></li>
+            <li><NuxtLink to="/privacy-policy" class="text-gray-400 hover:text-white">› นโยบายความเป็นส่วนตัว (PDPA)</NuxtLink></li>
           </ul>
         </div>
 
@@ -360,8 +361,16 @@
       </div>
 
       <div class="container-classic pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-        <p>© {{ new Date().getFullYear() }} {{ settings.companyNameTh || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด' }}. สงวนลิขสิทธิ์.</p>
-        <p>{{ settings.companyNameEn || 'FIRESZONE & MANUFACTURING CO., LTD.' }}</p>
+        <p>© {{ new Date().getFullYear() }} {{ settings.companyName || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด' }}. สงวนลิขสิทธิ์.</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <NuxtLink to="/privacy-policy" class="hover:text-gray-300">นโยบาย PDPA</NuxtLink>
+          <span>•</span>
+          <button type="button" class="hover:text-gray-300" @click="openPreferencesModal">ตั้งค่าคุกกี้</button>
+          <span>•</span>
+          <a href="/sitemap.xml" target="_blank" class="hover:text-gray-300">Sitemap</a>
+          <span>•</span>
+          <a href="/llms.txt" target="_blank" class="hover:text-gray-300" title="AI Search Index">AI / ASEO</a>
+        </div>
       </div>
     </footer>
 
@@ -385,6 +394,10 @@
         <PhoneCall class="w-5 h-5" />
       </a>
     </div>
+
+    <!-- Analytics/Tag Injector (respecting PDPA) & Cookie Consent Banner -->
+    <TrackingScripts />
+    <PdpaCookieBanner />
   </div>
 </template>
 
@@ -404,6 +417,7 @@ import {
 const route = useRoute()
 const router = useRouter()
 const { settings, categoryTree } = useSiteData()
+const { openPreferencesModal } = usePdpaConsent()
 
 const mobileOpen = ref(false)
 const searchOpen = ref(false)

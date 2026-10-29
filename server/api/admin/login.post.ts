@@ -1,7 +1,10 @@
 import { setAdminSessionCookie, verifyPassword } from '../../utils/auth'
 import { getDb } from '../../utils/db'
+import { enforceRateLimit } from '../../utils/security'
 
 export default defineEventHandler(async (event) => {
+  enforceRateLimit(event, 'admin-login', 8, 1000 * 60 * 15)
+
   const body = await readBody(event)
   const username = String(body?.username || '').trim()
   const password = String(body?.password || '')

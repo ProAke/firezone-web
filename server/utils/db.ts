@@ -10,6 +10,21 @@ import {
 } from '../data/seed-data'
 import { hashPassword } from './auth'
 
+// Secret keys that MUST NEVER be exposed in public /api/site or /api/home
+export const SECRET_SETTING_KEYS = new Set([
+  'lineLoginChannelSecret',
+  'lineChannelAccessToken',
+  'lineNotifyTargetId',
+  'smtpHost',
+  'smtpPort',
+  'smtpSecure',
+  'smtpUser',
+  'smtpPass',
+  'smtpFrom',
+  'notifyEmailTo',
+  'turnstileSecretKey'
+])
+
 let dbInstance: DatabaseSync | null = null
 
 export function getDb(): DatabaseSync {
@@ -24,6 +39,7 @@ export function getDb(): DatabaseSync {
   db.exec('PRAGMA foreign_keys = ON;')
 
   initSchema(db)
+  runMigrations(db)
   seedIfEmpty(db)
 
   dbInstance = db
@@ -56,6 +72,7 @@ function initSchema(db: DatabaseSync) {
     CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       slug TEXT UNIQUE NOT NULL,
+      legacy_slug TEXT DEFAULT '',
       name TEXT NOT NULL,
       brand TEXT DEFAULT '',
       excerpt TEXT DEFAULT '',
@@ -110,11 +127,42 @@ function initSchema(db: DatabaseSync) {
       subject TEXT DEFAULT '',
       product_name TEXT DEFAULT '',
       message TEXT NOT NULL,
+      line_id TEXT DEFAULT '',
+      line_user_id TEXT DEFAULT '',
+      line_display_name TEXT DEFAULT '',
+      line_picture_url TEXT DEFAULT '',
+      line_verified INTEGER DEFAULT 0,
+      attachments_json TEXT DEFAULT '[]',
+      pdpa_consent INTEGER DEFAULT 1,
+      ip_address TEXT DEFAULT '',
+      notify_email_status TEXT DEFAULT '',
+      notify_line_status TEXT DEFAULT '',
       status TEXT DEFAULT 'new',
       admin_note TEXT DEFAULT '',
       created_at TEXT NOT NULL
     );
   `)
+}
+
+function ensureColumn(db: DatabaseSync, table: string, column: string, definition: string) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>
+  if (!cols.some((c) => c.name === column)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`)
+  }
+}
+
+function runMigrations(db: DatabaseSync) {
+  ensureColumn(db, 'products', 'legacy_slug', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'line_id', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'line_user_id', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'line_display_name', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'line_picture_url', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'line_verified', 'INTEGER DEFAULT 0')
+  ensureColumn(db, 'inquiries', 'attachments_json', "TEXT DEFAULT '[]'")
+  ensureColumn(db, 'inquiries', 'pdpa_consent', 'INTEGER DEFAULT 1')
+  ensureColumn(db, 'inquiries', 'ip_address', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'notify_email_status', "TEXT DEFAULT ''")
+  ensureColumn(db, 'inquiries', 'notify_line_status', "TEXT DEFAULT ''")
 }
 
 function seedIfEmpty(db: DatabaseSync) {
@@ -167,8 +215,8 @@ function seedIfEmpty(db: DatabaseSync) {
   const prodCount = db.prepare('SELECT COUNT(*) as c FROM products').get() as { c: number }
   if (prodCount.c === 0) {
     const insertProd = db.prepare(`
-      INSERT INTO products (id, slug, name, brand, excerpt, description, image, datasheet_url, is_active, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO products (id, slug, legacy_slug, name, brand, excerpt, description, image, datasheet_url, is_active, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
     const insertProdCat = db.prepare(
       'INSERT OR IGNORE INTO product_categories (product_id, category_id) VALUES (?, ?)'
@@ -177,6 +225,7 @@ function seedIfEmpty(db: DatabaseSync) {
       insertProd.run(
         p.id,
         p.slug,
+        p.legacySlug || '',
         p.name,
         p.brand,
         p.excerpt,
@@ -189,6 +238,16 @@ function seedIfEmpty(db: DatabaseSync) {
       )
       for (const cid of p.categoryIds) {
         insertProdCat.run(p.id, cid)
+      }
+    }
+  } else {
+    // Upgrade non-URL-friendly numeric slugs on pre-existing DBs while preserving legacy_slug
+    const upgradeSlug = db.prepare(
+      'UPDATE products SET slug = ?, legacy_slug = ? WHERE id = ? AND slug = ?'
+    )
+    for (const p of SEED_PRODUCTS) {
+      if (p.legacySlug) {
+        upgradeSlug.run(p.slug, p.legacySlug, p.id, p.legacySlug)
       }
     }
   }
@@ -246,12 +305,26 @@ export function getAllSettingsMap(db: DatabaseSync): Record<string, string> {
   return map
 }
 
+export function getPublicSettingsMap(db: DatabaseSync): Record<string, string> {
+  const all = getAllSettingsMap(db)
+  const pub: Record<string, string> = {}
+  for (const [k, v] of Object.entries(all)) {
+    if (!SECRET_SETTING_KEYS.has(k)) {
+      pub[k] = v
+    }
+  }
+  // Tell frontend booleans about configured integrations without leaking secrets
+  pub.lineOauthConfigured = Boolean(all.lineLoginChannelId && all.lineLoginChannelSecret) ? '1' : '0'
+  pub.linePushConfigured = Boolean(all.lineChannelAccessToken && all.lineNotifyTargetId) ? '1' : '0'
+  return pub
+}
+
 export function slugifyText(input: string): string {
   const cleaned = input
     .toString()
     .trim()
     .toLowerCase()
-    .replace(/\s+/g, '-')
+    .replace(/[\/_,\s]+/g, '-')
     .replace(/[^\u0E00-\u0E7Fa-z0-9\-]/g, '')
     .replace(/\-+/g, '-')
     .replace(/^-|-$/g, '')
