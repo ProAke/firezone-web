@@ -45,15 +45,38 @@ function sanitizeAndTransformHtml(input: string): string {
     return vid ? pushYtToken(vid) : full
   })
 
-  // 4. Strip dangerous active tags & inline JS handlers
+  // 4. Strip dangerous active tags (including svg/math/applet/template/form controls), inline JS handlers & entity-obfuscated schemes
   working = working
-    .replace(/<(script|iframe|object|embed|form|meta|link|style|base)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
-    .replace(/<(script|iframe|object|embed|form|meta|link|style|base)\b[^>]*\/?>/gi, '')
-    .replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '')
-    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, '')
-    .replace(/(href|src)\s*=\s*(['"])\s*(javascript:|vbscript:|data:text\/html)[\s\S]*?\2/gi, '$1="#"')
+    .replace(
+      /<(script|iframe|object|embed|applet|svg|math|form|meta|link|style|base|template|textarea|button|input|select)\b[^>]*>[\s\S]*?<\/\1>/gi,
+      ''
+    )
+    .replace(
+      /<(script|iframe|object|embed|applet|svg|math|form|meta|link|style|base|template|textarea|button|input|select)\b[^>]*\/?>/gi,
+      ''
+    )
+    .replace(/\s(?:on[a-z]+|srcdoc|formaction)\s*=\s*(['"])[\s\S]*?\1/gi, '')
+    .replace(/\s(?:on[a-z]+|srcdoc|formaction)\s*=\s*[^\s>]+/gi, '')
+    .replace(/\b(href|src|xlink:href)\s*=\s*(['"])([\s\S]*?)\2/gi, (full, attr, q, val) => {
+      const normalized = String(val)
+        .replace(/&#x([0-9a-f]+);?/gi, (_m, hex) => String.fromCodePoint(parseInt(hex, 16) || 0))
+        .replace(/&#([0-9]+);?/g, (_m, dec) => String.fromCodePoint(parseInt(dec, 10) || 0))
+        .replace(/&colon;/gi, ':')
+        .replace(/&tab;|&newline;/gi, '')
+        .replace(/[\u0000-\u0020]+/g, '')
+        .toLowerCase()
+      if (
+        normalized.startsWith('javascript:') ||
+        normalized.startsWith('vbscript:') ||
+        normalized.startsWith('data:text/') ||
+        normalized.startsWith('data:application/')
+      ) {
+        return `${attr}=${q}#${q}`
+      }
+      return full
+    })
     .replace(/style\s*=\s*(['"])([\s\S]*?)\1/gi, (_m, q, css) => {
-      if (/(expression\s*\(|javascript:|vbscript:|-moz-binding)/i.test(css)) {
+      if (/(expression\s*\(|javascript:|vbscript:|-moz-binding|url\s*\(\s*['"]?\s*javascript:)/i.test(css)) {
         return ''
       }
       return `style=${q}${css}${q}`

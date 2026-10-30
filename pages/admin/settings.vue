@@ -521,8 +521,8 @@
         <input v-model="pwForm.currentPassword" type="password" required class="w-full px-3 py-2 border rounded" />
       </div>
       <div>
-        <label class="block font-bold mb-1">รหัสผ่านใหม่ (อย่างน้อย 6 ตัวอักษร) *</label>
-        <input v-model="pwForm.newPassword" type="password" required minlength="6" class="w-full px-3 py-2 border rounded" />
+        <label class="block font-bold mb-1">รหัสผ่านใหม่ (อย่างน้อย 8 ตัวอักษร) *</label>
+        <input v-model="pwForm.newPassword" type="password" required minlength="8" class="w-full px-3 py-2 border rounded" />
       </div>
 
       <button type="submit" class="px-5 py-2.5 rounded bg-firezone-navy hover:bg-slate-800 text-white font-semibold">

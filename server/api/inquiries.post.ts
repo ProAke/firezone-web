@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { randomBytes } from 'node:crypto'
 import { join } from 'node:path'
+import { getEffectiveSessionSecret } from '../utils/auth'
 import { getAllSettingsMap, getDb } from '../utils/db'
 import { getLineProfileCookie } from '../utils/line-session'
 import {
@@ -12,11 +13,14 @@ import {
   enforceRateLimit,
   getClientIp,
   MAX_INQUIRY_FILES,
+  signInquiryAttachmentUrl,
   validateInquiryFile,
+  verifySameOriginRequest,
   verifySpamChallenge
 } from '../utils/security'
 
 export default defineEventHandler(async (event) => {
+  verifySameOriginRequest(event)
   // 1. IP Rate Limit: max 6 submissions per 10 minutes per IP
   enforceRateLimit(event, 'inquiry-submit', 6, 1000 * 60 * 10)
 
@@ -54,11 +58,11 @@ export default defineEventHandler(async (event) => {
   }
 
   // 3. Anti-Spam Challenge Verification
-  const config = useRuntimeConfig(event)
+  const sessionSecret = getEffectiveSessionSecret(event)
   const challengeResult = verifySpamChallenge(
     fields.challengeToken || '',
     fields.challengeAnswer || '',
-    config.sessionSecret
+    sessionSecret
   )
   if (!challengeResult.valid) {
     throw createError({
@@ -228,7 +232,10 @@ export default defineEventHandler(async (event) => {
     lineUserId,
     lineDisplayName,
     lineVerified,
-    attachments: savedAttachments,
+    attachments: savedAttachments.map((a) => ({
+      ...a,
+      url: signInquiryAttachmentUrl(a.url, sessionSecret)
+    })),
     createdAt: now
   }
 

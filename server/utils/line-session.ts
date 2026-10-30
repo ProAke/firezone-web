@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 import type { H3Event } from 'h3'
+import { getEffectiveSessionSecret } from './auth'
 
 const LINE_COOKIE = 'fz_line_profile'
 const TTL_MS = 1000 * 60 * 60 * 24 * 3 // 3 days
@@ -13,10 +14,10 @@ export interface VerifiedLineSession {
 }
 
 export function setLineProfileCookie(event: H3Event, data: VerifiedLineSession) {
-  const config = useRuntimeConfig(event)
+  const secret = getEffectiveSessionSecret(event)
   const exp = Date.now() + TTL_MS
   const payload = Buffer.from(JSON.stringify({ ...data, exp })).toString('base64url')
-  const sig = createHmac('sha256', config.sessionSecret).update(payload).digest('base64url')
+  const sig = createHmac('sha256', secret).update(payload).digest('base64url')
   const isHttps = getRequestProtocol(event, { xForwardedProto: true }) === 'https'
 
   setCookie(event, LINE_COOKIE, `${payload}.${sig}`, {
@@ -29,13 +30,13 @@ export function setLineProfileCookie(event: H3Event, data: VerifiedLineSession) 
 }
 
 export function getLineProfileCookie(event: H3Event): VerifiedLineSession | null {
-  const config = useRuntimeConfig(event)
+  const secret = getEffectiveSessionSecret(event)
   const raw = getCookie(event, LINE_COOKIE)
   if (!raw || !raw.includes('.')) return null
   const [payload, sig] = raw.split('.')
   if (!payload || !sig) return null
 
-  const expected = createHmac('sha256', config.sessionSecret).update(payload).digest('base64url')
+  const expected = createHmac('sha256', secret).update(payload).digest('base64url')
   const a = Buffer.from(sig)
   const b = Buffer.from(expected)
   if (a.length !== b.length || !timingSafeEqual(a, b)) return null

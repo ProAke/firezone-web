@@ -275,14 +275,167 @@ export function validateInquiryFile(
 }
 
 // ---------------------------------------------------------------------------
-// 5. HTML Sanitizer for Content Rendering (strips XSS vectors)
+// 5. CSRF Origin / Referer Verification for State-Changing Requests
 // ---------------------------------------------------------------------------
+export function verifySameOriginRequest(event: H3Event) {
+  const method = (event.method || 'GET').toUpperCase()
+  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return
+
+  const reqHost = (getRequestHost(event, { xForwardedHost: true }) || '').toLowerCase()
+  if (!reqHost) return
+
+  const origin = getHeader(event, 'origin')
+  if (origin) {
+    try {
+      const originHost = new URL(origin).host.toLowerCase()
+      if (originHost !== reqHost) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'ปฏิเสธคำขอข้ามโดเมนเพื่อความปลอดภัย (CSRF Origin Mismatch)'
+        })
+      }
+      return
+    } catch (err: any) {
+      if (err?.statusCode === 403) throw err
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'รูปแบบ Origin ไม่ถูกต้อง'
+      })
+    }
+  }
+
+  const referer = getHeader(event, 'referer')
+  if (referer) {
+    try {
+      const refHost = new URL(referer).host.toLowerCase()
+      if (refHost !== reqHost) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'ปฏิเสธคำขอข้ามโดเมนเพื่อความปลอดภัย (CSRF Referer Mismatch)'
+        })
+      }
+      return
+    } catch (err: any) {
+      if (err?.statusCode === 403) throw err
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'รูปแบบ Referer ไม่ถูกต้อง'
+      })
+    }
+  }
+
+  const secFetchSite = (getHeader(event, 'sec-fetch-site') || '').toLowerCase()
+  if (secFetchSite === 'cross-site') {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'ปฏิเสธคำขอ Cross-Site ที่ไม่ระบุ Origin'
+    })
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 6. SSRF Guard for Outbound Media Backup URLs
+// ---------------------------------------------------------------------------
+export function isSafeExternalHttpUrl(rawUrl: string): boolean {
+  try {
+    const u = new URL(rawUrl)
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return false
+    const host = u.hostname.toLowerCase().replace(/^\[|\]$/g, '')
+    if (
+      host === 'localhost' ||
+      host === '0.0.0.0' ||
+      host === '::1' ||
+      host.endsWith('.local') ||
+      host.endsWith('.internal') ||
+      /^127\./.test(host) ||
+      /^10\./.test(host) ||
+      /^192\.168\./.test(host) ||
+      /^169\.254\./.test(host) ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(host) ||
+      /^(fc|fd|fe80):/i.test(host)
+    ) {
+      return false
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 7. Signed Access Tokens for Private Customer Inquiry Attachments (PDPA)
+// ---------------------------------------------------------------------------
+const INQUIRY_FILE_SIGN_TTL_MS = 1000 * 60 * 60 * 24 * 30 // 30 days for staff Email/LINE links
+
+export function signInquiryAttachmentUrl(urlPath: string, secret: string): string {
+  const cleanRel = urlPath.replace(/^\/uploads\//, '')
+  const exp = Date.now() + INQUIRY_FILE_SIGN_TTL_MS
+  const sig = createHmac('sha256', secret)
+    .update(`inq-file:${cleanRel}:${exp}`)
+    .digest('base64url')
+    .slice(0, 24)
+  const sep = urlPath.includes('?') ? '&' : '?'
+  return `${urlPath}${sep}exp=${exp}&sig=${sig}`
+}
+
+export function verifyInquiryAttachmentSignature(
+  cleanRelPath: string,
+  expRaw: string | undefined,
+  sigRaw: string | undefined,
+  secret: string
+): boolean {
+  const exp = Number(expRaw || 0)
+  if (!exp || !sigRaw || Date.now() > exp) return false
+  const expected = createHmac('sha256', secret)
+    .update(`inq-file:${cleanRelPath}:${exp}`)
+    .digest('base64url')
+    .slice(0, 24)
+  const a = Buffer.from(sigRaw)
+  const b = Buffer.from(expected)
+  return a.length === b.length && timingSafeEqual(a, b)
+}
+
+// ---------------------------------------------------------------------------
+// 8. HTML Sanitizer for Content Rendering (blocks entity/SVG/MathML XSS vectors)
+// ---------------------------------------------------------------------------
+function decodeHtmlEntitiesForSchemeCheck(val: string): string {
+  return val
+    .replace(/&#x([0-9a-f]+);?/gi, (_m, hex) => String.fromCodePoint(parseInt(hex, 16) || 0))
+    .replace(/&#([0-9]+);?/g, (_m, dec) => String.fromCodePoint(parseInt(dec, 10) || 0))
+    .replace(/&colon;/gi, ':')
+    .replace(/&tab;|&newline;/gi, '')
+    .replace(/[\u0000-\u0020]+/g, '')
+    .toLowerCase()
+}
+
+export function isSafeHtmlUrlAttribute(rawAttrVal: string): boolean {
+  const normalized = decodeHtmlEntitiesForSchemeCheck(rawAttrVal)
+  if (!normalized) return true
+  if (
+    normalized.startsWith('javascript:') ||
+    normalized.startsWith('vbscript:') ||
+    normalized.startsWith('data:text/') ||
+    normalized.startsWith('data:application/')
+  ) {
+    return false
+  }
+  return true
+}
+
 export function sanitizeHtmlContent(raw: string): string {
   if (!raw) return ''
   return raw
-    .replace(/<(script|iframe|object|embed|form|meta|link|style|base)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
-    .replace(/<(script|iframe|object|embed|form|meta|link|style|base)\b[^>]*\/?>/gi, '')
-    .replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '')
-    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, '')
-    .replace(/(href|src)\s*=\s*(['"])\s*(javascript:|vbscript:|data:text\/html)[\s\S]*?\2/gi, '$1="#"')
+    .replace(
+      /<(script|iframe|object|embed|applet|svg|math|form|meta|link|style|base|template|textarea|button|input|select)\b[^>]*>[\s\S]*?<\/\1>/gi,
+      ''
+    )
+    .replace(
+      /<(script|iframe|object|embed|applet|svg|math|form|meta|link|style|base|template|textarea|button|input|select)\b[^>]*\/?>/gi,
+      ''
+    )
+    .replace(/\s(?:on[a-z]+|srcdoc|formaction)\s*=\s*(['"])[\s\S]*?\1/gi, '')
+    .replace(/\s(?:on[a-z]+|srcdoc|formaction)\s*=\s*[^\s>]+/gi, '')
+    .replace(/\b(href|src|xlink:href)\s*=\s*(['"])([\s\S]*?)\2/gi, (full, attr, q, val) => {
+      return isSafeHtmlUrlAttribute(val) ? full : `${attr}=${q}#${q}`
+    })
 }

@@ -6,6 +6,12 @@ export default defineEventHandler(async (event) => {
   const code = String(query.code || '')
   const state = String(query.state || '')
   const savedState = getCookie(event, 'fz_line_oauth_state') || ''
+  const isHttps = getRequestProtocol(event, { xForwardedProto: true }) === 'https'
+  deleteCookie(event, 'fz_line_oauth_state', {
+    path: '/',
+    sameSite: isHttps ? 'none' : 'lax',
+    secure: isHttps
+  })
 
   if (!code || !state || state !== savedState) {
     return sendRedirect(event, '/contact?line_error=invalid_state#quote', 302)

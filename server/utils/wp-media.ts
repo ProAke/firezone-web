@@ -1,6 +1,9 @@
 import { existsSync, mkdirSync, renameSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, extname, resolve, sep } from 'node:path'
 import type { DatabaseSync } from 'node:sqlite'
+import { isSafeExternalHttpUrl } from './security'
+
+const MAX_REMOTE_MEDIA_BYTES = 20 * 1024 * 1024 // 20 MB cap
 
 export const DEFAULT_WP_BACKUP_UPLOADS_URL = 'https://fz.uarea.in/uploads'
 
@@ -128,11 +131,13 @@ export async function fetchAndCacheWpMedia(
   cleanRelPath: string,
   backupBaseUrl?: string
 ): Promise<FetchMediaOutcome> {
-  const base = (
+  const rawBase = (
     backupBaseUrl ||
     process.env.WP_BACKUP_UPLOADS_URL ||
     DEFAULT_WP_BACKUP_UPLOADS_URL
   ).replace(/\/+$/, '')
+
+  const base = isSafeExternalHttpUrl(rawBase) ? rawBase : DEFAULT_WP_BACKUP_UPLOADS_URL
 
   const encodedRel = encodeWpRelPathForUrl(cleanRelPath)
   const primaryRemoteUrl = `${base}/${encodedRel}`
@@ -173,8 +178,11 @@ export async function fetchAndCacheWpMedia(
         const contentType = (res.headers.get('content-type') || '').toLowerCase()
         if (contentType.includes('text/html')) continue
 
+        const contentLength = Number(res.headers.get('content-length') || 0)
+        if (contentLength > MAX_REMOTE_MEDIA_BYTES) continue
+
         const buf = Buffer.from(await res.arrayBuffer())
-        if (!isValidMediaBuffer(buf)) continue
+        if (buf.length > MAX_REMOTE_MEDIA_BYTES || !isValidMediaBuffer(buf)) continue
 
         mkdirSync(dirname(resolved.cacheTarget), { recursive: true })
         const tmpFile = `${resolved.cacheTarget}.${process.pid}.${Date.now()}.tmp`

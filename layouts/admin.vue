@@ -124,6 +124,7 @@ const router = useRouter()
 const sidebarOpen = ref(false)
 
 useHead({
+  meta: [{ name: 'robots', content: 'noindex, nofollow, noarchive' }],
   link: [
     {
       rel: 'stylesheet',

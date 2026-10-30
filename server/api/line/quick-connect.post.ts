@@ -1,7 +1,8 @@
-import { enforceRateLimit } from '../../utils/security'
+import { enforceRateLimit, verifySameOriginRequest } from '../../utils/security'
 import { setLineProfileCookie } from '../../utils/line-session'
 
 export default defineEventHandler(async (event) => {
+  verifySameOriginRequest(event)
   enforceRateLimit(event, 'line-quick-connect', 15, 1000 * 60 * 10)
   const body = await readBody(event)
 
