@@ -89,7 +89,10 @@ const { data } = await useAsyncData(
   { watch: [page] }
 )
 
-useHead({
-  title: 'ผลงานการติดตั้งและตรวจเช็คระบบ | FIRESZONE'
+usePageSeo({
+  title: 'ผลงานการติดตั้งและตรวจเช็คระบบ Fire Alarm | FIRESZONE',
+  description:
+    'ตัวอย่างผลงานการติดตั้ง ตรวจเช็ค และซ่อมบำรุงระบบสัญญาณเตือนอัคคีภัย Fire Alarm อาคารสำนักงาน คอนโดมิเนียม โรงพยาบาล โรงงาน และหน่วยงานราชการ',
+  path: '/portfolio'
 })
 </script>

@@ -337,7 +337,7 @@
             <NuxtLink
               v-for="(brand, idx) in homeData?.brands || []"
               :key="idx"
-              :to="`/shop?search=${encodeURIComponent(brand.name)}`"
+              :to="brand.slug ? `/shop/category/${encodeURIComponent(brand.slug)}` : `/shop?search=${encodeURIComponent(brand.name)}`"
               class="h-20 bg-white border border-gray-200 rounded p-3 flex items-center justify-center hover:border-firezone-red hover:shadow-sm transition-all"
               :title="brand.name"
             >
@@ -418,6 +418,34 @@
       </div>
     </section>
 
+    <!-- 9.5 คำถามที่พบบ่อย (FAQ Section for Buyers & AI Search / ASEO) -->
+    <section class="py-16 bg-firezone-light border-t border-gray-200">
+      <div class="container-classic max-w-4xl">
+        <div class="text-center mb-10">
+          <span class="text-firezone-red font-bold text-xs uppercase tracking-widest">FAQ &amp; KNOWLEDGE BASE</span>
+          <h2 class="section-heading mt-1">คำถามที่พบบ่อยเกี่ยวกับระบบสัญญาณเตือนอัคคีภัย</h2>
+          <div class="section-divider mx-auto" />
+        </div>
+
+        <div class="space-y-3">
+          <details
+            v-for="(faq, idx) in homeFaqs"
+            :key="idx"
+            class="group bg-white border border-gray-200 rounded-lg p-5 shadow-sm"
+            :open="idx === 0"
+          >
+            <summary class="font-bold text-firezone-navy text-sm md:text-base cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>{{ faq.q }}</span>
+              <span class="text-firezone-red font-extrabold text-lg group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-sm text-gray-600 mt-3 leading-relaxed border-t border-gray-100 pt-3">
+              {{ faq.a }}
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- 10. Bottom CTA Strip -->
     <section class="bg-firezone-navy text-white py-12 border-t border-white/10">
       <div class="container-classic flex flex-col md:flex-row items-center justify-between gap-6">
@@ -493,7 +521,84 @@ onBeforeUnmount(() => {
   if (timer) clearInterval(timer)
 })
 
-useHead({
-  title: 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด | ระบบสัญญาณเตือนอัคคีภัย Fire Alarm ครบวงจร'
+const homeFaqs = [
+  {
+    q: 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด ให้บริการระบบอะไรบ้าง?',
+    a: 'เราเป็นตัวแทนจำหน่าย ออกแบบ ติดตั้ง ตรวจสอบประจำปี และบำรุงรักษาระบบสัญญาณเตือนอัคคีภัย (Fire Alarm System) มาตรฐาน UL/FM รวมถึงพัฒนาระบบแจ้งเตือนเหตุเพลิงไหม้ผ่าน LINE และ E-mail ระบบกล้องวงจรปิด (CCTV) ระบบทีวีรวมดิจิตอล (MATV) และอุปกรณ์ดับเพลิงครบวงจร'
+  },
+  {
+    q: 'ระบบ Fire Alarm แบบ Conventional และ Addressable ต่างกันอย่างไร?',
+    a: 'ระบบ Conventional แสดงผลแจ้งเตือนเป็นโซนพื้นที่ เหมาะกับอาคารขนาดเล็กถึงกลาง ติดตั้งและดูแลง่าย ส่วนระบบ Addressable ระบุตำแหน่งหัวตรวจจับ (Smoke/Heat Detector) ที่เกิดเหตุได้แบบรายจุดแม่นยำ เหมาะกับอาคารสูง โรงงานขนาดใหญ่ โรงพยาบาล และคอนโดมิเนียม'
+  },
+  {
+    q: 'ระบบแจ้งเตือนไฟไหม้ผ่าน LINE ของ Fireszone สามารถติดตั้งร่วมกับตู้เดิมได้หรือไม่?',
+    a: 'สามารถติดตั้งเชื่อมต่อเข้ากับตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ (Fire Alarm Control Panel) ได้ทั้งตู้ติดตั้งใหม่และตู้เดิมทุกยี่ห้อ เมื่อเกิดสัญญาณแจ้งเตือน ระบบจะส่งข้อความเข้ากลุ่ม LINE และ E-mail ของผู้ดูแลอาคารทันทีตลอด 24 ชั่วโมง'
+  },
+  {
+    q: 'ต้องการขอใบเสนอราคาหรือส่งแบบแปลนให้ประเมินราคาต้องทำอย่างไร?',
+    a: 'สามารถส่งข้อมูลผ่านหน้า ติดต่อเรา (/contact) พร้อมแนบไฟล์แบบแปลน PDF หรือรูปภาพหน้างานได้สูงสุด 5 ไฟล์ และกดปุ่ม Connect LINE เพื่อรับการติดต่อผ่าน LINE Official Account ได้ทันที หรือโทร 086-363-5495, 086-449-2598 ยินดีให้คำปรึกษาฟรี'
+  }
+]
+
+usePageSeo({
+  title: computed(
+    () =>
+      homeData.value?.settings?.seoDefaultTitle ||
+      'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด | ระบบสัญญาณเตือนอัคคีภัย Fire Alarm ครบวงจร'
+  ),
+  description: computed(() => homeData.value?.settings?.seoDefaultDescription || ''),
+  path: '/',
+  jsonLd: computed(() => {
+    const siteUrl = (homeData.value?.settings?.siteUrl || 'https://fireszone.com').replace(/\/+$/, '')
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': ['Organization', 'LocalBusiness'],
+        name: homeData.value?.settings?.companyName || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+        alternateName: 'FIRESZONE & MANUFACTURING CO., LTD.',
+        url: siteUrl,
+        logo: `${siteUrl}/logo-fz.jpg`,
+        image: `${siteUrl}/logo-fz.jpg`,
+        telephone: homeData.value?.settings?.phone1 || '086-363-5495',
+        email: homeData.value?.settings?.email || 'fire_zone@hotmail.com',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress:
+            homeData.value?.settings?.address ||
+            '678/6 ซอยพหลโยธิน 32 แขวงจันทรเกษม เขตจตุจักร',
+          addressLocality: 'กรุงเทพมหานคร',
+          postalCode: '10900',
+          addressCountry: 'TH'
+        },
+        sameAs: [
+          homeData.value?.settings?.facebookUrl || 'https://www.facebook.com/FIRESZONE/',
+          homeData.value?.settings?.lineUrl || 'https://line.me/ti/p/RBiGzfFotR'
+        ]
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'FIRESZONE',
+        url: siteUrl,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${siteUrl}/shop?search={search_term_string}`,
+          'query-input': 'required name=search_term_string'
+        }
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: homeFaqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.a
+          }
+        }))
+      }
+    ]
+  })
 })
 </script>

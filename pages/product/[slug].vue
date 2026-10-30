@@ -6,7 +6,7 @@
       :breadcrumbs="[
         { label: 'สินค้า', to: '/shop' },
         ...(data.product.categories?.[0]
-          ? [{ label: data.product.categories[0].name, to: `/shop?category=${encodeURIComponent(data.product.categories[0].slug)}` }]
+          ? [{ label: data.product.categories[0].name, to: `/shop/category/${encodeURIComponent(data.product.categories[0].slug)}` }]
           : []),
         { label: data.product.name }
       ]"
@@ -39,7 +39,7 @@
                 <NuxtLink
                   v-for="cat in data.product.categories || []"
                   :key="cat.id"
-                  :to="`/shop?category=${encodeURIComponent(cat.slug)}`"
+                  :to="`/shop/category/${encodeURIComponent(cat.slug)}`"
                   class="bg-red-50 text-firezone-red hover:bg-red-100 text-xs font-semibold px-3 py-1 rounded transition-colors"
                 >
                   {{ cat.name }}
@@ -137,15 +137,90 @@ const { data, error } = await useAsyncData(`product-${slug.value}`, () =>
   $fetch(`/api/products/${encodeURIComponent(slug.value)}`)
 )
 
-if (error.value) {
+if (error.value || !data.value?.product) {
   throw createError({ statusCode: 404, statusMessage: 'ไม่พบสินค้าที่ต้องการ' })
 }
 
-useHead({
+// Canonical 301 redirect if accessed via legacy slug or numeric ID (e.g. /product/2118 -> /product/nohmi-fapn202-r-5l)
+if (data.value.product.slug && decodeURIComponent(slug.value) !== data.value.product.slug) {
+  await navigateTo(`/product/${encodeURIComponent(data.value.product.slug)}`, { redirectCode: 301 })
+}
+
+usePageSeo({
   title: computed(() =>
     data.value?.product?.name
       ? `${data.value.product.name} | สินค้า FIRESZONE`
       : 'รายละเอียดสินค้า | FIRESZONE'
-  )
+  ),
+  description: computed(
+    () =>
+      data.value?.product?.shortDescription ||
+      data.value?.product?.description ||
+      `รายละเอียดสเปคและขอใบเสนอราคา ${data.value?.product?.name || ''} โดย บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด`
+  ),
+  path: computed(() => `/product/${encodeURIComponent(data.value?.product?.slug || slug.value)}`),
+  image: computed(() => data.value?.product?.image || ''),
+  type: 'product',
+  jsonLd: computed(() => {
+    const p = data.value?.product
+    if (!p) return []
+    const siteUrl = (settings.value.siteUrl || 'https://fireszone.com').replace(/\/+$/, '')
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: p.name,
+        sku: p.sku || p.slug,
+        image: p.image ? [p.image] : undefined,
+        description: p.shortDescription || p.description || p.name,
+        brand: {
+          '@type': 'Brand',
+          name: p.brand || 'Fire Alarm Equipment'
+        },
+        category: p.categories?.[0]?.name || 'Fire Alarm System',
+        offers: {
+          '@type': 'Offer',
+          url: `${siteUrl}/product/${p.slug}`,
+          priceCurrency: 'THB',
+          availability: 'https://schema.org/InStock',
+          seller: {
+            '@type': 'Organization',
+            name: settings.value.companyName || 'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด'
+          }
+        }
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'หน้าหลัก', item: `${siteUrl}/` },
+          { '@type': 'ListItem', position: 2, name: 'สินค้า', item: `${siteUrl}/shop` },
+          ...(p.categories?.[0]
+            ? [
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: p.categories[0].name,
+                  item: `${siteUrl}/shop/category/${p.categories[0].slug}`
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 4,
+                  name: p.name,
+                  item: `${siteUrl}/product/${p.slug}`
+                }
+              ]
+            : [
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: p.name,
+                  item: `${siteUrl}/product/${p.slug}`
+                }
+              ])
+        ]
+      }
+    ]
+  })
 })
 </script>

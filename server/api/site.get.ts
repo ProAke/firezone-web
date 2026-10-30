@@ -1,8 +1,8 @@
-import { getAllSettingsMap, getDb } from '../utils/db'
+import { getDb, getPublicSettingsMap } from '../utils/db'
 
 export default defineEventHandler(() => {
   const db = getDb()
-  const settings = getAllSettingsMap(db)
+  const settings = getPublicSettingsMap(db)
 
   const categories = db
     .prepare(`

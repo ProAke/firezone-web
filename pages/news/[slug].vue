@@ -73,15 +73,39 @@ const { data, error } = await useAsyncData(`news-${slug.value}`, () =>
   $fetch(`/api/posts/${encodeURIComponent(slug.value)}`)
 )
 
-if (error.value) {
+if (error.value || !data.value?.post) {
   throw createError({ statusCode: 404, statusMessage: 'ไม่พบบทความที่ต้องการ' })
 }
 
-useHead({
+if (data.value.post.type === 'portfolio') {
+  await navigateTo(`/portfolio/${encodeURIComponent(data.value.post.slug)}`, { redirectCode: 301 })
+}
+
+if (data.value.post.slug && decodeURIComponent(slug.value) !== data.value.post.slug) {
+  await navigateTo(`/news/${encodeURIComponent(data.value.post.slug)}`, { redirectCode: 301 })
+}
+
+usePageSeo({
   title: computed(() =>
     data.value?.post?.title
       ? `${data.value.post.title} | ข่าวสาร FIRESZONE`
       : 'ข่าวสาร | FIRESZONE'
-  )
+  ),
+  description: computed(() => data.value?.post?.excerpt || ''),
+  path: computed(() => `/news/${encodeURIComponent(data.value?.post?.slug || slug.value)}`),
+  image: computed(() => data.value?.post?.image || ''),
+  type: 'article',
+  jsonLd: computed(() => {
+    const post = data.value?.post
+    if (!post) return null
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: post.title,
+      description: post.excerpt,
+      image: post.image ? [post.image] : undefined,
+      datePublished: post.publishedAt
+    }
+  })
 })
 </script>

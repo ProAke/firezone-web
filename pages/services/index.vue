@@ -100,7 +100,10 @@ const equipmentServices = computed(() =>
   (data.value?.items || []).filter((s: any) => s.type === 'equipment')
 )
 
-useHead({
-  title: 'บริการของเรา | บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด'
+usePageSeo({
+  title: 'บริการของเรา (ติดตั้ง ตรวจสอบ ทดสอบระบบ Fire Alarm, CCTV, MATV) | FIRESZONE',
+  description:
+    'บริการออกแบบ ติดตั้ง ตรวจสอบประจำปี ทดสอบระบบสัญญาณเตือนอัคคีภัย Fire Alarm พัฒนาระบบแจ้งเตือนไฟไหม้ผ่าน LINE กล้องวงจรปิด CCTV และระบบทีวีรวม MATV',
+  path: '/services'
 })
 </script>

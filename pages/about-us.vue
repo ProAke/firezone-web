@@ -105,7 +105,15 @@ import { ShieldCheck } from 'lucide-vue-next'
 
 const { settings, brands } = useSiteData()
 
-useHead({
-  title: 'เกี่ยวกับเรา | บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด'
+usePageSeo({
+  title: 'เกี่ยวกับเรา | บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+  description: computed(() => settings.value.aboutIntro || settings.value.seoDefaultDescription || ''),
+  path: '/about-us',
+  jsonLd: computed(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'เกี่ยวกับ บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+    description: settings.value.aboutIntro
+  }))
 })
 </script>
