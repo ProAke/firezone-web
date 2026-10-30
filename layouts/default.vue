@@ -34,7 +34,7 @@
           >
             LINE: {{ settings.lineId || '0864492598' }}
           </a>
-          <span class="text-white/20">|</span>
+          <span v-if="settings.lineUrl && settings.facebookUrl" class="text-white/20">|</span>
           <a
             v-if="settings.facebookUrl"
             :href="settings.facebookUrl"
@@ -44,15 +44,6 @@
           >
             Facebook
           </a>
-          <span class="text-white/20">|</span>
-          <NuxtLink
-            to="/admin"
-            class="inline-flex items-center gap-1 text-gray-400 hover:text-white transition-colors"
-            title="ระบบจัดการเว็บไซต์ (CMS)"
-          >
-            <Lock class="w-3 h-3" />
-            <span>จัดการเว็บ</span>
-          </NuxtLink>
         </div>
       </div>
     </div>
@@ -404,7 +395,6 @@
 <script setup lang="ts">
 import {
   ChevronDown,
-  Lock,
   Mail,
   MapPin,
   Menu,

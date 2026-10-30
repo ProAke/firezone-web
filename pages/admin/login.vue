@@ -65,7 +65,7 @@ definePageMeta({
 })
 
 const router = useRouter()
-const username = ref('admin')
+const username = ref('')
 const password = ref('')
 const loading = ref(false)
 const errorMsg = ref('')
@@ -86,5 +86,8 @@ async function handleLogin() {
   }
 }
 
-useHead({ title: 'เข้าสู่ระบบผู้ดูแล | FIRESZONE CMS' })
+useHead({
+  title: 'เข้าสู่ระบบผู้ดูแล | FIRESZONE CMS',
+  meta: [{ name: 'robots', content: 'noindex, nofollow, noarchive' }]
+})
 </script>

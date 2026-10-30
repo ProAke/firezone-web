@@ -10,18 +10,15 @@ export default defineEventHandler((event) => {
   setHeader(event, 'Content-Type', 'text/plain; charset=utf-8')
   setHeader(event, 'Cache-Control', 'public, max-age=3600')
 
+  // Do not advertise internal management paths in robots.txt (indexing is blocked via X-Robots-Tag headers)
   return [
     '# robots.txt for FIRESZONE & MANUFACTURING CO., LTD. (SEO + ASEO Enabled)',
     'User-agent: *',
     'Allow: /',
-    'Disallow: /admin',
-    'Disallow: /api/admin',
-    'Disallow: /uploads/inquiries/',
     '',
     '# Explicitly allow AI Search & Answer Engines (ASEO / GEO)',
     'User-agent: GPTBot',
     'Allow: /',
-    'Disallow: /admin',
     '',
     'User-agent: OAI-SearchBot',
     'Allow: /',

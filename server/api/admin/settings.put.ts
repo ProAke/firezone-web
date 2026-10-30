@@ -1,5 +1,8 @@
 import { requireAdmin } from '../../utils/auth'
 import { getDb } from '../../utils/db'
+import { isSafeExternalHttpUrl } from '../../utils/security'
+
+const FORBIDDEN_KEYS = new Set(['settings', '__proto__', 'constructor', 'prototype'])
 
 export default defineEventHandler(async (event) => {
   requireAdmin(event)
@@ -14,6 +17,15 @@ export default defineEventHandler(async (event) => {
       ? body.settings
       : body
 
+  if (typeof payload.wpBackupUploadsUrl === 'string' && payload.wpBackupUploadsUrl.trim()) {
+    if (!isSafeExternalHttpUrl(payload.wpBackupUploadsUrl.trim())) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'URL แหล่งสำรองรูปภาพต้องเป็น HTTPS/HTTP สาธารณะที่ปลอดภัยเท่านั้น'
+      })
+    }
+  }
+
   const db = getDb()
   db.prepare("DELETE FROM settings WHERE key = 'settings'").run()
 
@@ -22,7 +34,10 @@ export default defineEventHandler(async (event) => {
   )
 
   for (const [key, val] of Object.entries(payload)) {
-    if (key === 'settings') continue
+    // Reject internal system keys (prefixed with _) and prototype pollution keys
+    if (!key || key.startsWith('_') || FORBIDDEN_KEYS.has(key) || !/^[a-zA-Z0-9_]{1,80}$/.test(key)) {
+      continue
+    }
     if (typeof val === 'string') {
       upsert.run(key, val)
     } else if (val !== undefined && val !== null) {

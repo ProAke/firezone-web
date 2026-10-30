@@ -1,6 +1,8 @@
 import { createReadStream, existsSync, statSync } from 'node:fs'
-import { basename, extname, join, resolve, sep } from 'node:path'
+import { basename, extname, resolve, sep } from 'node:path'
 import { sendStream } from 'h3'
+import { getAdminUser, getEffectiveSessionSecret } from '../../utils/auth'
+import { verifyInquiryAttachmentSignature } from '../../utils/security'
 
 const MIME_MAP: Record<string, string> = {
   '.jpg': 'image/jpeg',
@@ -12,9 +14,35 @@ const MIME_MAP: Record<string, string> = {
 }
 
 export default defineEventHandler((event) => {
-  const rawPath = decodeURIComponent(getRouterParam(event, 'path') || '')
+  let rawPath = ''
+  try {
+    rawPath = decodeURIComponent(getRouterParam(event, 'path') || '').replace(/^\/+/, '')
+  } catch {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid path encoding' })
+  }
+
   if (!rawPath || rawPath.includes('\0')) {
     throw createError({ statusCode: 400, statusMessage: 'Invalid path' })
+  }
+
+  // Private customer inquiry attachments (PDPA): allow ONLY authenticated Admin or HMAC-signed staff notification link
+  if (rawPath.toLowerCase().startsWith('inquiries/')) {
+    const admin = getAdminUser(event)
+    if (!admin) {
+      const query = getQuery(event)
+      const validSig = verifyInquiryAttachmentSignature(
+        rawPath,
+        typeof query.exp === 'string' ? query.exp : undefined,
+        typeof query.sig === 'string' ? query.sig : undefined,
+        getEffectiveSessionSecret(event)
+      )
+      if (!validSig) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'ไม่อนุญาตให้เข้าถึงไฟล์แนบข้อมูลส่วนบุคคลโดยไม่ได้รับอนุญาต'
+        })
+      }
+    }
   }
 
   const uploadsRoot = resolve(process.cwd(), 'data', 'uploads')
@@ -43,13 +71,16 @@ export default defineEventHandler((event) => {
   )
 
   if (ext === '.pdf' || contentType === 'application/octet-stream') {
-    setHeader(event, 'Content-Disposition', `inline; filename="${basename(fullPath).replace(/[^a-zA-Z0-9._-]/g, '_')}"`)
+    setHeader(
+      event,
+      'Content-Disposition',
+      `inline; filename="${basename(fullPath).replace(/[^a-zA-Z0-9._-]/g, '_')}"`
+    )
   }
 
-  // Inquiry attachments should not be indexed by search engines
-  if (rawPath.startsWith('inquiries/')) {
-    setHeader(event, 'X-Robots-Tag', 'noindex, nofollow')
-    setHeader(event, 'Cache-Control', 'private, max-age=3600')
+  if (rawPath.toLowerCase().startsWith('inquiries/')) {
+    setHeader(event, 'X-Robots-Tag', 'noindex, nofollow, noarchive')
+    setHeader(event, 'Cache-Control', 'private, no-store')
   } else {
     setHeader(event, 'Cache-Control', 'public, max-age=86400')
   }

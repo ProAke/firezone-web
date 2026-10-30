@@ -1,4 +1,5 @@
 import { DatabaseSync } from 'node:sqlite'
+import { randomBytes } from 'node:crypto'
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import {
@@ -12,6 +13,7 @@ import { hashPassword } from './auth'
 
 // Secret keys that MUST NEVER be exposed in public /api/site or /api/home
 export const SECRET_SETTING_KEYS = new Set([
+  'lineLoginChannelId',
   'lineLoginChannelSecret',
   'lineChannelAccessToken',
   'lineNotifyTargetId',
@@ -22,7 +24,10 @@ export const SECRET_SETTING_KEYS = new Set([
   'smtpPass',
   'smtpFrom',
   'notifyEmailTo',
-  'turnstileSecretKey'
+  'notifyEmailEnabled',
+  'notifyLineEnabled',
+  'turnstileSecretKey',
+  'wpBackupUploadsUrl'
 ])
 
 let dbInstance: DatabaseSync | null = null
@@ -455,10 +460,36 @@ function seedIfEmpty(db: DatabaseSync) {
   `)
 }
 
+let cachedInternalSecret = ''
+
+export function getOrCreateInternalSessionSecret(db?: DatabaseSync): string {
+  if (cachedInternalSecret) return cachedInternalSecret
+  const conn = db || getDb()
+  const existing = conn
+    .prepare("SELECT value FROM settings WHERE key = '_internalSessionSecret'")
+    .get() as { value: string } | undefined
+
+  if (existing?.value && existing.value.length >= 48) {
+    cachedInternalSecret = existing.value
+    return cachedInternalSecret
+  }
+
+  const generated = randomBytes(32).toString('hex')
+  conn
+    .prepare(
+      "INSERT INTO settings (key, value) VALUES ('_internalSessionSecret', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value"
+    )
+    .run(generated)
+  cachedInternalSecret = generated
+  return cachedInternalSecret
+}
+
 export function getAllSettingsMap(db: DatabaseSync): Record<string, string> {
   const rows = db.prepare('SELECT key, value FROM settings').all() as Array<{ key: string; value: string }>
   const map: Record<string, string> = {}
   for (const r of rows) {
+    // Internal system secrets (prefixed with _) are never exposed to API consumers
+    if (r.key.startsWith('_')) continue
     map[r.key] = r.value
   }
   return map
