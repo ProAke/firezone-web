@@ -20,8 +20,10 @@ export default defineNuxtConfig({
     adminUsername: process.env.ADMIN_USERNAME || 'admin',
     adminPassword: process.env.ADMIN_PASSWORD || 'firezone2026',
     sessionSecret: process.env.SESSION_SECRET || 'fz-nuxt-cms-secret-key-2026-secure',
+    wpBackupUploadsUrl: process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads',
     public: {
-      wpMediaOrigin: process.env.WP_MEDIA_ORIGIN || 'https://fireszone.com'
+      wpMediaOrigin: process.env.WP_MEDIA_ORIGIN || 'https://fz.uarea.in',
+      wpBackupUploadsUrl: process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads'
     }
   },
 

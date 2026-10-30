@@ -85,7 +85,7 @@
         <div class="lg:col-span-5 relative">
           <div class="rounded-lg overflow-hidden shadow-xl border border-gray-200">
             <SmartImage
-              :src="homeData?.settings?.aboutImage || 'https://fireszone.com/wp-content/uploads/2021/01/bg-homeaboutus.png'"
+              :src="homeData?.settings?.aboutImage || '/wp-content/uploads/2021/01/bg-homeaboutus.png'"
               alt="เกี่ยวกับบริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด"
               img-class="w-full h-[340px] object-cover"
             />
@@ -493,7 +493,7 @@ const slides = computed(() => {
         {
           title: 'ผู้นำด้านระบบสัญญาณเตือนอัคคีภัยครบวงจร',
           subtitle: 'ตัวแทนจำหน่าย ออกแบบ ติดตั้ง ตรวจเช็ค และบำรุงรักษาระบบ Fire Alarm, CCTV, MATV มาตรฐานสากล',
-          image: 'https://fireszone.com/wp-content/uploads/2021/01/banner1.png',
+          image: '/wp-content/uploads/2021/01/banner1.png',
           ctaText: 'ดูสินค้าทั้งหมด',
           ctaLink: '/shop'
         }

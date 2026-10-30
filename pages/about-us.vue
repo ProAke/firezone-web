@@ -11,7 +11,7 @@
         <div class="lg:col-span-6 space-y-4">
           <div class="rounded-lg overflow-hidden border border-gray-200 shadow-md">
             <SmartImage
-              src="https://fireszone.com/wp-content/uploads/2021/02/Banner-2.jpg"
+              src="/wp-content/uploads/2021/02/Banner-2.jpg"
               alt="Fireszone Fire Alarm Systems"
               img-class="w-full h-72 md:h-80 object-cover"
             />
@@ -19,14 +19,14 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="rounded-lg overflow-hidden border border-gray-200">
               <SmartImage
-                src="https://fireszone.com/wp-content/uploads/2021/02/server-2.jpg"
+                src="/wp-content/uploads/2021/01/server-2.jpg"
                 alt="งานติดตั้งและตรวจเช็คระบบ Fire Alarm"
                 img-class="w-full h-40 object-cover"
               />
             </div>
             <div class="rounded-lg overflow-hidden border border-gray-200">
               <SmartImage
-                src="https://fireszone.com/wp-content/uploads/2021/02/server-3.jpg"
+                src="/wp-content/uploads/2021/02/server-3.jpg"
                 alt="พัฒนาระบบแจ้งเตือนไฟไหม้ผ่าน Line และ Email"
                 img-class="w-full h-40 object-cover"
               />

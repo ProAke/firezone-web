@@ -25,11 +25,10 @@
     </div>
     <p v-if="uploadError" class="text-xs text-red-600">{{ uploadError }}</p>
     <div v-if="modelValue && showPreview && !modelValue.endsWith('.pdf')" class="pt-1">
-      <img
+      <SmartImage
         :src="modelValue"
         alt="Preview"
-        class="h-24 w-auto rounded border border-gray-200 object-contain p-2"
-        :class="darkPreview ? 'bg-firezone-navy' : 'bg-gray-50'"
+        :img-class="`h-24 w-auto rounded border border-gray-200 object-contain p-2 ${darkPreview ? 'bg-firezone-navy' : 'bg-gray-50'}`"
       />
     </div>
   </div>
