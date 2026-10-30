@@ -179,24 +179,10 @@
         <!-- Cover Image Card -->
         <div class="bg-white rounded-lg border border-gray-200 p-5 shadow-sm space-y-3 text-xs">
           <h3 class="font-bold text-sm text-firezone-navy border-b pb-2.5">รูปภาพปก (Cover Image)</h3>
-          <div v-if="form.image" class="rounded overflow-hidden border border-gray-200">
-            <SmartImage :src="form.image" :alt="form.title" img-class="w-full h-44 object-cover" />
-          </div>
-          <div v-else class="h-32 rounded border border-dashed border-gray-300 bg-gray-50 flex items-center justify-center text-gray-400 text-center px-3">
-            ยังไม่ได้เลือกรูปปก (ระบบจะใช้รูปแรกจากเนื้อหา/YouTube ให้อัตโนมัติ)
-          </div>
-
-          <label class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-firezone-navy hover:bg-slate-800 text-white rounded cursor-pointer font-semibold transition-colors">
-            <Upload class="w-3.5 h-3.5" />
-            <span>{{ uploadingCover ? 'กำลังอัปโหลด...' : 'อัปโหลดรูปภาพปก' }}</span>
-            <input type="file" accept="image/*" class="hidden" @change="handleCoverUpload" />
-          </label>
-
-          <input
+          <AdminImageDropzone
             v-model="form.image"
-            type="text"
-            placeholder="หรือระบุ URL รูปภาพ..."
-            class="w-full px-3 py-1.5 border border-gray-300 rounded text-[11px]"
+            :alt="form.title"
+            label="อัปโหลดรูปภาพปก"
           />
         </div>
 

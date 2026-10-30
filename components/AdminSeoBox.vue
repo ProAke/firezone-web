@@ -3,14 +3,42 @@
     <div class="px-5 py-3.5 bg-slate-50 border-b border-gray-200 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <Sparkles class="w-4 h-4 text-emerald-600" />
-        <h3 class="font-bold text-sm text-firezone-navy">ระบบ SEO อัตโนมัติ (Auto-SEO)</h3>
+        <h3 class="font-bold text-sm text-firezone-navy">ระบบลิงก์แชร์ &amp; SEO อัตโนมัติ</h3>
       </div>
       <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
-        ทำงานอัตโนมัติ
+        Auto-SEO
       </span>
     </div>
 
     <div class="p-5 space-y-4 text-xs">
+      <!-- Laem-Chabang-Inspired Share URL + One-Click Copy Bar -->
+      <div>
+        <label class="block font-bold text-gray-700 mb-1.5">Share URL (ลิงก์หน้าเว็บไซต์สำหรับแชร์)</label>
+        <div class="flex items-stretch rounded-md overflow-hidden border border-slate-300 bg-slate-50">
+          <input
+            :value="previewUrl"
+            type="text"
+            readonly
+            class="flex-1 min-w-0 px-3 py-2 bg-transparent font-mono text-[11px] text-slate-700 focus:outline-none"
+            @focus="($event.target as HTMLInputElement).select()"
+          />
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 px-3 py-2 border-l border-slate-300 font-semibold transition-colors shrink-0"
+            :class="
+              copied
+                ? 'bg-emerald-600 text-white border-emerald-600'
+                : 'bg-[#eef5fc] hover:bg-[#dceafb] text-[#1d5fb8]'
+            "
+            @click="copyShareUrl"
+          >
+            <Check v-if="copied" class="w-3.5 h-3.5" />
+            <Copy v-else class="w-3.5 h-3.5" />
+            <span>{{ copied ? 'คัดลอกแล้ว' : 'Copy' }}</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Live Google Search Snippet Preview -->
       <div class="rounded-lg border border-gray-200 bg-gray-50/70 p-4 space-y-1.5">
         <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">
@@ -111,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronDown, Sparkles } from 'lucide-vue-next'
+import { Check, ChevronDown, Copy, Sparkles } from 'lucide-vue-next'
 import {
   autoSeoDescription,
   autoSeoKeywords,
@@ -161,6 +189,7 @@ const emit = defineEmits<{
 const manualOpen = ref(
   Boolean(props.seoTitle?.trim() || props.seoDescription?.trim() || props.seoKeywords?.trim())
 )
+const copied = ref(false)
 
 function clientSlugify(text: string): string {
   return (
@@ -175,17 +204,31 @@ function clientSlugify(text: string): string {
   )
 }
 
+const requestUrl = useRequestURL()
 const autoSlugPreview = computed(() => clientSlugify(props.itemTitle || 'item'))
 
 const previewUrl = computed(() => {
+  const origin = requestUrl?.origin || 'https://fireszone.com'
   const cleanPrefix = (props.pathPrefix || '/').replace(/\/+$/, '')
   if (props.lockSlug && props.slug === 'home') {
-    return 'https://fireszone.com/'
+    return `${origin}/`
   }
   const activeSlug = props.slug?.trim() || autoSlugPreview.value
-  if (!cleanPrefix) return `https://fireszone.com/${activeSlug}`
-  return `https://fireszone.com${cleanPrefix}/${activeSlug}`
+  if (!cleanPrefix) return `${origin}/${activeSlug}`
+  return `${origin}${cleanPrefix}/${activeSlug}`
 })
+
+async function copyShareUrl() {
+  try {
+    await navigator.clipboard.writeText(previewUrl.value)
+    copied.value = true
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch {
+    // ignore clipboard fallback
+  }
+}
 
 const autoTitleOnly = computed(() =>
   autoSeoTitle('', props.itemTitle || 'หัวข้อเนื้อหา', props.titleSuffix)

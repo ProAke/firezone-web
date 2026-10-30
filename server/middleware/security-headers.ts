@@ -10,6 +10,9 @@ export default defineEventHandler((event) => {
   // Prevent browser caching of sensitive Admin API responses
   if (path.startsWith('/api/admin')) {
     setHeader(event, 'Cache-Control', 'no-store, no-cache, must-revalidate, private')
+  } else if (path.startsWith('/ckeditor/')) {
+    // Aggressively cache standalone pre-built CKEditor 5 bundle & CSS for instant 0ms subsequent loads
+    setHeader(event, 'Cache-Control', 'public, max-age=31536000, immutable')
   }
 
   // Isolate user-uploaded files so no active script can ever execute under /uploads/
@@ -17,14 +20,14 @@ export default defineEventHandler((event) => {
     setHeader(
       event,
       'Content-Security-Policy',
-      "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox"
+      "default-src 'none'; img-src 'self' data: blob:; media-src 'self'; style-src 'unsafe-inline'; sandbox"
     )
   } else {
-    // Baseline CSP blocking Flash/Java/object embeds & <base> hijacking while permitting YouTube embeds, Google Maps, Turnstile & GA4
+    // Baseline CSP blocking Flash/Java/object embeds & <base> hijacking while permitting YouTube embeds, blob/data image previews, Maps, Turnstile & GA4
     setHeader(
       event,
       'Content-Security-Policy',
-      "base-uri 'self'; object-src 'none'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https:; form-action 'self' https://access.line.me"
+      "base-uri 'self'; object-src 'none'; img-src 'self' data: blob: https: http:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https:; form-action 'self' https://access.line.me"
     )
   }
 })

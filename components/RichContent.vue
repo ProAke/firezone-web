@@ -4,7 +4,6 @@
 </template>
 
 <script setup lang="ts">
-import 'ckeditor5/ckeditor5-content.css'
 import { extractYouTubeVideoId } from '~/utils/seo'
 
 const props = defineProps<{
