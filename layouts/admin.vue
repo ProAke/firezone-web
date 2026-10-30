@@ -123,6 +123,26 @@ const route = useRoute()
 const router = useRouter()
 const sidebarOpen = ref(false)
 
+useHead({
+  link: [
+    {
+      rel: 'stylesheet',
+      href: '/ckeditor/ckeditor.css?v=20261030'
+    },
+    {
+      rel: 'preload',
+      as: 'script',
+      href: '/ckeditor/ckeditor.js?v=20261030'
+    }
+  ],
+  script: [
+    {
+      src: '/ckeditor/ckeditor.js?v=20261030',
+      defer: true
+    }
+  ]
+})
+
 const navItems = [
   { to: '/admin', label: 'ภาพรวมระบบ', icon: LayoutDashboard },
   { to: '/admin/pages', label: 'จัดการหน้าเว็บไซต์', icon: FileText },

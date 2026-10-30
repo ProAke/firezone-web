@@ -10,6 +10,14 @@ export default defineNuxtConfig({
     port: 3000
   },
 
+  routeRules: {
+    '/ckeditor/**': {
+      headers: {
+        'Cache-Control': 'public, max-age=31536000, immutable'
+      }
+    }
+  },
+
   vite: {
     server: {
       allowedHosts: true

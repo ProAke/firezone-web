@@ -12,7 +12,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'ไม่พบไฟล์ที่อัปโหลด' })
   }
 
-  const filePart = form.find((p) => p.name === 'file' && p.filename && p.data)
+  const filePart = form.find(
+    (p) => (p.name === 'file' || p.name === 'upload') && p.filename && p.data
+  )
   if (!filePart || !filePart.filename) {
     throw createError({ statusCode: 400, statusMessage: 'กรุณาเลือกไฟล์' })
   }
@@ -39,9 +41,14 @@ export default defineEventHandler(async (event) => {
 
   writeFileSync(fullPath, validated.data)
 
+  const url = `/uploads/${uniqueName}`
+
   return {
     ok: true,
-    url: `/uploads/${uniqueName}`,
-    filename: uniqueName
+    uploaded: 1,
+    url,
+    default: url,
+    filename: uniqueName,
+    fileName: uniqueName
   }
 })

@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:ckeditor": "node scripts/build-ckeditor.mjs",
     "build": "NODE_OPTIONS='--no-warnings' nuxt build",
     "dev": "NODE_OPTIONS='--no-warnings' nuxt dev --host 0.0.0.0 --port 3000",
     "generate": "NODE_OPTIONS='--no-warnings' nuxt generate",

@@ -242,16 +242,16 @@ export function validateInquiryFile(
   if (isPdf && ext === '.pdf') {
     detectedMime = 'application/pdf'
     safeExt = '.pdf'
-  } else if (isJpeg && (ext === '.jpg' || ext === '.jpeg')) {
+  } else if (isJpeg && (ext === '.jpg' || ext === '.jpeg' || ext === '.jfif' || ext === '')) {
     detectedMime = 'image/jpeg'
     safeExt = '.jpg'
-  } else if (isPng && ext === '.png') {
+  } else if (isPng && (ext === '.png' || ext === '')) {
     detectedMime = 'image/png'
     safeExt = '.png'
-  } else if (isGif && ext === '.gif') {
+  } else if (isGif && (ext === '.gif' || ext === '')) {
     detectedMime = 'image/gif'
     safeExt = '.gif'
-  } else if (isWebp && ext === '.webp') {
+  } else if (isWebp && (ext === '.webp' || ext === '')) {
     detectedMime = 'image/webp'
     safeExt = '.webp'
   } else {

@@ -175,7 +175,7 @@ export function sanitizeRichHtmlForStorage(input?: string): string {
       if (!vid) return ''
       const idx = preservedIframes.length
       preservedIframes.push(
-        `<iframe src="https://www.youtube.com/embed/${vid}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        `<iframe src="https://www.youtube.com/embed/${vid}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" title="YouTube video player" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
       )
       return `__FZ_SAFE_IFRAME_${idx}__`
     }
