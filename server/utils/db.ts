@@ -66,7 +66,10 @@ function initSchema(db: DatabaseSync) {
       slug TEXT UNIQUE NOT NULL,
       parent_id INTEGER,
       sort_order INTEGER DEFAULT 0,
-      description TEXT DEFAULT ''
+      description TEXT DEFAULT '',
+      seo_title TEXT DEFAULT '',
+      seo_description TEXT DEFAULT '',
+      seo_keywords TEXT DEFAULT ''
     );
 
     CREATE TABLE IF NOT EXISTS products (
@@ -80,6 +83,9 @@ function initSchema(db: DatabaseSync) {
       image TEXT DEFAULT '',
       datasheet_url TEXT DEFAULT '',
       is_active INTEGER DEFAULT 1,
+      seo_title TEXT DEFAULT '',
+      seo_description TEXT DEFAULT '',
+      seo_keywords TEXT DEFAULT '',
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
@@ -101,7 +107,10 @@ function initSchema(db: DatabaseSync) {
       excerpt TEXT DEFAULT '',
       content TEXT DEFAULT '',
       image TEXT DEFAULT '',
-      sort_order INTEGER DEFAULT 0
+      sort_order INTEGER DEFAULT 0,
+      seo_title TEXT DEFAULT '',
+      seo_description TEXT DEFAULT '',
+      seo_keywords TEXT DEFAULT ''
     );
 
     CREATE TABLE IF NOT EXISTS posts (
@@ -115,7 +124,26 @@ function initSchema(db: DatabaseSync) {
       image TEXT DEFAULT '',
       gallery_json TEXT DEFAULT '[]',
       published_at TEXT NOT NULL,
-      is_active INTEGER DEFAULT 1
+      is_active INTEGER DEFAULT 1,
+      seo_title TEXT DEFAULT '',
+      seo_description TEXT DEFAULT '',
+      seo_keywords TEXT DEFAULT ''
+    );
+
+    CREATE TABLE IF NOT EXISTS pages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      slug TEXT UNIQUE NOT NULL,
+      title TEXT NOT NULL,
+      subtitle TEXT DEFAULT '',
+      excerpt TEXT DEFAULT '',
+      content TEXT DEFAULT '',
+      image TEXT DEFAULT '',
+      is_system INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      seo_title TEXT DEFAULT '',
+      seo_description TEXT DEFAULT '',
+      seo_keywords TEXT DEFAULT '',
+      updated_at TEXT NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS inquiries (
@@ -153,6 +181,22 @@ function ensureColumn(db: DatabaseSync, table: string, column: string, definitio
 
 function runMigrations(db: DatabaseSync) {
   ensureColumn(db, 'products', 'legacy_slug', "TEXT DEFAULT ''")
+  ensureColumn(db, 'products', 'seo_title', "TEXT DEFAULT ''")
+  ensureColumn(db, 'products', 'seo_description', "TEXT DEFAULT ''")
+  ensureColumn(db, 'products', 'seo_keywords', "TEXT DEFAULT ''")
+
+  ensureColumn(db, 'categories', 'seo_title', "TEXT DEFAULT ''")
+  ensureColumn(db, 'categories', 'seo_description', "TEXT DEFAULT ''")
+  ensureColumn(db, 'categories', 'seo_keywords', "TEXT DEFAULT ''")
+
+  ensureColumn(db, 'services', 'seo_title', "TEXT DEFAULT ''")
+  ensureColumn(db, 'services', 'seo_description', "TEXT DEFAULT ''")
+  ensureColumn(db, 'services', 'seo_keywords', "TEXT DEFAULT ''")
+
+  ensureColumn(db, 'posts', 'seo_title', "TEXT DEFAULT ''")
+  ensureColumn(db, 'posts', 'seo_description', "TEXT DEFAULT ''")
+  ensureColumn(db, 'posts', 'seo_keywords', "TEXT DEFAULT ''")
+
   ensureColumn(db, 'inquiries', 'line_id', "TEXT DEFAULT ''")
   ensureColumn(db, 'inquiries', 'line_user_id', "TEXT DEFAULT ''")
   ensureColumn(db, 'inquiries', 'line_display_name', "TEXT DEFAULT ''")
@@ -163,6 +207,80 @@ function runMigrations(db: DatabaseSync) {
   ensureColumn(db, 'inquiries', 'ip_address', "TEXT DEFAULT ''")
   ensureColumn(db, 'inquiries', 'notify_email_status', "TEXT DEFAULT ''")
   ensureColumn(db, 'inquiries', 'notify_line_status', "TEXT DEFAULT ''")
+}
+
+function seedDefaultPages(db: DatabaseSync, now: string) {
+  const insertPage = db.prepare(`
+    INSERT OR IGNORE INTO pages (slug, title, subtitle, excerpt, content, image, is_system, is_active, seo_title, seo_description, seo_keywords, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, 1, 1, '', '', '', ?)
+  `)
+
+  insertPage.run(
+    'home',
+    'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+    'ABOUT FIRESZONE',
+    SEED_SETTINGS.aboutIntro || '',
+    `<p>${SEED_SETTINGS.aboutIntro || ''}</p>`,
+    '/wp-content/uploads/2021/01/bg-homeaboutus.png',
+    now
+  )
+
+  insertPage.run(
+    'about-us',
+    'เกี่ยวกับเรา',
+    'ABOUT FIRESZONE',
+    SEED_SETTINGS.aboutIntro || '',
+    `<p>${SEED_SETTINGS.aboutIntro || ''}</p>
+<h3>ขอบเขตการให้บริการหลักของเรา</h3>
+<ul>
+  <li><strong>จัดจำหน่ายอุปกรณ์ระบบแจ้งเหตุเพลิงไหม้ (Fire Alarm System):</strong> ตู้ควบคุม Conventional &amp; Addressable, Smoke/Heat Detector, Manual Pull Station, Bell &amp; Strobe Light มาตรฐาน UL/FM</li>
+  <li><strong>บริการออกแบบ ติดตั้ง ตรวจสอบ และบำรุงรักษาประจำปี:</strong> ตรวจเช็คและทดสอบการทำงานของระบบแจ้งเหตุเพลิงไหม้ พร้อมออกเอกสารรับรองและอบรมการใช้งาน</li>
+  <li><strong>พัฒนานวัตกรรมแจ้งเตือนอัคคีภัยผ่าน LINE &amp; Email:</strong> เชื่อมต่อตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้เข้ากับสมาร์ทโฟนเพื่อให้ผู้ดูแลอาคารรับทราบเหตุได้ทันที</li>
+  <li><strong>ระบบรักษาความปลอดภัยและระบบอาคาร:</strong> กล้องวงจรปิด (CCTV), ระบบทีวีรวมดิจิตอล (MATV), ถังดับเพลิงเคมีแห้ง / CO2 และไฟฉุกเฉิน</li>
+</ul>`,
+    '/wp-content/uploads/2021/02/Banner-2.jpg',
+    now
+  )
+
+  insertPage.run(
+    'contact',
+    'ติดต่อเรา & ขอใบเสนอราคา',
+    'CONTACT US & REQUEST A QUOTE',
+    'สอบถามข้อมูลอุปกรณ์แจ้งเหตุเพลิงไหม้ ขอใบเสนอราคาโครงการ นัดสำรวจหน้างาน หรือแนบไฟล์แบบแปลน PDF ให้ทีมวิศวกรประเมินราคาฟรี',
+    `<p>ทีมวิศวกรและฝ่ายขาย <strong>บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด</strong> พร้อมให้คำปรึกษา จัดทำใบเสนอราคาอุปกรณ์ระบบแจ้งเหตุเพลิงไหม้ (Fire Alarm), กล้องวงจรปิด (CCTV), ระบบทีวีรวม (MATV) และงานตรวจสอบบำรุงรักษาระบบประจำปี สามารถกรอกแบบฟอร์มพร้อมแนบไฟล์สเปคหรือรูปหน้างานได้สูงสุด 5 ไฟล์</p>`,
+    '',
+    now
+  )
+
+  insertPage.run(
+    'privacy-policy',
+    'นโยบายคุ้มครองข้อมูลส่วนบุคคล (PDPA)',
+    'PRIVACY POLICY & PDPA',
+    'ประกาศนโยบายความเป็นส่วนตัวและการคุ้มครองข้อมูลส่วนบุคคล (PDPA) และการใช้งานคุกกี้ของ บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
+    `<h2>ประกาศนโยบายความเป็นส่วนตัว (Privacy Notice)</h2>
+<p><em>ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (Personal Data Protection Act: PDPA)</em></p>
+<p><strong>บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด</strong> ("บริษัทฯ") ให้ความสำคัญสูงสุดต่อการคุ้มครองข้อมูลส่วนบุคคลของลูกค้า คู่ค้า และผู้เข้าชมเว็บไซต์ เอกสารฉบับนี้อธิบายถึงวิธีการเก็บรวบรวม ใช้ เปิดเผย และรักษาความปลอดภัยของข้อมูลส่วนบุคคลของท่าน</p>
+<h3>1. ข้อมูลส่วนบุคคลที่เราเก็บรวบรวม</h3>
+<ul>
+  <li><strong>ข้อมูลการติดต่อและขอใบเสนอราคา:</strong> ชื่อ-นามสกุล เบอร์โทรศัพท์ อีเมล ชื่อบริษัท/อาคาร/โครงการ และรายละเอียดความต้องการ</li>
+  <li><strong>ข้อมูลการเชื่อมต่อบัญชี LINE (Connect LINE):</strong> รหัสอ้างอิงผู้ใช้ LINE (User ID) ชื่อที่แสดง (Display Name) หรือ LINE ID ที่ท่านยินยอมเชื่อมต่อเพื่อรับการติดต่อกลับผ่าน LINE Official Account</li>
+  <li><strong>ไฟล์เอกสารและรูปภาพแนบ:</strong> ไฟล์ PDF สเปคงาน แบบแปลน หรือรูปภาพหน้างานที่ท่านแนบผ่านแบบฟอร์มติดต่อ (ไม่เกิน 5 ไฟล์)</li>
+  <li><strong>ข้อมูลทางเทคนิคและคุกกี้ (Cookies):</strong> หมายเลข IP Address ข้อมูลเบราว์เซอร์ และสถิติการเข้าชมเว็บไซต์ (เฉพาะกรณีที่ท่านให้ความยินยอมคุกกี้เพื่อการวิเคราะห์หรือการตลาด)</li>
+</ul>
+<h3>2. วัตถุประสงค์ในการประมวลผลข้อมูล</h3>
+<ul>
+  <li>เพื่อจัดทำใบเสนอราคา ให้คำปรึกษาทางวิศวกรรม นัดสำรวจหน้างาน และให้บริการติดตั้ง/ตรวจสอบระบบสัญญาณเตือนอัคคีภัย</li>
+  <li>เพื่อส่งแจ้งเตือนและติดต่อสื่อสารกับท่านผ่านทางโทรศัพท์ อีเมล หรือ LINE Official Account ตามที่ท่านร้องขอ</li>
+  <li>เพื่อป้องกันสแปม การโจมตีทางไซเบอร์ และการรักษาความปลอดภัยของระบบสารสนเทศ</li>
+  <li>เพื่อวิเคราะห์สถิติและปรับปรุงคุณภาพเว็บไซต์และบริการ (เมื่อได้รับความยินยอมคุกกี้จากท่าน)</li>
+</ul>
+<h3>3. ระยะเวลาในการเก็บรักษาข้อมูล</h3>
+<p>บริษัทฯ จะเก็บรักษาข้อมูลการติดต่อขอใบเสนอราคาไว้เป็นระยะเวลาประมาณ <strong>365 วัน</strong> หรือตลอดระยะเวลาที่มีนิติสัมพันธ์ตามสัญญาซื้อขาย/สัญญาบริการบำรุงรักษาระบบ และจะลบหรือทำลายข้อมูลเมื่อพ้นกำหนดความจำเป็น</p>
+<h3>4. สิทธิของเจ้าของข้อมูลส่วนบุคคลตามกฎหมาย PDPA</h3>
+<p>ท่านมีสิทธิตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 ได้แก่ สิทธิในการเพิกถอนความยินยอม, สิทธิในการขอเข้าถึงและรับสำเนาข้อมูลส่วนบุคคล, สิทธิในการขอแก้ไขข้อมูลให้ถูกต้องเป็นปัจจุบัน และสิทธิในการขอลบหรือระงับการใช้ข้อมูลส่วนบุคคล</p>`,
+    '',
+    now
+  )
 }
 
 function seedIfEmpty(db: DatabaseSync) {
@@ -186,6 +304,9 @@ function seedIfEmpty(db: DatabaseSync) {
   for (const [k, v] of Object.entries(SEED_SETTINGS)) {
     insertSetting.run(k, v)
   }
+
+  // Ensure default Website Pages exist
+  seedDefaultPages(db, now)
 
   // Upgrade legacy remote WordPress logo URLs (or previous default) to bundled local assets
   db.prepare(`
@@ -296,7 +417,6 @@ function seedIfEmpty(db: DatabaseSync) {
   }
 
   // Normalize any legacy absolute https://fireszone.com/wp-content/uploads/ URLs in pre-existing DBs
-  // to local /wp-content/uploads/ so Nuxt serves & auto-caches them from https://fz.uarea.in/uploads/
   db.exec(`
     UPDATE settings
     SET value = REPLACE(REPLACE(value, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
@@ -352,7 +472,6 @@ export function getPublicSettingsMap(db: DatabaseSync): Record<string, string> {
       pub[k] = v
     }
   }
-  // Tell frontend booleans about configured integrations without leaking secrets
   pub.lineOauthConfigured = Boolean(all.lineLoginChannelId && all.lineLoginChannelSecret) ? '1' : '0'
   pub.linePushConfigured = Boolean(all.lineChannelAccessToken && all.lineNotifyTargetId) ? '1' : '0'
   return pub

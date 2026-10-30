@@ -561,8 +561,9 @@ function selectTab(id: string) {
   router.replace({ path: '/admin/settings', query: id === 'company' ? {} : { tab: id } })
 }
 
+const reqFetch = useRequestFetch()
 const { data: adminSettingsData, refresh } = await useAsyncData('admin-all-settings', () =>
-  $fetch('/api/admin/settings')
+  reqFetch('/api/admin/settings')
 )
 
 const form = reactive<Record<string, string>>({

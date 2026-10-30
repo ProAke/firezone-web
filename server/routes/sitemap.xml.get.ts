@@ -24,6 +24,10 @@ export default defineEventHandler((event) => {
     .prepare('SELECT slug, type, published_at as publishedAt FROM posts WHERE is_active = 1 ORDER BY id DESC')
     .all() as Array<{ slug: string; type: string; publishedAt: string }>
 
+  const customPages = db
+    .prepare('SELECT slug, updated_at as updatedAt FROM pages WHERE is_system = 0 AND is_active = 1 ORDER BY id ASC')
+    .all() as Array<{ slug: string; updatedAt: string }>
+
   const urls: Array<{ loc: string; lastmod?: string; changefreq: string; priority: string }> = [
     { loc: `${baseUrl}/`, lastmod: today, changefreq: 'weekly', priority: '1.0' },
     { loc: `${baseUrl}/shop`, lastmod: today, changefreq: 'weekly', priority: '0.9' },
@@ -34,6 +38,15 @@ export default defineEventHandler((event) => {
     { loc: `${baseUrl}/contact`, lastmod: today, changefreq: 'monthly', priority: '0.8' },
     { loc: `${baseUrl}/privacy-policy`, lastmod: today, changefreq: 'yearly', priority: '0.4' }
   ]
+
+  for (const pg of customPages) {
+    urls.push({
+      loc: `${baseUrl}/page/${encodeURIComponent(pg.slug)}`,
+      lastmod: (pg.updatedAt || today).slice(0, 10),
+      changefreq: 'monthly',
+      priority: '0.7'
+    })
+  }
 
   for (const c of categories) {
     urls.push({

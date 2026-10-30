@@ -20,11 +20,11 @@ export default defineEventHandler((event) => {
       "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox"
     )
   } else {
-    // Baseline CSP blocking Flash/Java/object embeds & <base> hijacking while keeping GA4/GTM/Pixels & iframe preview working
+    // Baseline CSP blocking Flash/Java/object embeds & <base> hijacking while permitting YouTube embeds, Google Maps, Turnstile & GA4
     setHeader(
       event,
       'Content-Security-Policy',
-      "base-uri 'self'; object-src 'none'; form-action 'self' https://access.line.me"
+      "base-uri 'self'; object-src 'none'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https:; form-action 'self' https://access.line.me"
     )
   }
 })

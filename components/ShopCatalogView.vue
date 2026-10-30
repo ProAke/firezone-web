@@ -111,8 +111,8 @@
             v-if="productsData?.selectedCategory?.description"
             class="bg-white border-l-4 border-firezone-red rounded-md px-5 py-4 shadow-sm text-sm text-gray-700"
           >
-            <strong class="text-firezone-navy">{{ productsData.selectedCategory.name }}:</strong>
-            {{ productsData.selectedCategory.description }}
+            <div class="font-bold text-firezone-navy mb-1">{{ productsData.selectedCategory.name }}</div>
+            <RichContent :content="productsData.selectedCategory.description" />
           </div>
 
           <!-- Toolbar -->
@@ -278,13 +278,23 @@ usePageSeo({
   title: computed(() =>
     productsData.value?.selectedCategory?.name
       ? `${productsData.value.selectedCategory.name} — อุปกรณ์ Fire Alarm | FIRESZONE`
-      : 'สินค้าและอุปกรณ์แจ้งเหตุเพลิงไหม้ทั้งหมด (48 รุ่น) | FIRESZONE'
+      : 'สินค้าและอุปกรณ์แจ้งเหตุเพลิงไหม้ทั้งหมด | FIRESZONE'
   ),
+  seoTitle: computed(() => productsData.value?.selectedCategory?.seoTitle || ''),
   description: computed(
     () =>
-      productsData.value?.selectedCategory?.description ||
-      'แคตตาล็อกสินค้าและอุปกรณ์ระบบสัญญาณเตือนอัคคีภัย Fire Alarm มาตรฐาน UL/FM ตู้ควบคุม Smoke Detector Heat Detector Manual Pull Station กระดิ่งและไฟไซเรน'
+      productsData.value?.selectedCategory?.seoDescription ||
+      (productsData.value?.selectedCategory
+        ? ''
+        : 'แคตตาล็อกสินค้าและอุปกรณ์ระบบสัญญาณเตือนอัคคีภัย Fire Alarm มาตรฐาน UL/FM ตู้ควบคุม Smoke Detector Heat Detector Manual Pull Station กระดิ่งและไฟไซเรน')
   ),
+  seoKeywords: computed(() => productsData.value?.selectedCategory?.seoKeywords || ''),
+  keywordParts: computed(() =>
+    productsData.value?.selectedCategory?.name
+      ? [productsData.value.selectedCategory.name, 'อุปกรณ์แจ้งเหตุเพลิงไหม้']
+      : ['สินค้าแจ้งเหตุเพลิงไหม้', 'อุปกรณ์ Fire Alarm']
+  ),
+  htmlContent: computed(() => productsData.value?.selectedCategory?.description || ''),
   path: basePath,
   jsonLd: computed(() => ({
     '@context': 'https://schema.org',

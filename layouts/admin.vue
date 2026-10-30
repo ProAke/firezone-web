@@ -106,6 +106,7 @@ import {
   BellRing,
   Briefcase,
   ExternalLink,
+  FileText,
   FolderTree,
   LayoutDashboard,
   LogOut,
@@ -124,6 +125,7 @@ const sidebarOpen = ref(false)
 
 const navItems = [
   { to: '/admin', label: 'ภาพรวมระบบ', icon: LayoutDashboard },
+  { to: '/admin/pages', label: 'จัดการหน้าเว็บไซต์', icon: FileText },
   { to: '/admin/products', label: 'จัดการสินค้า', icon: Package },
   { to: '/admin/categories', label: 'หมวดหมู่สินค้า', icon: FolderTree },
   { to: '/admin/services', label: 'บริการ & อุปกรณ์', icon: Wrench },

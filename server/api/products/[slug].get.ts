@@ -16,7 +16,11 @@ export default defineEventHandler((event) => {
         description,
         image,
         datasheet_url as datasheetUrl,
-        is_active as isActive
+        is_active as isActive,
+        seo_title as seoTitle,
+        seo_description as seoDescription,
+        seo_keywords as seoKeywords,
+        updated_at as updatedAt
       FROM products
       WHERE (LOWER(slug) = LOWER(?) OR LOWER(legacy_slug) = LOWER(?) OR CAST(id AS TEXT) = ?)
         AND is_active = 1

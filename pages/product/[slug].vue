@@ -152,12 +152,22 @@ usePageSeo({
       ? `${data.value.product.name} | สินค้า FIRESZONE`
       : 'รายละเอียดสินค้า | FIRESZONE'
   ),
+  seoTitle: computed(() => data.value?.product?.seoTitle || ''),
   description: computed(
     () =>
+      data.value?.product?.excerpt ||
       data.value?.product?.shortDescription ||
-      data.value?.product?.description ||
-      `รายละเอียดสเปคและขอใบเสนอราคา ${data.value?.product?.name || ''} โดย บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด`
+      ''
   ),
+  seoDescription: computed(() => data.value?.product?.seoDescription || ''),
+  seoKeywords: computed(() => data.value?.product?.seoKeywords || ''),
+  keywordParts: computed(() => [
+    data.value?.product?.name,
+    data.value?.product?.brand,
+    ...(data.value?.product?.categories || []).map((c: any) => c.name)
+  ]),
+  htmlContent: computed(() => data.value?.product?.description || ''),
+  publishedAt: computed(() => data.value?.product?.updatedAt || ''),
   path: computed(() => `/product/${encodeURIComponent(data.value?.product?.slug || slug.value)}`),
   image: computed(() => data.value?.product?.image || ''),
   type: 'product',

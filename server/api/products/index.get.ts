@@ -23,7 +23,11 @@ export default defineEventHandler((event) => {
   let selectedCategory: Record<string, any> | null = null
   if (categoryParam) {
     const catRow = db
-      .prepare('SELECT id, name, slug, parent_id as parentId, description FROM categories WHERE slug = ? OR CAST(id AS TEXT) = ?')
+      .prepare(
+        `SELECT id, name, slug, parent_id as parentId, description,
+                seo_title as seoTitle, seo_description as seoDescription, seo_keywords as seoKeywords
+         FROM categories WHERE slug = ? OR CAST(id AS TEXT) = ?`
+      )
       .get(categoryParam, categoryParam) as Record<string, any> | undefined
 
     if (catRow) {
@@ -78,6 +82,9 @@ export default defineEventHandler((event) => {
         p.image,
         p.datasheet_url as datasheetUrl,
         p.is_active as isActive,
+        p.seo_title as seoTitle,
+        p.seo_description as seoDescription,
+        p.seo_keywords as seoKeywords,
         p.updated_at as updatedAt
       FROM products p
       ${whereSql}
