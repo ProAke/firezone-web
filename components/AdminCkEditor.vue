@@ -211,12 +211,15 @@ declare global {
   interface Window {
     ClassicEditor?: any
     FirezoneClassicEditor?: any
+    CKEDITOR_GLOBAL_LICENSE_KEY?: string
     __fzCkLoadingPromise?: Promise<any>
   }
 }
 
-const CKEDITOR_SCRIPT_SRC = '/ckeditor/ckeditor.js?v=20261030'
-const CKEDITOR_STYLE_HREF = '/ckeditor/ckeditor.css?v=20261030'
+const CKEDITOR_SCRIPT_SRC = '/ckeditor/ckeditor.js?v=20261030b'
+const CKEDITOR_STYLE_HREF = '/ckeditor/ckeditor.css?v=20261030b'
+
+const runtimeConfig = useRuntimeConfig()
 
 const props = withDefaults(
   defineProps<{
@@ -459,7 +462,11 @@ async function mountClassicEditor() {
     // Seed initial HTML directly on the visible <textarea> (exact Laem Chabang pattern — zero initialData conflict)
     textareaEl.value.value = props.modelValue || ''
 
+    const resolvedLicenseKey = String(runtimeConfig.public?.ckeditorLicenseKey || 'GPL').trim() || 'GPL'
+    window.CKEDITOR_GLOBAL_LICENSE_KEY = resolvedLicenseKey
+
     const instance = await ClassicEditor.create(textareaEl.value, {
+      licenseKey: resolvedLicenseKey,
       placeholder: props.placeholder,
       firezoneUploadUrl: '/api/admin/upload',
       firezoneOnUploadState: (busy: boolean, errMsg: string) => {

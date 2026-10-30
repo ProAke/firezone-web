@@ -308,6 +308,7 @@ FirezoneClassicEditor.defaultConfig = {
   }
 }
 
+window.CKEDITOR_GLOBAL_LICENSE_KEY = window.CKEDITOR_GLOBAL_LICENSE_KEY || 'GPL'
 window.ClassicEditor = FirezoneClassicEditor
 window.FirezoneClassicEditor = FirezoneClassicEditor
 export default FirezoneClassicEditor
@@ -340,6 +341,14 @@ copyFileSync(
   join(root, 'node_modules', 'ckeditor5', 'dist', 'ckeditor5-content.css'),
   join(outDir, 'ckeditor-content.css')
 )
+copyFileSync(
+  join(root, 'node_modules', 'ckeditor5', 'LICENSE.md'),
+  join(outDir, 'LICENSE.md')
+)
+copyFileSync(
+  join(root, 'node_modules', 'ckeditor5', 'COPYING.GPL'),
+  join(outDir, 'COPYING.GPL')
+)
 
 rmSync(tmpEntryDir, { recursive: true, force: true })
-console.log('Built standalone public/ckeditor/{ckeditor.js,ckeditor.css,ckeditor-content.css}!')
+console.log('Built standalone GPL-free public/ckeditor/ bundle with LICENSE.md & COPYING.GPL!')

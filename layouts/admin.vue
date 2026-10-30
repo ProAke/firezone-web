@@ -127,17 +127,17 @@ useHead({
   link: [
     {
       rel: 'stylesheet',
-      href: '/ckeditor/ckeditor.css?v=20261030'
+      href: '/ckeditor/ckeditor.css?v=20261030b'
     },
     {
       rel: 'preload',
       as: 'script',
-      href: '/ckeditor/ckeditor.js?v=20261030'
+      href: '/ckeditor/ckeditor.js?v=20261030b'
     }
   ],
   script: [
     {
-      src: '/ckeditor/ckeditor.js?v=20261030',
+      src: '/ckeditor/ckeditor.js?v=20261030b',
       defer: true
     }
   ]
