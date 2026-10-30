@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     wpBackupUploadsUrl: process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads',
     public: {
       wpMediaOrigin: process.env.WP_MEDIA_ORIGIN || 'https://fz.uarea.in',
-      wpBackupUploadsUrl: process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads'
+      wpBackupUploadsUrl: process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads',
+      ckeditorLicenseKey: process.env.NUXT_PUBLIC_CKEDITOR_LICENSE_KEY || 'GPL'
     }
   },
 
