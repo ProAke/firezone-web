@@ -58,13 +58,13 @@ export const SEED_SETTINGS: Record<string, string> = {
   email: 'fire_zone@hotmail.com',
   lineId: '0864492598',
   lineUrl: 'https://line.me/ti/p/RBiGzfFotR',
-  lineQrImage: 'https://fireszone.com/wp-content/uploads/2021/01/qrcode.png',
+  lineQrImage: '/wp-content/uploads/2021/01/qrcode.png',
   facebookUrl: 'https://www.facebook.com/FIRESZONE/',
   logoHeader: '/logosticky-fireszone-2.png',
   logoSticky: '/logosticky-fireszone-2.png',
   logoFooter: '/logofooter-firesone.png',
-  aboutImage: 'https://fireszone.com/wp-content/uploads/2021/01/bg-homeaboutus.png',
-  whyChooseImage: 'https://fireszone.com/wp-content/uploads/2021/01/bg-homefireszone3.png',
+  aboutImage: '/wp-content/uploads/2021/01/bg-homeaboutus.png',
+  whyChooseImage: '/wp-content/uploads/2021/01/bg-homefireszone3.png',
   aboutIntro:
     'โดยที่เรามีช่างผู้เชี่ยวชาญด้านระบบไฟอรามโดยเฉพาะ เราจึงจัดจำหน่ายอุปกรณ์ไฟอราม และกล้องวงจรปิด และเน้นให้คำปรึกษาเฉพาะทาง เน้นงานบริการเข้าถึง ลูกค้าได้งาน ไม่คิดราคาเกินจริง พร้อมถึงเซอร์วิสหลังการขาย และการรับประกันจากแบรนด์ชั้นนำต่างๆ',
   statFireAlarmCount: '856',
@@ -98,6 +98,8 @@ export const SEED_SETTINGS: Record<string, string> = {
     'เว็บไซต์นี้ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งาน วิเคราะห์สถิติการเข้าชม และปรับปรุงการให้บริการตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)',
   pdpaDpoEmail: 'fire_zone@hotmail.com',
   pdpaRetentionDays: '365',
+  // Backup Media Origin (auto-mirrored to local data/uploads/wp/)
+  wpBackupUploadsUrl: 'https://fz.uarea.in/uploads',
   // LINE Login & LINE OA / Email Notification Settings
   lineOaBasicId: '',
   lineLoginChannelId: '',
@@ -121,7 +123,7 @@ export const SEED_SETTINGS: Record<string, string> = {
       description: 'หรือติดตั้งพร้อมช่างผู้เชี่ยวชาญเฉพาะทาง ยินดีให้คำปรึกษา ฟรี',
       buttonText: 'คลิกรายละเอียด',
       buttonLink: '/shop',
-      image: 'https://fireszone.com/wp-content/uploads/2021/01/banner1.png'
+      image: '/wp-content/uploads/2021/01/banner1.png'
     },
     {
       id: 2,
@@ -130,7 +132,7 @@ export const SEED_SETTINGS: Record<string, string> = {
       description: 'และระบบแจ้งเตือนผ่าน E-mail รู้เหตุทันท่วงทีผ่านมือถือ ยินดีให้คำปรึกษา ฟรี',
       buttonText: 'คลิกรายละเอียด',
       buttonLink: '/service/line-alarm-development',
-      image: 'https://fireszone.com/wp-content/uploads/2021/02/Banner-2.jpg'
+      image: '/wp-content/uploads/2021/02/Banner-2.jpg'
     },
     {
       id: 3,
@@ -139,7 +141,7 @@ export const SEED_SETTINGS: Record<string, string> = {
       description: 'Notifier, Nohmi, System Sensor, Cemen, CL, AIP, BGM ราคาไม่สูงเกินจริง',
       buttonText: 'ดูสินค้าทั้งหมด',
       buttonLink: '/shop',
-      image: 'https://fireszone.com/wp-content/uploads/2021/02/Banner-3.jpg'
+      image: '/wp-content/uploads/2021/02/Banner-3.jpg'
     },
     {
       id: 4,
@@ -148,31 +150,31 @@ export const SEED_SETTINGS: Record<string, string> = {
       description: 'พร้อมทีมช่างชำนาญงานเฉพาะทาง บริการหลังการขายและการรับประกันครบถ้วน',
       buttonText: 'ติดต่อเรา',
       buttonLink: '/contact',
-      image: 'https://fireszone.com/wp-content/uploads/2021/02/Banner-4-2.jpg'
+      image: '/wp-content/uploads/2021/02/Banner-4-2.jpg'
     }
   ]),
   brandsJson: JSON.stringify([
-    { name: 'EDWARDS', slug: 'edwards', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-edwards.png' },
-    { name: 'NOTIFIER', slug: 'notifier', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-notifier.png' },
-    { name: 'NOHMI', slug: 'nohmi', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-nohmi.png' },
-    { name: 'SYSTEM SENSOR', slug: 'smoke-detectors', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-systemsensor.png' },
-    { name: 'CEMEN', slug: 'cemen', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-cemen.png' },
-    { name: 'AIP', slug: 'aip', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-aip.png' },
-    { name: 'BGM', slug: 'explosion-proof', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-bgm.png' },
-    { name: 'CL', slug: 'control-panels', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-cl.png' },
-    { name: 'CM', slug: 'smoke-detectors', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-cm.png' },
-    { name: 'COMMAX', slug: 'accessories', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-commax.png' },
-    { name: 'FIREMAN', slug: 'accessories', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-fireman.png' },
-    { name: 'MAX', slug: 'accessories', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-max.png' }
+    { name: 'EDWARDS', slug: 'edwards', logo: '/wp-content/uploads/2021/01/logo-edwards.png' },
+    { name: 'NOTIFIER', slug: 'notifier', logo: '/wp-content/uploads/2021/01/logo-notifier.png' },
+    { name: 'NOHMI', slug: 'nohmi', logo: '/wp-content/uploads/2021/01/logo-nohmi.png' },
+    { name: 'SYSTEM SENSOR', slug: 'smoke-detectors', logo: '/wp-content/uploads/2021/01/logo-systemsensor.png' },
+    { name: 'CEMEN', slug: 'cemen', logo: '/wp-content/uploads/2021/01/logo-cemen.png' },
+    { name: 'AIP', slug: 'aip', logo: '/wp-content/uploads/2021/01/logo-aip.png' },
+    { name: 'BGM', slug: 'explosion-proof', logo: '/wp-content/uploads/2021/01/logo-bgm.png' },
+    { name: 'CL', slug: 'control-panels', logo: '/wp-content/uploads/2021/01/logo-cl.png' },
+    { name: 'CM', slug: 'smoke-detectors', logo: '/wp-content/uploads/2021/01/logo-cm.png' },
+    { name: 'COMMAX', slug: 'accessories', logo: '/wp-content/uploads/2021/01/logo-commax.png' },
+    { name: 'FIREMAN', slug: 'accessories', logo: '/wp-content/uploads/2021/01/logo-fireman.png' },
+    { name: 'MAX', slug: 'accessories', logo: '/wp-content/uploads/2021/01/logo-max.png' }
   ]),
   clientsJson: JSON.stringify([
-    { name: 'Porsche', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-porsche.png' },
-    { name: 'Italthai', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-italthai.png' },
-    { name: 'บ้านร้อยสาน', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-baanroisarn.png' },
-    { name: 'Mitsubishi', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-mitsubishi.png' },
-    { name: 'Texas Chicken', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-texas.png' },
-    { name: 'มหาวิทยาลัยธรรมศาสตร์', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-thammasat.png' },
-    { name: 'มหาวิทยาลัยเกษตรศาสตร์', logo: 'https://fireszone.com/wp-content/uploads/2021/01/logo-kaset.png' }
+    { name: 'Porsche', logo: '/wp-content/uploads/2021/01/logo-porsche.png' },
+    { name: 'Italthai', logo: '/wp-content/uploads/2021/01/logo-italthai.png' },
+    { name: 'บ้านร้อยสาน', logo: '/wp-content/uploads/2021/01/logo-baanroisarn.png' },
+    { name: 'Mitsubishi', logo: '/wp-content/uploads/2021/01/logo-mitsubishi.png' },
+    { name: 'Texas Chicken', logo: '/wp-content/uploads/2021/01/logo-texas.png' },
+    { name: 'มหาวิทยาลัยธรรมศาสตร์', logo: '/wp-content/uploads/2021/01/logo-thammasat.png' },
+    { name: 'มหาวิทยาลัยเกษตรศาสตร์', logo: '/wp-content/uploads/2021/01/logo-kaset.png' }
   ])
 }
 
@@ -213,7 +215,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>24 volt operation, Low AC voltage sense, Alarm Verification, PAS (Positive Alarm Sequence).</li>
 <li>Automatic battery trickle charger & up to eight ANN-BUS annunciators.</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/5zone-1.jpg',
+    image: '/wp-content/uploads/2021/02/5zone-1.jpg',
     categoryIds: [76, 67],
     isActive: 1
   },
@@ -236,7 +238,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>History file with 800-event capacity in nonvolatile memory, plus separate 200-event alarm-only file.</li>
 <li>Charger for up to 90 hours of standby power.</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/320.jpg',
+    image: '/wp-content/uploads/2021/02/320.jpg',
     categoryIds: [76, 67],
     isActive: 1
   },
@@ -258,7 +260,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>History file with 800-event capacity in nonvolatile memory + 200-event alarm-only file.</li>
 <li>Full QWERTY keypad & charger for up to 200 hours of standby power.</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/1-loop.jpg',
+    image: '/wp-content/uploads/2021/02/1-loop.jpg',
     categoryIds: [76, 67],
     isActive: 1
   },
@@ -279,7 +281,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>80-character backlit LCD display, real-time clock/calendar, and 256-event history log.</li>
 <li>ANN-BUS connector for up to 8 remote annunciator/relay/printer modules.</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/2002.jpg',
+    image: '/wp-content/uploads/2021/02/2002.jpg',
     categoryIds: [76, 67],
     isActive: 1
   },
@@ -300,7 +302,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Removable front cover for easy installation and maintenance</li>
 <li>Built-in surge arrester for power lines</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FAPN202-R-5L-1.jpg',
+    image: '/wp-content/uploads/2021/02/FAPN202-R-5L-1.jpg',
     categoryIds: [77, 67],
     isActive: 1
   },
@@ -321,7 +323,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Removable front cover for easy installation and maintenance</li>
 <li>Built-in surge arrester for power lines</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FAPN202-R-5L-2.jpg',
+    image: '/wp-content/uploads/2021/02/FAPN202-R-5L-2.jpg',
     categoryIds: [77, 67],
     isActive: 1
   },
@@ -341,7 +343,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Fire zone indication by both zone nameplates and digital display, history list for last 10,000 events</li>
 <li>25 programmable dry contacts interlocked by zone alarm signals & optional RS485 serial output</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FAPN104N-B1.jpg',
+    image: '/wp-content/uploads/2021/02/FAPN104N-B1.jpg',
     categoryIds: [77, 67],
     isActive: 1
   },
@@ -353,7 +355,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'Fire Alarm Control Panel ใน 1 โซนสามารถต่อกับอุปกรณ์ตรวจจับควันไฟ Smoke Detector ได้ 25 ตัว และอุปกรณ์ตรวจจับความร้อน Heat Detector ได้ไม่จำกัดจำนวน มีแบตเตอรี่ 24 โวลท์ในตัว มีฟังก์ชั่นตรวจเช็คสายและอุปกรณ์ได้',
     description: `<p>ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ ยี่ห้อ CEMEN รุ่น FA-605 รองรับการต่อ Smoke Detector ได้ 25 ตัวต่อโซน และ Heat Detector ไม่จำกัดจำนวน มาพร้อมแบตเตอรี่สำรองไฟ 24VDC ในตัว และระบบตรวจสอบสายสัญญาณขาดหรือลัดวงจรอัตโนมัติ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FA-605.jpg',
+    image: '/wp-content/uploads/2021/02/FA-605.jpg',
     categoryIds: [78, 67],
     isActive: 1
   },
@@ -365,7 +367,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'Fire Alarm Control Panel (FCP) ตู้คอนโทรล หรือ ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ในอาคาร 1 โซน สามารถต่อกับ Smoke Detector ได้ 25 ตัว และ Heat Detector ได้ไม่จำกัดจำนวน พร้อมแบตเตอรี่ 24 โวลท์ มีฟังก์ชั่นตรวจเช็คสายและอุปกรณ์ได้',
     description: `<p>ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ขนาด 1 โซน ยี่ห้อ CEMEN รุ่น FA-601 เหมาะสำหรับอาคารพาณิชย์ สำนักงานคลินิก หรือร้านค้า ติดตั้งง่าย พร้อมแบตเตอรี่สำรอง 24VDC และระบบตรวจเช็คสาย</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FA-601.jpg',
+    image: '/wp-content/uploads/2021/02/FA-601.jpg',
     categoryIds: [78, 67],
     isActive: 1
   },
@@ -377,7 +379,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'ตู้คอนโทรล หรือ ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ในอาคาร ขนาด 5 โซนและ 10 โซน Fire Alarm Control Panel 5 Zone and 10 Zone พร้อมแบตเตอรี่ 24VDC ใน 1 โซนต่อ Smoke Detector ได้ 25 ตัว และ Heat Detector ได้ไม่จำกัดจำนวน',
     description: `<p>ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ CEMEN รุ่น FA-505 ขนาด 5 โซน และ 10 โซน พร้อมแบตเตอรี่ 24VDC มีฟังก์ชั่นตรวจเช็คสายและอุปกรณ์ครบถ้วน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FA-505.jpg',
+    image: '/wp-content/uploads/2021/02/FA-505.jpg',
     categoryIds: [78, 67],
     isActive: 1
   },
@@ -389,7 +391,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'ตู้คอนโทรล หรือ ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ในอาคาร ขนาด 15 – 80 โซน Fire Alarm Control Panel 15 – 80 Zone พร้อมแบตเตอรี่ 24VDC ใน 1 โซนต่อ Smoke Detector ได้ 25 ตัว และ Heat Detector ได้ไม่จำกัดจำนวน มีฟังก์ชั่นตรวจเช็คสายและอุปกรณ์ได้',
     description: `<p>ตู้ควบคุมสัญญาณแจ้งเหตุเพลิงไหม้ขนาดใหญ่สำหรับอาคารสูง โรงงาน และโครงการขนาดกลาง-ใหญ่ ขนาดตั้งแต่ 15 ถึง 80 โซน ยี่ห้อ CEMEN รุ่น FA-400 พร้อมแบตเตอรี่สำรองไฟ 24VDC</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FA-400.jpg',
+    image: '/wp-content/uploads/2021/02/FA-400.jpg',
     categoryIds: [78, 67],
     isActive: 1
   },
@@ -401,7 +403,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'ตู้ควบคุมระบบไฟอลาม Fire Alarm Control Panel ขนาด 5 – 80 โซน รุ่น CL-9600 ยี่ห้อ CL ใน 1 โซนต่อ Smoke Detector ได้ 25 ตัว และ Heat Detector ได้ไม่จำกัดจำนวน มีแบตเตอรี่ 24 โวลท์ สามารถตรวจเช็คสายและอุปกรณ์ Detector ได้',
     description: `<p>ตู้คอนโทรลระบบสัญญาณแจ้งเหตุเพลิงไหม้ รุ่น CL-9600 ยี่ห้อ CL รองรับตั้งแต่ 5 ถึง 80 โซน พร้อมแบตเตอรี่สำรอง 24V และฟังก์ชันตรวจสอบสถานะสายสัญญาณ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/CL-9600.jpg',
+    image: '/wp-content/uploads/2021/02/CL-9600.jpg',
     categoryIds: [67],
     isActive: 1
   },
@@ -417,7 +419,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>รุ่น YA-CCP100-10 ขนาด 2-10 Zones Detector</li>
 <li>ระบบแจ้งเตือนและตรวจสอบสายสัญญาณครบวงจร มาตรฐานแบรนด์ AIP</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/YA-CP100.jpg',
+    image: '/wp-content/uploads/2021/02/YA-CP100.jpg',
     categoryIds: [89, 67],
     isActive: 1
   },
@@ -436,7 +438,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Standby Current: ≤90μA | Alarm Current: 10mA – 130mA</li>
 <li>Latching Alarm LED with remote LED connection capability</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/882.jpg',
+    image: '/wp-content/uploads/2021/02/882.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -448,7 +450,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'The Notifier SD-651 Plug-in Smoke Detectors offer superb performance and reliability in a sleek 2” (5.1 cm) low-profile design. UL listed optical sensing chamber sealed against dirt, back pressure air flow, and insects.',
     description: `<p>SD-651 photoelectric smoke detectors contain a unique optical sensing chamber designed to sense smoke particles produced by a wide range of combustion sources. Custom integrated circuit incorporates signal processing to reduce false alarms. Features low current draw, built-in tamper resistant base design, remote LED option, removable cover, and built-in test switch.</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/SD-651.jpg',
+    image: '/wp-content/uploads/2021/02/SD-651.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -466,7 +468,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Easy-to-use terminal screws & reversible mounting bracket</li>
 <li>Compatible with single-gang, 3.5″/4″ octagonal, and 4″ square back boxes</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/5600.jpg',
+    image: '/wp-content/uploads/2021/02/5600.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -484,7 +486,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>DC models polarized for use with supervision circuitry</li>
 <li>Mounts directly to standard 4-inch square electrical box indoors, pre-wired</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/SSM24-6-1.jpg',
+    image: '/wp-content/uploads/2021/02/SSM24-6-1.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -503,7 +505,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Four-position terminal strip molded into backplate (accepts up to 12 AWG wire)</li>
 <li>Surface or semi-flush mounting options</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/NBG-12S.jpg',
+    image: '/wp-content/uploads/2021/02/NBG-12S.jpg',
     categoryIds: [71],
     isActive: 1
   },
@@ -515,7 +517,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'โมดูลระบุตำแหน่ง (Addressable Monitor Modules) สำหรับเชื่อมต่ออุปกรณ์ตรวจจับและสวิตช์แจ้งเหตุเข้ากับตู้ควบคุมระบบอัจฉริยะ NOTIFIER ONYX Series (NFS-320 / NFS-640)',
     description: `<p>Addressable Monitor Modules สำหรับใช้งานร่วมกับตู้ควบคุมอัจฉริยะตระกูล ONYX Series ของ NOTIFIER (เช่น NFS-320, NFS-640) เพื่อเชื่อมต่ออุปกรณ์ Conventional Smoke/Heat Detector, Manual Pull Station, Waterflow Switch และอุปกรณ์แจ้งสถานะเข้าสู่ระบบ Loop อัจฉริยะ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/Monitor-Modules.jpg',
+    image: '/wp-content/uploads/2021/02/Monitor-Modules.jpg',
     categoryIds: [72],
     isActive: 1
   },
@@ -527,7 +529,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'กระดิ่งเตือนภัย ขนาด 6 นิ้ว รุ่น AIP-624B Fire Alarm Bell 6″ ยี่ห้อ AIP ได้มาตรฐาน UL LISTED ใช้ไฟ 24 VDC ความดังที่ 95 dB ที่ 3 เมตร',
     description: `<p>กระดิ่งสัญญาณแจ้งเหตุเพลิงไหม้ ขนาด 6 นิ้ว รุ่น AIP-624B ยี่ห้อ AIP มาตรฐาน UL Listed แรงดันใช้งาน 24 VDC ให้ระดับเสียงเตือนภัยดังชัดเจนถึง 95 dB (ที่ระยะ 3 เมตร) แข็งแรงทนทาน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/AIP-624B.jpg',
+    image: '/wp-content/uploads/2021/02/AIP-624B.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -544,7 +546,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>High sound output with low current consumption & low RFI noise</li>
 <li>High durability, rainproof type available, lead wire connection</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FBM023Z-D.jpg',
+    image: '/wp-content/uploads/2021/02/FBM023Z-D.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -561,7 +563,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Addressable and conventional types available</li>
 <li>Built-in response lamp and telecommunication jack</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FMMN102-U.jpg',
+    image: '/wp-content/uploads/2021/02/FMMN102-U.jpg',
     categoryIds: [71],
     isActive: 1
   },
@@ -572,7 +574,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'CEMEN',
     excerpt: 'อุปกรณ์แจ้งเหตุด้วยมือ Manual Station ยี่ห้อ CEMEN รุ่น S-336 มีแบบฝังและแบบติดลอย',
     description: `<p>อุปกรณ์กดแจ้งเหตุเพลิงไหม้ด้วยมือ (Manual Station) ยี่ห้อ CEMEN รุ่น S-336 ติดตั้งง่าย รองรับทั้งการติดตั้งแบบฝังผนังและแบบติดลอย</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/S-336.jpg',
+    image: '/wp-content/uploads/2021/02/S-336.jpg',
     categoryIds: [71],
     isActive: 1
   },
@@ -584,7 +586,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'สำหรับใช้กดแจ้งเหตุเพลิงไหม้เมื่อเกิดไฟไหม้ เป็นชนิดกดหน้ากระจกให้แตก วัสดุทำด้วยพลาสติกสีแดงทรงสี่เหลี่ยม พร้อมรุ่นฝาครอบใสป้องกันการกดโดยบังเอิญ ใช้ไฟ 24 VDC',
     description: `<p>อุปกรณ์กดแจ้งเหตุเพลิงไหม้ชนิด Break Glass รุ่น YA102 วัสดุพลาสติกทนทานสีแดงทรงสี่เหลี่ยม เมื่อใช้งานแล้วสามารถเปลี่ยนกระจกใหม่ได้ รองรับฝาครอบใสป้องกันการกดเล่น ใช้ไฟ 24 VDC</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/YA102.jpg',
+    image: '/wp-content/uploads/2021/02/YA102.jpg',
     categoryIds: [71],
     isActive: 1
   },
@@ -602,7 +604,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Built-in automatic gain control compensates for signal deterioration from dust build-up</li>
 <li>Optional integral NFPA 72 sensitivity test feature & remote test station</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/Beam1224-1.jpg',
+    image: '/wp-content/uploads/2021/02/Beam1224-1.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -621,7 +623,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Field sensitivity metering to meet NFPA 72 requirements</li>
 <li>Removable cover and insect screen for field cleaning</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/2151.jpg',
+    image: '/wp-content/uploads/2021/02/2151.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -639,7 +641,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Detector head plugs easily into mounting base with built-in shorting spring</li>
 <li>Built-in test switch</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/5151.jpg',
+    image: '/wp-content/uploads/2021/02/5151.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -651,7 +653,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'สโม๊คดีเทคเตอร์ อุปกรณ์ตรวจจับควันไฟ วัสดุเป็นพลาสติกทนความร้อนสีขาว มีไฟ LED บอกสถานะการทำงาน กินกระแสไฟตอนสแตนด์บาย 60~90 ไมโครแอมป์ และตอนทำอลาม 60 มิลลิแอมป์ ไฟ LED สีแดงติดค้างเมื่อแจ้งเหตุ',
     description: `<p>อุปกรณ์ตรวจจับควันไฟ (Photoelectric Smoke Detector) รุ่น CL-180 ยี่ห้อ CL ตัวเรือนพลาสติกทนความร้อนสีขาว กินไฟต่ำ มีไฟ LED แสดงสถานะการทำงานรอบทิศทาง</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/CL-180.jpg',
+    image: '/wp-content/uploads/2021/02/CL-180.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -663,7 +665,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'อุปกรณ์จับความร้อน แบบตรวจจับความร้อนอุณหภูมิคงที่ 70 องศาเซลเซียส วัสดุพลาสติกทนความร้อนสีขาว กินกระแสไฟตอนทำอลาม 60 มิลลิแอมป์ มีไฟ LED สีแดงติดค้างบอกสถานะแจ้งเหตุ',
     description: `<p>อุปกรณ์ตรวจจับความร้อนชนิดอุณหภูมิคงที่ 70°C (Fixed Temperature Heat Detector) รุ่น CL-181 ยี่ห้อ CL ทนทาน เหมาะกับห้องครัว ห้องเครื่อง หรือพื้นที่ที่มีฝุ่น/ไอน้ำ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/CL-181.jpg',
+    image: '/wp-content/uploads/2021/02/CL-181.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -674,7 +676,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'CEMEN',
     excerpt: 'กระดิ่งเตือนภัย รุ่น S-332 Fire Alarm Bell ยี่ห้อ CEMEN ขนาด 6 นิ้ว ใช้ไฟ 24 VDC',
     description: `<p>กระดิ่งสัญญาณเตือนอัคคีภัยขนาด 6 นิ้ว ยี่ห้อ CEMEN รุ่น S-332 ใช้ไฟ 24 VDC เสียงกังวานชัดเจน แข็งแรงทนทาน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/S-332.jpg',
+    image: '/wp-content/uploads/2021/02/S-332.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -685,7 +687,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'Horing Lih',
     excerpt: 'ไซเรนพร้อมไฟกระพริบ สามารถปรับความดังและปรับเสียงได้ 32 เสียง ความดังสูงสุด 114 dB ที่ 1 เมตร ใช้ไฟ 24 VDC',
     description: `<p>อุปกรณ์ส่งสัญญาณเสียงไซเรนและแสงไฟกระพริบ รุ่น AH-03127-BS ปรับรูปแบบเสียงเตือนภัยได้ถึง 32 โทนเสียง ความดังสูงสุด 114 dB (ที่ระยะ 1 เมตร) แรงดันไฟ 24 VDC</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/AH-03127-BS.jpg',
+    image: '/wp-content/uploads/2021/02/AH-03127-BS.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -704,7 +706,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Simple optical axis setting & optional remote test switch</li>
 <li>Approved by Japan Fire Equipment Inspection Institute</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FDGJ203-D-X.jpg',
+    image: '/wp-content/uploads/2021/02/FDGJ203-D-X.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -723,7 +725,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Very low profile design</li>
 <li>Approved by Japan Fire Equipment Inspection Institute</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FDK-246-N.jpg',
+    image: '/wp-content/uploads/2021/02/FDK-246-N.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -734,7 +736,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'NOHMI',
     excerpt: 'Explosion-proof Type Detector Model FDL120-E-60 ยี่ห้อ NOHMI สำหรับพื้นที่เสี่ยงอันตราย',
     description: `<p>อุปกรณ์ตรวจจับชนิดป้องกันการระเบิด (Explosion-proof Type) รุ่น FDL120-E-60 ยี่ห้อ NOHMI ออกแบบสำหรับติดตั้งในพื้นที่อันตราย เช่น โรงกลั่น คลังสารเคมี หรือห้องเก็บเชื้อเพลิง</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/FDL120-E-60.jpg',
+    image: '/wp-content/uploads/2021/02/FDL120-E-60.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -752,8 +754,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>2-wire system with Alarm response lamp (LED)</li>
 <li>Approved by Japan Fire Equipment Inspection Institute</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/FDLJ906-DW-65.jpg',
-    datasheetUrl: 'https://fireszone.com/wp-content/uploads/woocommerce_uploads/2021/03/fdlj_df_2914-xgyf9c.pdf',
+    image: '/wp-content/uploads/2021/03/FDLJ906-DW-65.jpg',
+    datasheetUrl: '',
     categoryIds: [69],
     isActive: 1
   },
@@ -771,7 +773,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Simple mounting, low profile, and easy maintenance</li>
 <li>Approved by Japan Fire Equipment Inspection Institute</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/FDPJ206-D.jpg',
+    image: '/wp-content/uploads/2021/03/FDPJ206-D.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -786,7 +788,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Single Phone Jack Mounted on durable Stainless Steel Faceplate</li>
 <li>Size: 7 cm x 11.5 cm (Single-Gang Electrical Outlet Box)</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/Fireman-telephone-jack.jpg',
+    image: '/wp-content/uploads/2021/03/Fireman-telephone-jack.jpg',
     categoryIds: [72],
     isActive: 1
   },
@@ -804,7 +806,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Dual bi-color LEDs provide 360° viewing angle (blink green on poll, steady red on alarm)</li>
 <li>Remote test feature from panel & built-in magnet test switch</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/FSP-851CH.jpg',
+    image: '/wp-content/uploads/2021/03/FSP-851CH.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -821,7 +823,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>High visibility even in dark corridors</li>
 <li>Streamlined internal structure for fast, clean wiring</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/FWLN007-R-P1.jpg',
+    image: '/wp-content/uploads/2021/03/FWLN007-R-P1.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -833,7 +835,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'Notifier LDM-E32 Lamp Driver Annunciator Expander Module with 32 alarm drivers (or 16 alarm, 16 trouble, and 16 switch inputs), includes ribbon cable.',
     description: `<p>Lamp Driver Annunciator Expander Module 32 Points สำหรับขยายจุดแสดงผล Graphic Annunciator ร่วมกับโมดูล LDM-32 ของ NOTIFIER มาพร้อมสายแพเชื่อมต่อ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/LDM-32.jpg',
+    image: '/wp-content/uploads/2021/03/LDM-32.jpg',
     categoryIds: [72],
     isActive: 1
   },
@@ -852,7 +854,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
 <li>Horn rated at 88+ dBA at 16 volts with rotary switch for tone and volume selection</li>
 <li>Mounting plate shorting spring checks wiring continuity before device installation</li>
 </ul>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/p2rl.jpg',
+    image: '/wp-content/uploads/2021/03/p2rl.jpg',
     categoryIds: [70],
     isActive: 1
   },
@@ -864,7 +866,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'อุปกรณ์ตรวจจับความร้อน จับอุณหภูมิที่เปลี่ยนแปลงจากปกติ 9 องศาเซลเซียส หรือ 15 องศาฟาเรนไฮต์ ภายใน 1 นาที มีไฟ LED บอกสถานะการทำงาน',
     description: `<p>อุปกรณ์ตรวจจับความร้อนชนิดตรวจจับอัตราการเพิ่มของอุณหภูมิ (Rate-of-Rise Heat Detector) รุ่น S-302 ยี่ห้อ CEMEN ทำงานเมื่ออุณหภูมิสูงขึ้นเกิน 9°C ภายใน 1 นาที พร้อมไฟ LED แสดงสถานะ</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/S-302.jpg',
+    image: '/wp-content/uploads/2021/03/S-302.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -876,7 +878,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'ตัวจับควัน สโม๊คดีเทคเตอร์ ใช้ไฟ 12~24 โวลท์ สามารถใช้ร่วมกับระบบกันขโมยได้ มีดรายคอนแทคแยก (NO/NC) และไฟ LED สีแดงติดค้างเมื่อเกิดเหตุอลาม',
     description: `<p>อุปกรณ์ตรวจจับควันไฟ รุ่น S-314 ยี่ห้อ CEMEN วัสดุพลาสติกทนความร้อนสีขาว ใช้ไฟ 12~24V กินกระแสสแตนด์บาย 75 ไมโครแอมป์ มี Dry Contact แยก (0.8A @ 30V / 0.4A @ 125V) สามารถประยุกต์ใช้งานร่วมกับตู้ Fire Alarm และระบบกันขโมยได้</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/S-314.jpg',
+    image: '/wp-content/uploads/2021/03/S-314.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -887,7 +889,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'CEMEN',
     excerpt: 'ตรวจจับควัน Smoke Detector ยี่ห้อ CEMEN รุ่น S-315 มีไฟ LED บอกสถานะการทำงาน',
     description: `<p>อุปกรณ์ตรวจจับควันไฟ Photoelectric Smoke Detector ยี่ห้อ CEMEN รุ่น S-315 ดีไซน์กะทัดรัด ติดตั้งง่าย พร้อมไฟ LED แสดงสถานะการทำงาน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/S-315.jpg',
+    image: '/wp-content/uploads/2021/03/S-315.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -899,7 +901,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'อุปกรณ์ตรวจจับความร้อนอุณหภูมิคงที่ 70 องศาเซลเซียส ใช้ไฟ 12~24 โวลท์ มีดรายคอนแทคแยก และไฟ LED สีแดงติดค้างบอกสถานะตอนทำอลาม',
     description: `<p>อุปกรณ์ตรวจจับความร้อนชนิดอุณหภูมิคงที่ 70°C รุ่น S-318 ยี่ห้อ CEMEN ใช้ไฟ 12~24V กินกระแสตอนทำอลาม 40mA มี Dry Contact แยก พร้อมไฟ LED แสดงสถานะการทำงาน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/S-318.jpg',
+    image: '/wp-content/uploads/2021/03/S-318.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -911,7 +913,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     excerpt:
       'อุปกรณ์ตรวจจับความร้อน 2 ระบบ คือ ตรวจจับอุณหภูมิที่เปลี่ยนแปลงและตรวจจับอุณหภูมิคงที่ในตัวเดียวกัน วัสดุเป็นพลาสติกทนความร้อนสีขาว',
     description: `<p>Combination Heat Detector รุ่น YA-CH710 ยี่ห้อ AIP รวมระบบตรวจจับอัตราการเพิ่มอุณหภูมิ (Rate-of-Rise) และอุณหภูมิคงที่ (Fixed Temperature) ไว้ในตัวเดียว แม่นยำและทนทาน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/YA-CH710.jpg',
+    image: '/wp-content/uploads/2021/03/YA-CH710.jpg',
     categoryIds: [69],
     isActive: 1
   },
@@ -922,7 +924,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'AIP',
     excerpt: 'ตัวจับควัน สโม๊คดีเทคเตอร์ หรือ อุปกรณ์ตรวจจับควันไฟ รุ่น YA-CS820 วัสดุเป็นพลาสติกทนความร้อนสีขาว',
     description: `<p>อุปกรณ์ตรวจจับควันไฟ (Photoelectric Smoke Detector) รุ่น YA-CS820 ยี่ห้อ AIP ตัวเรือนผลิตจากพลาสติกทนความร้อนสีขาว ตรวจจับควันไฟได้อย่างรวดเร็วและเสถียร</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/YA-CS820.jpg',
+    image: '/wp-content/uploads/2021/03/YA-CS820.jpg',
     categoryIds: [68],
     isActive: 1
   },
@@ -933,7 +935,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     brand: 'BGM',
     excerpt: 'อุปกรณ์แจ้งเหตุเพลิงไหม้ชนิดป้องกันการระเบิด (Explosion-Proof) แบรนด์ BGM สำหรับติดตั้งในพื้นที่เสี่ยงอันตรายและโรงงานอุตสาหกรรม',
     description: `<p>ชุดอุปกรณ์แจ้งเหตุเพลิงไหม้ชนิดกันระเบิด (Explosion-Proof Fire Alarm Equipment) แบรนด์ BGM ออกแบบโครงสร้างป้องกันประกายไฟเล็ดลอดออกสู่ภายนอก เหมาะสำหรับโรงงานเคมี คลังเชื้อเพลิง ห้องเก็บก๊าซ และพื้นที่ Hazardous Location</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/03/BMG.jpg',
+    image: '/wp-content/uploads/2021/03/BMG.jpg',
     categoryIds: [90],
     isActive: 1
   }
@@ -949,7 +951,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'อุปกรณ์กำเนิดสัญญาณเหตุเพลิงไหม้',
     excerpt: 'อุปกรณ์ระบบแจ้งเหตุเพลิงไหม้ เช่น Smoke Detector, Heat Detector, Manual Pull Station สำหรับแจ้งเตือนเมื่อเกิดเหตุ',
     content: `<p>อุปกรณ์ระบบแจ้งเหตุเพลิงไหม้ ที่มีไว้สำหรับแจ้งเตือนเมื่อมีเหตุเพลิงไหม้ โดยจะใช้อุปกรณ์ตรวจจับชนิดต่างๆ กันออกไปตามความเหมาะสมของพื้นที่ เช่น Smoke Detector (อุปกรณ์ตรวจจับควัน), Heat Detector (อุปกรณ์ตรวจจับความร้อน), Manual Pull Station / Manual Call Point (อุปกรณ์ดึงหรือกดแจ้งเหตุด้วยมือ) เป็นต้น ซึ่งจะทำให้สามารถรับรู้เหตุการณ์ตั้งแต่ระยะเริ่มต้นและแก้ไขได้ทันท่วงที ไม่ให้ไฟไหม้ลุกลามจนไม่สามารถควบคุมได้</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/product1.png',
+    image: '/wp-content/uploads/2021/01/product1.png',
     sortOrder: 1
   },
   {
@@ -962,7 +964,7 @@ export const SEED_SERVICES: SeedService[] = [
     content: `<p>ตู้ควบคุมระบบป้องกันอัคคีภัยจะมีด้วยกัน 2 แบบหลัก ได้แก่ แบบ Hard-Wire (Conventional) และแบบ Multiplex (Addressable)</p>
 <p><strong>1. ตู้ควบคุมระบบแบบ Hard-Wire (Conventional):</strong> จะต่อโซนอุปกรณ์ตรวจจับและโซนอุปกรณ์แจ้งสัญญาณเตือนเข้ากับแผงควบคุมภายในตู้โดยตรง มีให้เลือกทั้งขนาด 1, 2, 4, 5, 6, 10 ไปจนถึง 80 โซน จากแบรนด์ชั้นนำมาตรฐาน UL, FM, ULC และมาตรฐานญี่ปุ่น</p>
 <p><strong>2. ตู้ควบคุมระบบแบบ Multiplex (Addressable):</strong> ใช้อุปกรณ์ระบุตำแหน่งและโมดูล (Addressable Module) ในการต่อโซนและขยายระบบ ทำให้ทราบจุดเกิดเหตุแบบรายตัว เหมาะกับอาคารขนาดกลางถึงขนาดใหญ่</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/product2.png',
+    image: '/wp-content/uploads/2021/01/product2.png',
     sortOrder: 2
   },
   {
@@ -976,7 +978,7 @@ export const SEED_SERVICES: SeedService[] = [
 <p><strong>• ถังดับเพลิงชนิดผงเคมีแห้ง (Dry Chemical):</strong> บรรจุถังสีแดง ภายในบรรจุผงเคมีแห้งและก๊าซไนโตรเจน ฉีดออกมาเป็นฝุ่นละออง สามารถดับเพลิงไหม้ที่เกิดจากไม้ กระดาษ สิ่งทอ ยาง น้ำมัน แก๊ส และเครื่องใช้ไฟฟ้าได้อย่างรวดเร็วและมีประสิทธิภาพสูง</p>
 <p><strong>• ถังดับเพลิงชนิดก๊าซคาร์บอนไดออกไซด์ (CO2):</strong> น้ำยาเป็นหมอกหิมะที่ช่วยลดความร้อนและไล่ออกซิเจน ไม่ทิ้งคราบสกปรก เหมาะสำหรับใช้งานภายในอาคาร ห้องเซิร์ฟเวอร์ ห้องควบคุมไฟฟ้า มีขนาด 5, 10 และ 15 ปอนด์</p>
 <p><strong>• อุปกรณ์ไฟฉุกเฉิน (Emergency Light):</strong> อุปกรณ์ให้แสงสว่างสำรองอัตโนมัติเมื่อเกิดเหตุไฟฟ้าดับ เพื่อให้สามารถอพยพออกจากอาคารได้อย่างปลอดภัย</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/Porduct-6.jpg',
+    image: '/wp-content/uploads/2021/01/Porduct-6.jpg',
     sortOrder: 3
   },
   {
@@ -987,7 +989,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'ระบบกล้องวงจรปิด',
     excerpt: 'ระบบการบันทึกภาพเคลื่อนไหวด้วยกล้องวงจรปิด CCTV แบรนด์ชั้นนำ Hikvision, Panasonic, Bosch, Dahua',
     content: `<p>ระบบการบันทึกภาพเคลื่อนไหวด้วยกล้องวงจรปิด (CCTV) สำหรับการรักษาความปลอดภัยและเฝ้าระวังเหตุการณ์ต่างๆ ทั้งภายในและภายนอกอาคาร รองรับการดูภาพออนไลน์ผ่านสมาร์ทโฟนตลอด 24 ชั่วโมง จัดจำหน่ายและติดตั้งแบรนด์ชั้นนำ อาทิ Hikvision, Panasonic, Bosch, Pelco และ Dahua</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/Porduct-5.jpg',
+    image: '/wp-content/uploads/2021/02/Porduct-5.jpg',
     sortOrder: 4
   },
   {
@@ -999,7 +1001,7 @@ export const SEED_SERVICES: SeedService[] = [
     excerpt: 'ระบบเสาอากาศรวม Master Antenna Television (MATV) สำหรับหอพัก อพาร์ทเม้นท์ รีสอร์ท คอนโดมิเนียม และโรงแรม',
     content: `<p>Master Antenna Television (MATV) คือระบบกระจายสัญญาณทีวีดิจิตอลไปยังห้องพักต่างๆ ภายในอาคารเดียวกันหรือกลุ่มอาคารใกล้เคียงโดยใช้เสาอากาศรวมเพียงชุดเดียว นิยมใช้ในหอพัก อพาร์ทเม้นท์ รีสอร์ท คอนโดมิเนียม และโรงแรม</p>
 <p>ช่วยให้ไม่ต้องติดตั้งเสาก้างปลาหรือจานดาวเทียมแยกแต่ละห้อง ลดความรกของอาคาร บริหารจัดการสายสัญญาณได้เป็นระเบียบ และดูแลรักษาง่าย</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/Porduct-4.jpg',
+    image: '/wp-content/uploads/2021/01/Porduct-4.jpg',
     sortOrder: 5
   },
 
@@ -1012,7 +1014,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'ติดตั้งและตรวจเช็คระบบสัญญาณเตือนไฟไหม้',
     excerpt: 'พร้อมช่างที่ชำนาญเฉพาะทางที่มีประสบการณ์มาหลายปี ติดตั้งตามแบบและสโคปงานมาตรฐาน',
     content: `<p>บริการติดตั้งและตรวจเช็คบำรุงรักษาระบบสัญญาณเตือนไฟไหม้ (Fire Alarm System) ติดตั้งตามแบบวิศวกรรมหรือตามสโคปงานที่ได้รับมอบหมาย พร้อมตรวจสอบสายสัญญาณและทดสอบการทำงานของอุปกรณ์ทุกจุดโดยทีมช่างผู้ชำนาญการที่มีประสบการณ์มากกว่า 20 ปี</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/server-2.jpg',
+    image: '/wp-content/uploads/2021/01/server-2.jpg',
     sortOrder: 6
   },
   {
@@ -1023,7 +1025,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'ทดสอบระบบสัญญาณเตือนไฟไหม้',
     excerpt: 'สอนการใช้งานของอุปกรณ์ พร้อมให้คำปรึกษาจากช่างที่ชำนาญงานโดยตรง',
     content: `<p>บริการทดสอบประสิทธิภาพระบบสัญญาณเตือนไฟไหม้ประจำปี แนะนำอุปกรณ์สัญญาณเตือนไฟไหม้ที่เหมาะสมกับหน้างาน สอนวิธีการใช้งานตู้ควบคุมให้กับเจ้าหน้าที่ประจำอาคาร รวมถึงวิเคราะห์และแก้ไขปัญหาหน้างานอย่างตรงจุด</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2020/06/service-1.png',
+    image: '/wp-content/uploads/2020/06/service-1.png',
     sortOrder: 7
   },
   {
@@ -1034,7 +1036,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'พัฒนาระบบสัญญาณเตือนภัยไฟอราม',
     excerpt: 'เขียนระบบให้อุปกรณ์สัญญาณเตือนภัยไฟอราม สามารถแจ้งเตือนผ่านมือถือ Line และ E-mail ได้ทันที',
     content: `<p>พัฒนาระบบต่อพ่วงให้อุปกรณ์และตู้ควบคุมสัญญาณเตือนภัยไฟอรามสามารถแจ้งเตือนถึงผู้ดูแลอาคารได้รวดเร็วขึ้น โดยส่งข้อความแจ้งเตือนเข้าสู่กลุ่ม LINE (Line Notification) หรือ E-mail ทันทีเมื่อเกิดเหตุสัญญาณเตือนอัคคีภัย ทางบริษัทเป็นผู้พัฒนาขึ้นโดยเฉพาะเพื่อรองรับความต้องการของลูกค้ายุคใหม่</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/server-3.jpg',
+    image: '/wp-content/uploads/2021/02/server-3.jpg',
     sortOrder: 8
   },
   {
@@ -1045,7 +1047,7 @@ export const SEED_SERVICES: SeedService[] = [
     title: 'ระบบสัญญาณเตือนไฟไหม้',
     excerpt: 'จำหน่ายอุปกรณ์ ระบบสัญญาณเตือนไฟไหม้ ได้มาตรฐาน UL พร้อมคู่มือและสอนการใช้งาน',
     content: `<p>จัดจำหน่ายอุปกรณ์แจ้งเตือนภัยไฟอราม (Fire Alarm) และอุปกรณ์ดับเพลิงหลากหลายแบรนด์ชั้นนำ ได้รับมาตรฐานสากล UL / FM พร้อมเอกสารคู่มือการใช้งาน การรับประกันสินค้า และบริการให้คำปรึกษาวิธีการใช้งานครบถ้วน</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/server-1-1.jpg',
+    image: '/wp-content/uploads/2021/01/server-1-1.jpg',
     sortOrder: 9
   }
 ]
@@ -1060,8 +1062,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ บริษัท พี เอ โฟน',
     excerpt: 'ผลงานติดตั้งและตรวจสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ บริษัท พี เอ โฟน',
     content: '<p>ดำเนินการติดตั้งและทดสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ (Fire Alarm System) ณ โครงการ บริษัท พี เอ โฟน โดยทีมช่างผู้เชี่ยวชาญจาก บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-15.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-15.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-15.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-15.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1072,8 +1074,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ กรมทหารสื่อสาร พระราชวัง',
     excerpt: 'ผลงานติดตั้งและดูแลระบบสัญญาณเตือนอัคคีภัย กรมทหารสื่อสาร พระราชวัง',
     content: '<p>ดำเนินการติดตั้ง ตรวจเช็ค และทดสอบระบบสัญญาณเตือนอัคคีภัย ณ โครงการ กรมทหารสื่อสาร พระราชวัง ให้พร้อมใช้งานตามมาตรฐานความปลอดภัยสูงสุด</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-14.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-14.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-14.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-14.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1084,8 +1086,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ โรงอู่ ปอร์เช่ วิภาวดีรังสิต',
     excerpt: 'ผลงานติดตั้งระบบสัญญาณเตือนอัคคีภัย ศูนย์บริการและโรงอู่ ปอร์เช่ ถนนวิภาวดีรังสิต',
     content: '<p>ผลงานติดตั้งและทดสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ (Fire Alarm System) ณ โครงการ โรงอู่ ปอร์เช่ วิภาวดีรังสิต มาตรฐานศูนย์บริการรถยนต์ระดับสากล</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-13.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-13.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-13.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-13.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1096,8 +1098,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ โรงพยาบาลสัตว์ แอนิมอลสเปซ พุทธมณฑล 2',
     excerpt: 'ผลงานติดตั้งระบบแจ้งเหตุเพลิงไหม้ โรงพยาบาลสัตว์ แอนิมอลสเปซ พุทธมณฑลสาย 2',
     content: '<p>ดำเนินการติดตั้งและทดสอบระบบแจ้งเหตุเพลิงไหม้ (Fire Alarm System) สำหรับอาคารโรงพยาบาลสัตว์ แอนิมอลสเปซ พุทธมณฑล 2 เพื่อความปลอดภัยตลอด 24 ชั่วโมง</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-12.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-12.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-12.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-12.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1108,8 +1110,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ ศูนย์ Training Center of Mitsubishi',
     excerpt: 'ผลงานติดตั้งและตรวจเช็คระบบป้องกันอัคคีภัย ศูนย์ฝึกอบรม Mitsubishi',
     content: '<p>ดำเนินการติดตั้งและตรวจเช็คระบบสัญญาณเตือนอัคคีภัย ณ โครงการ ศูนย์ฝึกอบรม Training Center of Mitsubishi โดยทีมวิศวกรและช่างเทคนิคชำนาญการ</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-10.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-10.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-10.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-10.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1120,8 +1122,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ โรงงาน ลาดกระบัง',
     excerpt: 'ผลงานติดตั้งระบบสัญญาณแจ้งเหตุเพลิงไหม้สำหรับโรงงานอุตสาหกรรม เขตลาดกระบัง',
     content: '<p>ผลงานติดตั้งและทดสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ในพื้นที่โรงงานอุตสาหกรรม เขตลาดกระบัง ครอบคลุมพื้นที่การผลิตและคลังสินค้า</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-9.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-9.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-9.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-9.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1132,8 +1134,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ โรงงาน บุคคโลแทรดิ้ง',
     excerpt: 'ผลงานติดตั้งและบำรุงรักษาระบบไฟอราม โรงงาน บุคคโลแทรดิ้ง',
     content: '<p>ดำเนินการติดตั้งและตรวจเช็คระบบสัญญาณแจ้งเหตุเพลิงไหม้ (Fire Alarm System) ณ โครงการ โรงงาน บุคคโลแทรดิ้ง พร้อมส่งมอบและแนะนำการใช้งาน</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-8.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-8.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-8.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-8.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1144,8 +1146,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ บริษัท โพลทรี่กรุ๊ป จำกัด พนัสนิคม ชลบุรี',
     excerpt: 'ผลงานติดตั้งระบบสัญญาณเตือนอัคคีภัย บริษัท โพลทรี่กรุ๊ป จำกัด อ.พนัสนิคม จ.ชลบุรี',
     content: '<p>ดำเนินการติดตั้งและทดสอบระบบแจ้งเหตุเพลิงไหม้ ณ โครงการ บริษัท โพลทรี่กรุ๊ป จำกัด อ.พนัสนิคม จ.ชลบุรี</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-7.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-7.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-7.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-7.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1156,8 +1158,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ UNISON LABORATORIES',
     excerpt: 'ผลงานติดตั้งและตรวจสอบระบบสัญญาณเตือนไฟไหม้ โรงงานเวชภัณฑ์ UNISON LABORATORIES',
     content: '<p>ผลงานติดตั้งและตรวจสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ตามมาตรฐานโรงงานผลิตเวชภัณฑ์ ณ โครงการ UNISON LABORATORIES</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-6.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/10/Pro-6.jpg'],
+    image: '/wp-content/uploads/2021/10/Pro-6.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-6.jpg'],
     publishedAt: '2021-10-29'
   },
   {
@@ -1168,14 +1170,14 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ The LIVING',
     excerpt: 'ผลงานติดตั้งและทดสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ครบวงจร โครงการ The LIVING',
     content: '<p>ประมวลภาพผลงานการเดินสาย ติดตั้งตู้ควบคุม อุปกรณ์ตรวจจับควัน-ความร้อน และทดสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ ณ โครงการ The LIVING</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/02/Pro-3.jpg',
+    image: '/wp-content/uploads/2021/02/Pro-3.jpg',
     gallery: [
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_0.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_1.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_2.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_3.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_5.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_9.jpg'
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_0.jpg',
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_1.jpg',
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_2.jpg',
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_3.jpg',
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_5.jpg',
+      '/wp-content/uploads/2021/02/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87_210212_9.jpg'
     ],
     publishedAt: '2021-02-12'
   },
@@ -1187,14 +1189,14 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ บริษัท เอเชียน มารีน เซอร์วิสส์ จำกัด',
     excerpt: 'ผลงานติดตั้งและตรวจเช็คระบบอุปกรณ์ไฟอราม บริษัท เอเชียน มารีน เซอร์วิสส์ จำกัด',
     content: '<p>ประมวลภาพการเข้าติดตั้ง ตรวจเช็ค และทดสอบระบบสัญญาณเตือนอัคคีภัย ณ บริษัท เอเชียน มารีน เซอร์วิสส์ จำกัด โดยทีมช่างเทคนิคผู้เชี่ยวชาญ</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/Pro-1.jpg',
+    image: '/wp-content/uploads/2021/01/Pro-1.jpg',
     gallery: [
-      'https://fireszone.com/wp-content/uploads/2021/01/141562653_1840738426103258_2317414679984104631_o.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/01/142731819_1840738462769921_1981925840563520749_o.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/01/S__455966733.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/01/S__455966735.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/01/S__455966739.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/01/S__455966729.jpg'
+      '/wp-content/uploads/2021/01/141562653_1840738426103258_2317414679984104631_o.jpg',
+      '/wp-content/uploads/2021/01/142731819_1840738462769921_1981925840563520749_o.jpg',
+      '/wp-content/uploads/2021/01/S__455966733.jpg',
+      '/wp-content/uploads/2021/01/S__455966735.jpg',
+      '/wp-content/uploads/2021/01/S__455966739.jpg',
+      '/wp-content/uploads/2021/01/S__455966729.jpg'
     ],
     publishedAt: '2021-01-21'
   },
@@ -1206,14 +1208,14 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ คอนโด รัชดา 18',
     excerpt: 'ผลงานติดตั้งและตรวจสอบระบบสัญญาณแจ้งเหตุเพลิงไหม้ อาคารชุดพักอาศัย คอนโด รัชดา 18',
     content: '<p>ผลงานติดตั้ง ตรวจสอบ และบำรุงรักษาระบบสัญญาณเตือนอัคคีภัย (Fire Alarm System) ณ โครงการ คอนโด รัชดา 18 เพื่อความอุ่นใจของผู้อยู่อาศัยทุกยูนิต</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/Pro-2.jpg',
+    image: '/wp-content/uploads/2021/01/Pro-2.jpg',
     gallery: [
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-6.png',
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-5.png',
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-4.png',
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-3.png',
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-2.png',
-      'https://fireszone.com/wp-content/uploads/2021/01/portfolio-1.png'
+      '/wp-content/uploads/2021/01/portfolio-6.png',
+      '/wp-content/uploads/2021/01/portfolio-5.png',
+      '/wp-content/uploads/2021/01/portfolio-4.png',
+      '/wp-content/uploads/2021/01/portfolio-3.png',
+      '/wp-content/uploads/2021/01/portfolio-2.png',
+      '/wp-content/uploads/2021/01/portfolio-1.png'
     ],
     publishedAt: '2021-01-15'
   },
@@ -1225,13 +1227,8 @@ export const SEED_POSTS: SeedPost[] = [
     title: 'โครงการ โรงแรม เอกลดา บุรีรัมย์',
     excerpt: 'เปลี่ยนตู้ควบคุมไฟอรามใหม่ พร้อมทดสอบระบบแจ้งเหตุเพลิงไหม้ โรงแรม เอกลดา จ.บุรีรัมย์',
     content: '<p>ดำเนินการเปลี่ยนตู้ควบคุมไฟอราม (Fire Alarm Control Panel) ชุดใหม่ พร้อมตรวจเช็คสายสัญญาณและทดสอบการทำงานของอุปกรณ์แจ้งเหตุเพลิงไหม้ ณ โรงแรม เอกลดา จังหวัดบุรีรัมย์</p>',
-    image: 'https://fireszone.com/wp-content/uploads/2021/10/Pro-5.jpg',
-    gallery: [
-      'https://fireszone.com/wp-content/uploads/2021/10/Pro-5.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/06/S__304103428.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/06/S__304103429.jpg',
-      'https://fireszone.com/wp-content/uploads/2021/06/S__304103430.jpg'
-    ],
+    image: '/wp-content/uploads/2021/10/Pro-5.jpg',
+    gallery: ['/wp-content/uploads/2021/10/Pro-5.jpg'],
     publishedAt: '2019-06-19'
   },
 
@@ -1246,8 +1243,8 @@ export const SEED_POSTS: SeedPost[] = [
     content: `<p>สถิติความสูญเสียทั้งชีวิตและทรัพย์สินจากเหตุเพลิงไหม้ในอาคาร พบว่ากว่า 38% เกิดขึ้นในอาคารที่ไม่มีระบบ Smoke Detector และอีก 21% พบว่าอาคารที่เกิดเพลิงไหม้แม้ว่าจะติดตั้งระบบ Smoke Detector ไว้แล้ว แต่เมื่อเกิดเหตุจริงระบบกลับไม่ทำงานเนื่องจากขาดการตรวจเช็คหรืออุปกรณ์หมดอายุการใช้งาน</p>
 <p>ความสำคัญของ <strong>Smoke Detector (อุปกรณ์ตรวจจับควันไฟ)</strong> คือการตรวจจับอนุภาคควันไฟตั้งแต่ระยะเริ่มต้นเมื่อเกิดการลุกไหม้บนเชื้อเพลิง เพราะควันไฟจะเป็นสิ่งแรกที่ลอยตัวขึ้นสู่ที่สูงไปกระทบกับเครื่องตรวจจับควันบนเพดานก่อนที่เปลวไฟจะลุกลาม</p>
 <p>เมื่ออุปกรณ์ตรวจจับควันทำงาน ระบบส่งสัญญาณแจ้งเหตุเพลิงไหม้ (Signaling Equipment) จะเริ่มส่งเสียงเตือนทันทีเพื่อให้ผู้ที่อยู่ภายในอาคารรับรู้เหตุการณ์ อพยพออกจากพื้นที่ หรือเข้าระงับเหตุเบื้องต้นได้อย่างรวดเร็ว ลดความสูญเสียได้อย่างมหาศาล ดังนั้นจึงควรตรวจเช็คทำความสะอาดเป็นประจำทุกปี และพิจารณาเปลี่ยนหัวตรวจจับเมื่อใช้งานครบอายุมาตรฐาน (ประมาณ 8–10 ปี) หรือเมื่อทดสอบแล้วค่าความไวต่ำกว่าเกณฑ์</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/news-3.png',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/01/smoke-alarm.jpg'],
+    image: '/wp-content/uploads/2021/01/news-3.png',
+    gallery: ['/wp-content/uploads/2021/01/smoke-alarm.jpg'],
     publishedAt: '2021-02-04'
   },
   {
@@ -1260,8 +1257,8 @@ export const SEED_POSTS: SeedPost[] = [
     content: `<p>รู้หรือไม่? อุปกรณ์แจ้งเหตุเพลิงไหม้ด้วยมือ (Manual Initiating Device) ที่ติดตั้งตามทางเดินและใกล้บันไดหนีไฟ มีด้วยกันอยู่ 2 รูปแบบหลัก ได้แก่:</p>
 <p><strong>1. อุปกรณ์แจ้งเหตุด้วยมือแบบดึงคันโยกลง (Manual Pull Station):</strong> นิยมใช้ตามมาตรฐานอเมริกา (UL / NFPA) ผู้พบเห็นเหตุเพลิงไหม้สามารถดันเข้าและดึงคันโยกลง (Push In / Pull Down) เพื่อส่งสัญญาณแจ้งเตือนไปยังตู้ควบคุมทันที</p>
 <p><strong>2. อุปกรณ์แจ้งเหตุด้วยมือแบบกดปุ่ม / ทุบกระจก (Manual Call Point):</strong> นิยมใช้ตามมาตรฐานยุโรปและญี่ปุ่น เมื่อเกิดเหตุให้กดที่แผ่นหน้าหรือกดปุ่มตรงกลางเพื่อส่งสัญญาณแจ้งเหตุ โดยหลายรุ่นสามารถรีเซ็ตกลับมาใช้งานใหม่ได้โดยไม่ต้องเปลี่ยนแผ่นกระจก</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/new-1p.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/01/new-1.jpg'],
+    image: '/wp-content/uploads/2021/01/new-1p.jpg',
+    gallery: ['/wp-content/uploads/2021/01/new-1.jpg'],
     publishedAt: '2021-02-03'
   },
   {
@@ -1273,8 +1270,8 @@ export const SEED_POSTS: SeedPost[] = [
     excerpt: 'มาทำความรู้จักกับอุปกรณ์กันระเบิด สำหรับพื้นที่เสี่ยงอันตราย เช่น โรงกลั่นน้ำมัน และคลังสารเคมี',
     content: `<p><strong>Explosion-Proof Fire Alarm System (อุปกรณ์ป้องกันการระเบิดในตัว)</strong> เป็นอุปกรณ์ที่ออกแบบโครงสร้างพิเศษให้เมื่อเกิดประกายไฟหรือการระเบิดขึ้นภายในตัวอุปกรณ์เอง จะไม่มีเปลวไฟหรือประกายไฟเล็ดลอดออกมาสู่ภายนอกได้ จึงไม่กลายเป็นแหล่งจุดติดไฟในบรรยากาศรอบข้าง</p>
 <p>อุปกรณ์ประเภทนี้มีความจำเป็นอย่างยิ่งสำหรับติดตั้งในพื้นที่อันตราย (Hazardous Location) ที่มีความเสี่ยงต่อการเกิดการระเบิดจากไอระเหยของสารไวไฟ ก๊าซ หรือฝุ่นผงที่ติดไฟง่าย อาทิ โรงกลั่นน้ำมัน คลังเก็บสารเคมี ห้องพ่นสี โรงงานปิโตรเคมี และคลังเก็บเชื้อเพลิง</p>`,
-    image: 'https://fireszone.com/wp-content/uploads/2021/01/new-2p.jpg',
-    gallery: ['https://fireszone.com/wp-content/uploads/2021/01/new-2.jpg'],
+    image: '/wp-content/uploads/2021/01/new-2p.jpg',
+    gallery: ['/wp-content/uploads/2021/01/new-2.jpg'],
     publishedAt: '2021-02-03'
   }
 ]

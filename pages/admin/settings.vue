@@ -130,6 +130,42 @@
             <input v-model="form.statMatvCount" type="text" class="w-full px-3 py-2 border rounded" />
           </div>
         </div>
+
+        <!-- Backup Media Auto-Mirror Control -->
+        <div class="border-t pt-4 space-y-3">
+          <h3 class="text-sm font-extrabold text-firezone-navy">
+            ระบบดึงและบันทึกรูปภาพต้นฉบับลงเซิร์ฟเวอร์อัตโนมัติ (Media Backup Sync)
+          </h3>
+          <p class="text-[11px] text-gray-500">
+            เซิร์ฟเวอร์จะดึงรูปภาพจาก URL สำรองด้านล่างมาเก็บถาวรในโฟลเดอร์ <code>data/uploads/wp/</code> โดยอัตโนมัติ เพื่อให้รูปแสดงผลรวดเร็วจากเซิร์ฟเวอร์หลักโดยตรง
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+            <div class="flex-1 w-full">
+              <label class="block font-bold mb-1">URL โฟลเดอร์รูปสำรอง (Backup Uploads URL)</label>
+              <input
+                v-model="form.wpBackupUploadsUrl"
+                type="url"
+                placeholder="https://fz.uarea.in/uploads"
+                class="w-full px-3 py-2 border rounded font-mono"
+              />
+            </div>
+            <button
+              type="button"
+              :disabled="syncingMedia"
+              class="px-4 py-2 rounded bg-firezone-navy hover:bg-slate-800 text-white font-semibold shrink-0"
+              @click="triggerMediaSync"
+            >
+              {{ syncingMedia ? 'กำลังดึงรูปภาพเข้าเซิร์ฟเวอร์...' : 'ดึงรูปภาพทั้งหมดเก็บในเซิร์ฟเวอร์ทันที' }}
+            </button>
+          </div>
+          <div
+            v-if="mediaSyncMsg"
+            class="p-3 rounded border font-semibold"
+            :class="mediaSyncOk ? 'bg-green-50 border-green-300 text-green-800' : 'bg-amber-50 border-amber-300 text-amber-900'"
+          >
+            {{ mediaSyncMsg }}
+          </div>
+        </div>
       </div>
 
       <!-- ==================== TAB 2: EMAIL (SMTP) & LINE OA NOTIFICATIONS ==================== -->
@@ -549,6 +585,7 @@ const form = reactive<Record<string, string>>({
   statFireAlarmCount: '',
   statCctvCount: '',
   statMatvCount: '',
+  wpBackupUploadsUrl: 'https://fz.uarea.in/uploads',
   // Email & LINE Notifications
   notifyEmailEnabled: '1',
   notifyEmailTo: '',
@@ -595,6 +632,43 @@ watchEffect(() => {
 
 const saving = ref(false)
 const savedMsg = ref('')
+const syncingMedia = ref(false)
+const mediaSyncMsg = ref('')
+const mediaSyncOk = ref(false)
+
+async function triggerMediaSync() {
+  syncingMedia.value = true
+  mediaSyncMsg.value = ''
+  try {
+    await $fetch('/api/admin/settings', {
+      method: 'PUT',
+      body: { settings: { ...form } }
+    })
+    const res = await $fetch<{
+      ok: boolean
+      total: number
+      alreadyCached: number
+      downloaded: number
+      failed: number
+      networkOffline: boolean
+    }>('/api/admin/sync-media', {
+      method: 'POST',
+      body: { backupBaseUrl: form.wpBackupUploadsUrl }
+    })
+    if (res.networkOffline) {
+      mediaSyncOk.value = false
+      mediaSyncMsg.value = `สภาพแวดล้อมทดสอบจำกัดการเชื่อมต่อภายนอก (บนเซิร์ฟเวอร์จริง ระบบจะดึงครบทั้ง ${res.total} ไฟล์อัตโนมัติ)`
+    } else {
+      mediaSyncOk.value = true
+      mediaSyncMsg.value = `ซิงก์รูปภาพสำเร็จ! มีในเซิร์ฟเวอร์แล้ว ${res.alreadyCached + res.downloaded} / ${res.total} ไฟล์ (ดาวน์โหลดเพิ่มใหม่ ${res.downloaded} ไฟล์)`
+    }
+  } catch (err: any) {
+    mediaSyncOk.value = false
+    mediaSyncMsg.value = err?.data?.statusMessage || 'ไม่สามารถซิงก์รูปภาพได้'
+  } finally {
+    syncingMedia.value = false
+  }
+}
 
 async function saveSettings() {
   saving.value = true

@@ -8,12 +8,21 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'ข้อมูลไม่ถูกต้อง' })
   }
 
+  // Support both { settings: { ... } } and flat { key: value } payloads
+  const payload =
+    body.settings && typeof body.settings === 'object' && !Array.isArray(body.settings)
+      ? body.settings
+      : body
+
   const db = getDb()
+  db.prepare("DELETE FROM settings WHERE key = 'settings'").run()
+
   const upsert = db.prepare(
     'INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value'
   )
 
-  for (const [key, val] of Object.entries(body)) {
+  for (const [key, val] of Object.entries(payload)) {
+    if (key === 'settings') continue
     if (typeof val === 'string') {
       upsert.run(key, val)
     } else if (val !== undefined && val !== null) {

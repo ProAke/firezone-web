@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 /**
- * สคริปต์ดึงไฟล์รูปภาพและเอกสาร PDF ทั้งหมดจาก https://fireszone.com/wp-content/uploads/...
- * มาเก็บไว้ในโฟลเดอร์ data/uploads/wp/... บนเซิร์ฟเวอร์ใหม่ และอัปเดตฐานข้อมูล SQLite อัตโนมัติ
- * เพื่อให้สามารถปิดโฮสติ้ง WordPress เดิมได้ 100% โดยรูปภาพไม่หาย
+ * สคริปต์ดึงไฟล์รูปภาพต้นฉบับทั้งหมดจากเซิร์ฟเวอร์สำรอง (ค่าเริ่มต้น https://fz.uarea.in/uploads)
+ * มาเก็บไว้ถาวรในโฟลเดอร์ data/uploads/wp/... บนเซิร์ฟเวอร์ Nuxt ใหม่
+ * (หมายเหตุ: เซิร์ฟเวอร์ Nuxt มีระบบดึงและบันทึกไฟล์ให้อัตโนมัติตอนรันอยู่แล้ว สคริปต์นี้ใช้สำหรับสั่งดึงล่วงหน้าผ่าน CLI)
  *
- * วิธีใช้งานบนเครื่องหรือเซิร์ฟเวอร์ที่ออกอินเทอร์เน็ตได้:
+ * วิธีใช้งาน:
  *   npm run mirror:media
  */
 import { DatabaseSync } from 'node:sqlite'
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
-const WP_PREFIX = 'https://fireszone.com/wp-content/uploads/'
+const BACKUP_UPLOADS_BASE = (
+  process.env.WP_BACKUP_UPLOADS_URL || 'https://fz.uarea.in/uploads'
+).replace(/\/+$/, '')
+
 const dbPath = join(process.cwd(), 'data', 'firezone.sqlite')
 
 if (!existsSync(dbPath)) {
@@ -23,84 +26,110 @@ const db = new DatabaseSync(dbPath)
 const uploadsBase = join(process.cwd(), 'data', 'uploads', 'wp')
 mkdirSync(uploadsBase, { recursive: true })
 
-const urlSet = new Set()
+const relSet = new Set([
+  '2021/01/banner1.png',
+  '2021/02/Banner-2.jpg',
+  '2021/02/Banner-3.jpg',
+  '2021/02/Banner-4-2.jpg',
+  '2021/01/server-2.jpg',
+  '2021/02/server-3.jpg',
+  '2021/01/bg-homeaboutus.png',
+  '2021/01/bg-homefireszone3.png',
+  '2021/01/qrcode.png'
+])
 
-function collectUrls(str) {
+function collectRelPaths(str) {
   if (!str || typeof str !== 'string') return
-  const matches = str.match(/https?:\/\/fireszone\.com\/wp-content\/uploads\/[^\s"'\\)\]]+/g)
-  if (matches) {
-    for (const m of matches) urlSet.add(m)
+  const regex = /(?:https?:\/\/(?:fireszone\.com|fz\.uarea\.in))?\/(?:wp-content\/)?uploads\/([^\s"'\\)\]]+)/g
+  let m
+  while ((m = regex.exec(str)) !== null) {
+    const rawRel = m[1]
+    if (!rawRel || rawRel.startsWith('inquiries/') || rawRel.startsWith('wp/')) continue
+    const decoded = rawRel
+      .split('/')
+      .filter(Boolean)
+      .map((s) => {
+        try {
+          return decodeURIComponent(s)
+        } catch {
+          return s
+        }
+      })
+      .join('/')
+    if (decoded && !decoded.includes('..')) relSet.add(decoded)
   }
 }
 
-for (const r of db.prepare('SELECT value FROM settings').all()) collectUrls(r.value)
+for (const r of db.prepare('SELECT value FROM settings').all()) collectRelPaths(r.value)
 for (const r of db.prepare('SELECT image, datasheet_url FROM products').all()) {
-  collectUrls(r.image)
-  collectUrls(r.datasheet_url)
+  collectRelPaths(r.image)
+  collectRelPaths(r.datasheet_url)
 }
-for (const r of db.prepare('SELECT image FROM services').all()) collectUrls(r.image)
-for (const r of db.prepare('SELECT image, gallery_json FROM posts').all()) {
-  collectUrls(r.image)
-  collectUrls(r.gallery_json)
+for (const r of db.prepare('SELECT image, content FROM services').all()) {
+  collectRelPaths(r.image)
+  collectRelPaths(r.content)
+}
+for (const r of db.prepare('SELECT image, gallery_json, content FROM posts').all()) {
+  collectRelPaths(r.image)
+  collectRelPaths(r.gallery_json)
+  collectRelPaths(r.content)
 }
 
-console.log(`พบไฟล์มีเดียจาก fireszone.com ทั้งหมด ${urlSet.size} ไฟล์`)
+console.log(`พบไฟล์มีเดียที่อ้างอิงทั้งหมด ${relSet.size} ไฟล์ (ดึงจาก ${BACKUP_UPLOADS_BASE})`)
 
-const urlMap = new Map()
-for (const remoteUrl of urlSet) {
-  const relPath = decodeURIComponent(remoteUrl.replace(/^https?:\/\/fireszone\.com\/wp-content\/uploads\//, ''))
+let downloaded = 0
+let cached = 0
+let failed = 0
+
+for (const relPath of relSet) {
   const destFile = join(uploadsBase, relPath)
-  const localUrl = `/uploads/wp/${relPath.split('/').map(encodeURIComponent).join('/')}`
-
   if (existsSync(destFile)) {
-    urlMap.set(remoteUrl, localUrl)
+    cached++
     continue
   }
+
+  const encodedRel = relPath.split('/').map(encodeURIComponent).join('/')
+  const remoteUrl = `${BACKUP_UPLOADS_BASE}/${encodedRel}`
 
   try {
     mkdirSync(dirname(destFile), { recursive: true })
     const res = await fetch(remoteUrl)
-    if (!res.ok) {
-      console.warn(`[ข้าม] ดาวน์โหลดไม่สำเร็จ (${res.status}): ${remoteUrl}`)
+    const ct = (res.headers.get('content-type') || '').toLowerCase()
+    if (!res.ok || ct.includes('text/html')) {
+      console.warn(`[ข้าม] ไม่พบไฟล์รูปภาพ (${res.status}): ${remoteUrl}`)
+      failed++
       continue
     }
     const buf = Buffer.from(await res.arrayBuffer())
     writeFileSync(destFile, buf)
-    urlMap.set(remoteUrl, localUrl)
-    console.log(`[สำเร็จ] ${relPath}`)
+    downloaded++
+    console.log(`[บันทึกสำเร็จ] ${relPath}`)
   } catch (err) {
-    console.warn(`[ข้อผิดพลาด] ${remoteUrl}: ${err.message}`)
+    failed++
+    console.warn(`[ข้อผิดพลาดเครือข่าย] ${remoteUrl}: ${err.message}`)
   }
 }
 
-function replaceAllMapped(str) {
-  if (!str) return str
-  let out = str
-  for (const [remote, local] of urlMap.entries()) {
-    out = out.split(remote).join(local)
-  }
-  return out
-}
+// Normalize DB URLs to clean relative /wp-content/uploads/...
+db.exec(`
+  UPDATE settings
+  SET value = REPLACE(REPLACE(value, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+  WHERE value LIKE '%fireszone.com/wp-content/uploads/%';
 
-for (const r of db.prepare('SELECT key, value FROM settings').all()) {
-  db.prepare('UPDATE settings SET value = ? WHERE key = ?').run(replaceAllMapped(r.value), r.key)
-}
-for (const r of db.prepare('SELECT id, image, datasheet_url FROM products').all()) {
-  db.prepare('UPDATE products SET image = ?, datasheet_url = ? WHERE id = ?').run(
-    replaceAllMapped(r.image),
-    replaceAllMapped(r.datasheet_url),
-    r.id
-  )
-}
-for (const r of db.prepare('SELECT id, image FROM services').all()) {
-  db.prepare('UPDATE services SET image = ? WHERE id = ?').run(replaceAllMapped(r.image), r.id)
-}
-for (const r of db.prepare('SELECT id, image, gallery_json FROM posts').all()) {
-  db.prepare('UPDATE posts SET image = ?, gallery_json = ? WHERE id = ?').run(
-    replaceAllMapped(r.image),
-    replaceAllMapped(r.gallery_json),
-    r.id
-  )
-}
+  UPDATE products
+  SET image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+  WHERE image LIKE '%fireszone.com/wp-content/uploads/%';
 
-console.log(`อัปเดตฐานข้อมูลให้ชี้มายังไฟล์ในเครื่องเรียบร้อยแล้ว (${urlMap.size} ไฟล์)`)
+  UPDATE services
+  SET image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+  WHERE image LIKE '%fireszone.com/wp-content/uploads/%';
+
+  UPDATE posts
+  SET
+    image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'),
+    gallery_json = REPLACE(REPLACE(gallery_json, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+  WHERE image LIKE '%fireszone.com/wp-content/uploads/%'
+     OR gallery_json LIKE '%fireszone.com/wp-content/uploads/%';
+`)
+
+console.log(`เสร็จสมบูรณ์: มีในเครื่องแล้ว ${cached} ไฟล์, ดาวน์โหลดเพิ่ม ${downloaded} ไฟล์, ข้าม ${failed} ไฟล์`)

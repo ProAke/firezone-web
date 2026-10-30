@@ -1,11 +1,11 @@
 <template>
   <img
-    v-if="src && !hasError"
-    :src="src"
+    v-if="activeSrc && !failedAll"
+    :src="activeSrc"
     :alt="alt"
     :class="imgClass"
     loading="lazy"
-    @error="hasError = true"
+    @error="handleImageError"
   />
   <div
     v-else
@@ -28,12 +28,44 @@ const props = defineProps<{
   imgClass?: string
 }>()
 
-const hasError = ref(false)
+const config = useRuntimeConfig()
+const fallbackIndex = ref(0)
+
+const candidateSources = computed<string[]>(() => {
+  const raw = (props.src || '').trim()
+  if (!raw) return []
+
+  const list: string[] = []
+  const backupBase = (
+    config.public?.wpBackupUploadsUrl || 'https://fz.uarea.in/uploads'
+  ).replace(/\/+$/, '')
+
+  // Normalize legacy fireszone.com/wp-content/uploads/<rel> -> /wp-content/uploads/<rel>
+  const wpMatch = raw.match(/^(?:https?:\/\/fireszone\.com)?\/wp-content\/uploads\/(.+)$/i)
+  if (wpMatch && wpMatch[1]) {
+    const rel = wpMatch[1]
+    list.push(`/wp-content/uploads/${rel}`)
+    list.push(`${backupBase}/${rel}`)
+  } else {
+    list.push(raw)
+  }
+
+  return Array.from(new Set(list))
+})
+
+const activeSrc = computed(() => candidateSources.value[fallbackIndex.value] || '')
+const failedAll = computed(
+  () => candidateSources.value.length === 0 || fallbackIndex.value >= candidateSources.value.length
+)
+
+function handleImageError() {
+  fallbackIndex.value += 1
+}
 
 watch(
   () => props.src,
   () => {
-    hasError.value = false
+    fallbackIndex.value = 0
   }
 )
 </script>

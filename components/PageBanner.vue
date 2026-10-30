@@ -3,7 +3,7 @@
     <div
       class="absolute inset-0 opacity-20 bg-cover bg-center"
       :style="{
-        backgroundImage: `url('https://fireszone.com/wp-content/uploads/2021/01/banner1.png')`
+        backgroundImage: `url('/wp-content/uploads/2021/01/banner1.png')`
       }"
     />
     <div class="absolute inset-0 bg-gradient-to-r from-[#151922] via-[#151922]/90 to-[#151922]/75" />

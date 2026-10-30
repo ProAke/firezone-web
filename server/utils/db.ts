@@ -294,6 +294,45 @@ function seedIfEmpty(db: DatabaseSync) {
       )
     }
   }
+
+  // Normalize any legacy absolute https://fireszone.com/wp-content/uploads/ URLs in pre-existing DBs
+  // to local /wp-content/uploads/ so Nuxt serves & auto-caches them from https://fz.uarea.in/uploads/
+  db.exec(`
+    UPDATE settings
+    SET value = REPLACE(REPLACE(value, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+    WHERE value LIKE '%fireszone.com/wp-content/uploads/%';
+
+    UPDATE products
+    SET
+      image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'),
+      datasheet_url = CASE
+        WHEN datasheet_url LIKE '%woocommerce_uploads/2021/03/fdlj_df_2914-xgyf9c.pdf%' THEN ''
+        ELSE REPLACE(REPLACE(datasheet_url, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+      END
+    WHERE image LIKE '%fireszone.com/wp-content/uploads/%'
+       OR datasheet_url LIKE '%fireszone.com/wp-content/uploads/%'
+       OR datasheet_url LIKE '%woocommerce_uploads/2021/03/fdlj_df_2914-xgyf9c.pdf%';
+
+    UPDATE services
+    SET
+      image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'),
+      content = REPLACE(REPLACE(content, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+    WHERE image LIKE '%fireszone.com/wp-content/uploads/%'
+       OR content LIKE '%fireszone.com/wp-content/uploads/%';
+
+    UPDATE posts
+    SET
+      image = REPLACE(REPLACE(image, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'),
+      gallery_json = REPLACE(REPLACE(gallery_json, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'),
+      content = REPLACE(REPLACE(content, 'https://fireszone.com/wp-content/uploads/', '/wp-content/uploads/'), 'http://fireszone.com/wp-content/uploads/', '/wp-content/uploads/')
+    WHERE image LIKE '%fireszone.com/wp-content/uploads/%'
+       OR gallery_json LIKE '%fireszone.com/wp-content/uploads/%'
+       OR content LIKE '%fireszone.com/wp-content/uploads/%';
+
+    UPDATE posts
+    SET gallery_json = '["/wp-content/uploads/2021/10/Pro-5.jpg"]'
+    WHERE id = 1138 AND gallery_json LIKE '%2021/06/S__304103428.jpg%';
+  `)
 }
 
 export function getAllSettingsMap(db: DatabaseSync): Record<string, string> {
