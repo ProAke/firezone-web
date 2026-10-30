@@ -99,9 +99,12 @@ usePageSeo({
       ? `${data.value.service.title} | บริการ FIRESZONE`
       : 'บริการของเรา | FIRESZONE'
   ),
-  description: computed(
-    () => data.value?.service?.excerpt || data.value?.service?.content?.slice(0, 180) || ''
-  ),
+  seoTitle: computed(() => data.value?.service?.seoTitle || ''),
+  description: computed(() => data.value?.service?.excerpt || ''),
+  seoDescription: computed(() => data.value?.service?.seoDescription || ''),
+  seoKeywords: computed(() => data.value?.service?.seoKeywords || ''),
+  keywordParts: computed(() => [data.value?.service?.title, 'บริการติดตั้งตรวจสอบ Fire Alarm']),
+  htmlContent: computed(() => data.value?.service?.content || ''),
   path: computed(() => `/service/${encodeURIComponent(data.value?.service?.slug || slug.value)}`),
   image: computed(() => data.value?.service?.image || ''),
   jsonLd: computed(() => {

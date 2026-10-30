@@ -6,7 +6,19 @@ export default defineEventHandler((event) => {
 
   const service = db
     .prepare(`
-      SELECT id, slug, legacy_slug as legacySlug, type, title, excerpt, content, image, sort_order as sortOrder
+      SELECT
+        id,
+        slug,
+        legacy_slug as legacySlug,
+        type,
+        title,
+        excerpt,
+        content,
+        image,
+        sort_order as sortOrder,
+        seo_title as seoTitle,
+        seo_description as seoDescription,
+        seo_keywords as seoKeywords
       FROM services
       WHERE LOWER(slug) = LOWER(?) OR legacy_slug = ? OR CAST(id AS TEXT) = ?
     `)

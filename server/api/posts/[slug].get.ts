@@ -19,7 +19,10 @@ export default defineEventHandler((event) => {
         image,
         gallery_json as galleryJson,
         published_at as publishedAt,
-        is_active as isActive
+        is_active as isActive,
+        seo_title as seoTitle,
+        seo_description as seoDescription,
+        seo_keywords as seoKeywords
       FROM posts
       WHERE (LOWER(slug) = LOWER(?) OR legacy_slug = ? OR CAST(id AS TEXT) = ?) AND is_active = 1
     `)

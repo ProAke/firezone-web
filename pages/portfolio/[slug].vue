@@ -123,7 +123,13 @@ usePageSeo({
       ? `${data.value.post.title} | ผลงาน FIRESZONE`
       : 'ผลงานที่ผ่านมา | FIRESZONE'
   ),
+  seoTitle: computed(() => data.value?.post?.seoTitle || ''),
   description: computed(() => data.value?.post?.excerpt || ''),
+  seoDescription: computed(() => data.value?.post?.seoDescription || ''),
+  seoKeywords: computed(() => data.value?.post?.seoKeywords || ''),
+  keywordParts: computed(() => [data.value?.post?.title, 'ผลงานติดตั้ง Fire Alarm']),
+  htmlContent: computed(() => data.value?.post?.content || ''),
+  publishedAt: computed(() => data.value?.post?.publishedAt || ''),
   path: computed(() => `/portfolio/${encodeURIComponent(data.value?.post?.slug || slug.value)}`),
   image: computed(() => data.value?.post?.image || ''),
   type: 'article',

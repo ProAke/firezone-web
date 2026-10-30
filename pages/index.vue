@@ -85,7 +85,7 @@
         <div class="lg:col-span-5 relative">
           <div class="rounded-lg overflow-hidden shadow-xl border border-gray-200">
             <SmartImage
-              :src="homeData?.settings?.aboutImage || '/wp-content/uploads/2021/01/bg-homeaboutus.png'"
+              :src="homeData?.homePage?.image || homeData?.settings?.aboutImage || '/wp-content/uploads/2021/01/bg-homeaboutus.png'"
               alt="เกี่ยวกับบริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด"
               img-class="w-full h-[340px] object-cover"
             />
@@ -107,7 +107,12 @@
             </p>
           </div>
 
-          <p class="text-gray-600 leading-relaxed whitespace-pre-line text-sm md:text-base">
+          <RichContent
+            v-if="homeData?.homePage?.content"
+            class="text-gray-600 leading-relaxed text-sm md:text-base"
+            :content="homeData.homePage.content"
+          />
+          <p v-else class="text-gray-600 leading-relaxed whitespace-pre-line text-sm md:text-base">
             {{ homeData?.settings?.aboutIntro }}
           </p>
 
@@ -543,10 +548,18 @@ const homeFaqs = [
 usePageSeo({
   title: computed(
     () =>
+      homeData.value?.homePage?.seoTitle ||
       homeData.value?.settings?.seoDefaultTitle ||
       'บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด | ระบบสัญญาณเตือนอัคคีภัย Fire Alarm ครบวงจร'
   ),
-  description: computed(() => homeData.value?.settings?.seoDefaultDescription || ''),
+  description: computed(
+    () =>
+      homeData.value?.homePage?.seoDescription ||
+      homeData.value?.settings?.seoDefaultDescription ||
+      ''
+  ),
+  seoKeywords: computed(() => homeData.value?.homePage?.seoKeywords || ''),
+  htmlContent: computed(() => homeData.value?.homePage?.content || ''),
   path: '/',
   jsonLd: computed(() => {
     const siteUrl = (homeData.value?.settings?.siteUrl || 'https://fireszone.com').replace(/\/+$/, '')

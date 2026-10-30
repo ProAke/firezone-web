@@ -4,6 +4,24 @@ export default defineEventHandler(() => {
   const db = getDb()
   const settings = getPublicSettingsMap(db)
 
+  const homePage = db
+    .prepare(`
+      SELECT
+        slug,
+        title,
+        subtitle,
+        excerpt,
+        content,
+        image,
+        seo_title as seoTitle,
+        seo_description as seoDescription,
+        seo_keywords as seoKeywords,
+        updated_at as updatedAt
+      FROM pages
+      WHERE slug = 'home'
+    `)
+    .get() as Record<string, any> | undefined
+
   const equipmentItems = db
     .prepare(
       `SELECT id, slug, legacy_slug as legacySlug, type, title, excerpt, image, sort_order as sortOrder
@@ -50,6 +68,7 @@ export default defineEventHandler(() => {
 
   return {
     settings,
+    homePage: homePage || null,
     heroSlides: safeParseJson(settings.heroSlidesJson, []),
     brands: safeParseJson(settings.brandsJson, []),
     clients: safeParseJson(settings.clientsJson, []),

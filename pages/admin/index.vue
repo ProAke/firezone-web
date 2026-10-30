@@ -8,11 +8,14 @@
         </p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <NuxtLink to="/admin/products" class="btn-firezone text-xs py-2 px-4">
-          + เพิ่ม / แก้ไขสินค้า
+        <NuxtLink to="/admin/products/new" class="btn-firezone text-xs py-2 px-4">
+          + เพิ่มสินค้าใหม่
         </NuxtLink>
-        <NuxtLink to="/admin/portfolio" class="btn-outline-firezone text-xs py-2 px-4">
+        <NuxtLink to="/admin/portfolio/new" class="btn-outline-firezone text-xs py-2 px-4">
           + เพิ่มผลงานใหม่
+        </NuxtLink>
+        <NuxtLink to="/admin/pages" class="px-4 py-2 rounded border border-gray-300 bg-white hover:border-firezone-red text-xs font-semibold text-gray-700">
+          จัดการหน้าเว็บไซต์
         </NuxtLink>
       </div>
     </div>
@@ -95,17 +98,30 @@
             <div class="flex items-center gap-3 min-w-0">
               <SmartImage :src="prod.image" :alt="prod.name" img-class="w-10 h-10 object-contain rounded border p-0.5 shrink-0" />
               <div class="min-w-0">
-                <div class="font-bold text-gray-900 truncate">{{ prod.name }}</div>
+                <NuxtLink
+                  :to="`/admin/products/${prod.id}`"
+                  class="font-bold text-gray-900 hover:text-firezone-red truncate block"
+                >
+                  {{ prod.name }}
+                </NuxtLink>
                 <div class="text-gray-400">{{ prod.brand || 'ไม่ระบุแบรนด์' }}</div>
               </div>
             </div>
-            <NuxtLink
-              :to="`/product/${encodeURIComponent(prod.slug)}`"
-              target="_blank"
-              class="text-firezone-red hover:underline shrink-0"
-            >
-              ดูหน้าสินค้า
-            </NuxtLink>
+            <div class="flex items-center gap-2.5 shrink-0">
+              <NuxtLink
+                :to="`/admin/products/${prod.id}`"
+                class="px-2.5 py-1 rounded bg-firezone-navy text-white font-semibold hover:bg-slate-800"
+              >
+                แก้ไข
+              </NuxtLink>
+              <NuxtLink
+                :to="`/product/${encodeURIComponent(prod.slug)}`"
+                target="_blank"
+                class="text-firezone-red hover:underline"
+              >
+                ดูหน้าเว็บ
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </div>
@@ -119,8 +135,9 @@ definePageMeta({
   middleware: 'admin-auth'
 })
 
+const reqFetch = useRequestFetch()
 const { data: stats } = await useAsyncData('admin-dashboard-stats', () =>
-  $fetch('/api/admin/stats')
+  reqFetch('/api/admin/stats')
 )
 
 useHead({ title: 'แดชบอร์ดผู้ดูแล | FIRESZONE CMS' })

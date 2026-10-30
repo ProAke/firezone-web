@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ck-content-font-family: 'Prompt', 'Sarabun', sans-serif;
+  --ck-content-font-color: #334155;
+  --ck-content-line-height: 1.7;
+}
+
 @layer base {
   html {
     font-family: 'Prompt', 'Sarabun', sans-serif;
@@ -63,12 +69,16 @@
   background-color: #e31e24;
 }
 
-/* Rich HTML content styling for migrated descriptions */
+/* Rich HTML & CKEditor 5 Content Styling */
+.fz-prose {
+  display: flow-root;
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+}
 .fz-prose ul {
-  @apply list-disc pl-5 space-y-1.5 my-3;
+  @apply list-disc pl-6 space-y-1.5 my-3;
 }
 .fz-prose ol {
-  @apply list-decimal pl-5 space-y-1.5 my-3;
+  @apply list-decimal pl-6 space-y-1.5 my-3;
 }
 .fz-prose p {
   @apply mb-3 leading-relaxed;
@@ -76,10 +86,51 @@
 .fz-prose li {
   @apply leading-relaxed;
 }
-.fz-prose h3,
+.fz-prose h2 {
+  @apply font-extrabold text-firezone-navy mt-6 mb-3 text-xl md:text-2xl;
+}
+.fz-prose h3 {
+  @apply font-bold text-firezone-navy mt-5 mb-2.5 text-lg;
+}
 .fz-prose h4 {
   @apply font-bold text-firezone-navy mt-4 mb-2 text-base;
 }
 .fz-prose strong {
   @apply font-bold text-gray-900;
+}
+.fz-prose a {
+  @apply text-firezone-red font-semibold underline hover:text-firezone-darkred;
+}
+.fz-prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+.fz-prose figure.image {
+  margin: 1.25rem auto;
+}
+.fz-prose figure.table {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+.fz-prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fz-prose table th,
+.fz-prose table td {
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.85rem;
+}
+.fz-prose table th {
+  background-color: #f1f5f9;
+  font-weight: 700;
+  color: #151922;
+}
+.fz-prose blockquote {
+  border-left: 4px solid #e31e24;
+  background: #f8fafc;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0 0.375rem 0.375rem 0;
+  color: #334155;
 }

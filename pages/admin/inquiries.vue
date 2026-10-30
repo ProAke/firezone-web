@@ -180,9 +180,10 @@ definePageMeta({
 
 const statusFilter = ref('')
 
+const reqFetch = useRequestFetch()
 const { data, refresh } = await useAsyncData(
   () => `admin-inquiries-${statusFilter.value}`,
-  () => $fetch('/api/admin/inquiries', { query: { status: statusFilter.value } }),
+  () => reqFetch('/api/admin/inquiries', { query: { status: statusFilter.value } }),
   { watch: [statusFilter] }
 )
 

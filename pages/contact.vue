@@ -1,9 +1,9 @@
 <template>
   <div>
     <PageBanner
-      title="ติดต่อเรา / ขอใบเสนอราคา"
-      subtitle="CONTACT US & QUOTATION"
-      :breadcrumbs="[{ label: 'ติดต่อเรา' }]"
+      :title="contactPageData?.page?.title || 'ติดต่อเรา / ขอใบเสนอราคา'"
+      :subtitle="contactPageData?.page?.subtitle || 'CONTACT US & QUOTATION'"
+      :breadcrumbs="[{ label: contactPageData?.page?.title || 'ติดต่อเรา' }]"
     />
 
     <section class="py-14 bg-white">
@@ -20,6 +20,12 @@
             </p>
             <div class="section-divider" />
           </div>
+
+          <RichContent
+            v-if="contactPageData?.page?.content"
+            class="text-sm text-gray-600 leading-relaxed"
+            :content="contactPageData.page.content"
+          />
 
           <div class="space-y-4">
             <div class="flex items-start gap-3.5 bg-firezone-light p-4 rounded-lg border border-gray-200">
@@ -669,10 +675,24 @@ async function submitForm() {
   }
 }
 
+const { data: contactPageData } = await useAsyncData('page-contact', () =>
+  $fetch('/api/pages/contact').catch(() => ({ page: null }))
+)
+
 usePageSeo({
-  title: 'ติดต่อเรา / ขอใบเสนอราคา | บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด',
-  description:
-    'ติดต่อขอใบเสนอราคาอุปกรณ์ระบบสัญญาณเตือนอัคคีภัย Fire Alarm นัดสำรวจหน้างาน แนบไฟล์สเปค PDF/รูปภาพ และเชื่อมต่อผ่าน LINE OA ได้ทันที',
+  title: computed(
+    () =>
+      `${contactPageData.value?.page?.title || 'ติดต่อเรา / ขอใบเสนอราคา'} | บริษัท ไฟร์โซน แอนด์แมนูแฟคเจอริ่ง จำกัด`
+  ),
+  seoTitle: computed(() => contactPageData.value?.page?.seoTitle || ''),
+  description: computed(
+    () =>
+      contactPageData.value?.page?.excerpt ||
+      'ติดต่อขอใบเสนอราคาอุปกรณ์ระบบสัญญาณเตือนอัคคีภัย Fire Alarm นัดสำรวจหน้างาน แนบไฟล์สเปค PDF/รูปภาพ และเชื่อมต่อผ่าน LINE OA ได้ทันที'
+  ),
+  seoDescription: computed(() => contactPageData.value?.page?.seoDescription || ''),
+  seoKeywords: computed(() => contactPageData.value?.page?.seoKeywords || ''),
+  htmlContent: computed(() => contactPageData.value?.page?.content || ''),
   path: '/contact',
   jsonLd: computed(() => ({
     '@context': 'https://schema.org',

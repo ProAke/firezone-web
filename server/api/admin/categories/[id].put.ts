@@ -1,5 +1,6 @@
 import { requireAdmin } from '../../../utils/auth'
 import { getDb, slugifyText } from '../../../utils/db'
+import { sanitizeRichHtmlForStorage } from '../../../../utils/seo'
 
 export default defineEventHandler(async (event) => {
   requireAdmin(event)
@@ -18,11 +19,17 @@ export default defineEventHandler(async (event) => {
 
   const parentId = body?.parentId && Number(body.parentId) !== id ? Number(body.parentId) : null
   const sortOrder = Number(body?.sortOrder) || 0
-  const description = String(body?.description || '').trim()
+  const description = sanitizeRichHtmlForStorage(body?.description)
+  const seoTitle = String(body?.seoTitle || '').trim()
+  const seoDescription = String(body?.seoDescription || '').trim()
+  const seoKeywords = String(body?.seoKeywords || '').trim()
 
   db.prepare(
-    'UPDATE categories SET name = ?, slug = ?, parent_id = ?, sort_order = ?, description = ? WHERE id = ?'
-  ).run(name, slug, parentId, sortOrder, description, id)
+    `UPDATE categories
+     SET name = ?, slug = ?, parent_id = ?, sort_order = ?, description = ?,
+         seo_title = ?, seo_description = ?, seo_keywords = ?
+     WHERE id = ?`
+  ).run(name, slug, parentId, sortOrder, description, seoTitle, seoDescription, seoKeywords, id)
 
   return { ok: true, id, slug }
 })
